@@ -1,0 +1,96 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/rates">Rate</a>
+                </li>
+                <li class="breadcrumb-item active">Rate Add</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <h5>
+            Rate Add
+        </h5>
+        <form role="form" id="service_caseType" method="POST" action="/rate/add">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <input type="hidden" name="service" value="S">
+            <input type="hidden" name="one_rate" value="0">
+            <input type="hidden" name="email_rate" value="0">
+            <input type="hidden" name="phone_rate" value="0">
+            <div class="form-group">
+                <label>Type of Case</label>
+                <span class="requiredErr">*</span>
+                <select class="full-width caseType" data-init-plugin="select2" name="name" id="name">
+                    <option value="">Select Type of Case</option>
+                    {{#each rateTypeAll}}
+                    <option value="{{this.type_of_case}}">{{this.type_of_case}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Rate Card </label>
+                <input type="text" class="form-control" name="rate" id="rate" placeholder="Enter Rate">
+            </div>
+            <input type="hidden" id="rate_id">
+            <div class="form-group">
+                <label>Rate For Lawyers </label>
+                <input type="text" class="form-control" name="rate_laywers" id="rate_laywers" placeholder="Enter Rate For Lawyers">
+            </div>
+
+            <button class="btn btn-primary btn-cons m-t-10 btn-lg" id="submit" type="submit">Submit</button>
+
+        </form>
+    </div>
+</div>
+
+
+
+{{#content "script" mode="append"}}
+
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        $("#service_caseType").validate({
+
+            rules: {
+                name: {
+                    required: true
+                },
+                rate: {
+                    required: true
+                },
+                rate_laywers: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Case Type can't be blank"
+                },
+                rate: {
+                    required: "Rate can't be blank"
+                },
+                rate_laywers: {
+                    required: "Rate For Lawyers can't be blank"
+                }
+            }
+
+        });
+    });
+
+
+</script>
+
+{{/content}}

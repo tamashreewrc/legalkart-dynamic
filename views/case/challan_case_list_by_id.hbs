@@ -1,0 +1,1068 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{#if_eq rate_list.id "6"}}
+                    <a href="/legalcart-superdari">All {{rate_list.type_of_case}} Lists</a>
+                    {{/if_eq}}
+                    {{#if_eq rate_list.id "7"}}
+                    <a href="/legalcart-challan">All {{rate_list.type_of_case}} Lists</a>
+                    {{/if_eq}}
+                    {{#if_eq rate_list.id "2"}}
+                    <a href="/legalcart-mact">All {{rate_list.type_of_case}} Lists</a>
+                    {{/if_eq}}
+                </li>
+                <li class="breadcrumb-item active">All {{rate_list.type_of_case}}</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_del_case_by_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_del_case_by_manager}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}} {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>List All {{rate_list.type_of_case}}</h5>
+        </div>
+        {{#if_eq user.role_id "1"}}       
+         <div class="pull-right assignment">
+             <a href="javascript:void(0)" class="btn btn-primary btn-cons m-b-10" id="lawyerAssignment">
+                <i class="fa fa-share-square-o"></i>Assignment</a>
+        </div>
+        {{/if_eq}}
+        <div class="pull-right allFileDownloads"  style="display: none">
+            <a href="/create-zip-for-Files/{{bulk_case_id}}" class="btn btn-primary btn-cons m-b-10" id="allFileDownloadFiles">
+            <i class="fa fa-download" aria-hidden="true"></i> Download All Files</a>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="card-body lawyers-add">
+        <div class="col-xl-12 col-lg-12 col-top">
+             <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item liTab1">
+                    <a href="javascript:void(0)" class="active govAdd hide-lawyerAssignment allCaseData" data-toggle="tab" role="tab" data-target="#allCase">All Case</a>
+                </li>
+                <li class="nav-item liTab2">
+                    <a href="javascript:void(0)" class="policeAdd hide-lawyerAssignment allFileData" data-toggle="tab" role="tab" data-target="#caseFile">Files</a>
+                </li>
+            </ul>
+           
+            <div class="tab-content">
+                <div class="tab-pane tabDiv1 active" id="allCase">
+                    {{#if_eq rate_list.id "2"}}
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                {{#if_eq user.role_id '1'}}
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                </th>
+                                {{else}}
+                                <th>
+                                    SL#
+                                </th>
+                                {{/if_eq}}
+                                <th>Cab No.</th>
+                                <th>Case No.</th>
+                                <th>Name of PS</th>
+                                <th>Claim Amount</th>
+                                <th>Next Date Of Hearing</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each casesDetails}}
+                            {{#if_eq this.status "0"}}
+                            <tr>
+                                {{#if_eq ../user.role_id '1'}}
+                                <td class="v-align-middle semi-bold">
+                                    {{#check_length this.lawyer_assignments "0"}}
+                                     {{#check_length this.file_for_cases 0}}
+                                     {{else}}
+                                    <input type="checkbox" name="case_check_id" value="{{this.id}}" />{{math @index "+" 1}}
+                                    {{/check_length}}
+                                    {{else}}
+                                    <input type="checkbox" name="case_check_id_" value="{{this.id}}" checked disabled />{{math
+                                    @index "+" 1}}
+                                    {{/check_length}}
+                                </td>
+                                {{else}}
+                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                {{/if_eq}}
+                    
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.mact_case_details.0.case_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.mact_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.mact_case_details.0.claim_amount}}/-</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.mact_case_details.0.next_date_of_hearing "DD/MM/YYYY"}}</p>
+                                </td>
+                                <td>
+                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{#if_eq ../user.role_id "5"}}
+                                        <button class="btn btn-danger" title="Delete" id="caseDeleteBtn" data-case-id="{{this.id}}"><i class="fa fa-trash"></i></button>
+                                    {{/if_eq}}
+                                    {{#if_eq ../user.role_id '1'}}
+                                    {{#check_length this.lawyer_assignments "0"}}
+                                    {{#check_length this.file_for_cases 0}}
+                                    <button id="lawyerAssnWithoutfileAssgn" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}" class="btn btn-info" title="Send">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </button>
+                                    {{else}}
+                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}" class="btn btn-info" title="Send">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </button>
+                                    {{/check_length}}
+                                    {{/check_length}}
+                                    {{#check_length this.file_for_cases 0}}
+                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success" title="File Assignment">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </button>
+                                    {{/check_length}}
+                                    {{/if_eq}}
+                    
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{else}}
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                {{#if_eq user.role_id '1'}}
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                </th>
+                                {{else}}
+                                <th>
+                                     SL#
+                                </th>
+                                {{/if_eq}}
+                                <th>Cab No.</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Driver Mobile</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each casesDetails}}
+                            {{#if_eq this.status "0"}}
+                            <tr>
+                                {{#if_eq ../user.role_id '1'}}
+                                <td class="v-align-middle semi-bold">
+                                    {{#check_length this.lawyer_assignments "0"}}
+                                    {{#check_length this.file_for_cases 0}}
+                                    {{else}}
+                                    <input type="checkbox" name="case_check_id" value="{{this.id}}" />
+                                    {{/check_length}}{{math @index "+" 1}}
+                                    {{else}}
+                                    <input type="checkbox" name="case_check_id_" value="{{this.id}}" checked disabled />{{math
+                                    @index "+" 1}}
+                                    {{/check_length}}
+                                </td>
+                                {{else}}
+                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                {{/if_eq}}
+                                
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                </td>
+                                <td>
+                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{#if_eq ../user.role_id "5"}}
+                                        <button class="btn btn-danger" title="Delete" id="caseDeleteBtn" data-case-id="{{this.id}}"><i class="fa fa-trash"></i></button>
+                                    {{/if_eq}}
+                                    {{#if_eq ../user.role_id '1'}}
+                                    {{#check_length this.lawyer_assignments "0"}}
+                                    {{#check_length this.file_for_cases 0}}
+                                    <button id="lawyerAssnWithoutfileAssgn" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}" class="btn btn-info" title="Send">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </button>
+                                    {{else}}
+                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}" class="btn btn-info" title="Send">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </button>
+                                    {{/check_length}}
+                                    {{/check_length}}
+                                    {{#check_length this.file_for_cases 0}}
+                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success" title="File Assignment">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </button>
+                                    {{/check_length}}
+                                    {{/if_eq}}
+
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{/if_eq}}
+            </div>
+             <div class="tab-pane tabDiv2" id="caseFile">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th> SL# </th>
+                                <th>Name of File</th>
+                                <th>Date &amp; time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each fileList}}
+                            <tr>
+                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                <td class="v-align-middle">
+                                  
+                                   
+                                   {{#check_image this.filename}}
+                                    <a href="/upload_Files/{{../this.filename}}" title="{{this.file_title}}" id="imgCaseFileHover" download>
+                                    <img height="30" width="33" src="/upload_Files/{{../this.filename}}">
+                                    </a>
+                                   
+                                   {{else}}
+                                    <a href="/upload_Files/{{../this.filename}}" title="{{../this.file_title}}" download></div>
+                                   <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png">
+                                   </a></br>{{../this.file_title}}
+                                   {{/check_image}}
+                                        {{!-- <img height="30" width="33" src="/upload_Files/{{this.filename}}"> --}}
+                                        {{!-- <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png"> --}}
+                                   {{!-- </a> --}}
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                    {{!-- <p>{{dateFormat this.updatedAt "hh:mm a"}}</p> --}}
+                                </td>
+                                <td>
+                                    <a href="/upload_Files/{{this.filename}}"  title="{{this.file_title}}" class="btn btn-complete" target="_blank"> <i class="fa fa-eye"></i> </a>
+                                    <a href="/upload_Files/{{this.filename}}" class="btn btn-complete" title="Download File" style="background-color:#43a047" download> <i class="fa fa-download" aria-hidden="true"></i> </a>
+                                    <a href="javascript:void(0)" class="btn btn-danger" id="caseDelete_conform" data-case_delete_id="{{this.id}}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="caseDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete City</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/case/delete/manager" method="post">
+                <input type="hidden" name="delete_case_id" id="delete_case_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this Case?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewcaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Cases</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Case No</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="view_name" id="view_case" placeholder="Enter Jurisdiction Name"
+                            readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Cab No</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="view_cab" name="view_remarks" placeholder="Briefly Describe your Remarks"
+                            readonly></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Case Type</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="view_type" name="view_remarks" placeholder="Briefly Describe your Remarks"
+                            readonly></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sendLoyerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lawyer Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" id="selectLawyer" method="POST" action="/lawyer/challan/case/assignment">
+                <input type="hidden" id="hiddencaseId" name="hiddencaseId">
+                <div class="modal-body">
+                    <div class="form-group ">
+                        <label>Lawyers</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width select2-hidden-accessible" id="laywerList" name="laywerList"
+                            data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <option value="">Select Lawyer</option>
+                        </select>
+                        <div class="lawyerListLabelErrorTarget"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" >Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!--multiple lawyer Assign start-->
+<div class="modal fade" id="legalCart_lawyer_assignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lawyer Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{!-- <form role="form" id="legalCart_lawyer_assignment_form" method="POST"> --}}
+                <input type="hidden" id="caseTypeHidden" name="caseTypeHidden" value="{{rate_list.type_of_case}}">
+                <input type="hidden" id="caseTypeIdHidden" name="caseTypeIdHidden" value="{{rate_list.id}}">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <input type="hidden" id="hiddencaseId" name="hiddencaseId">
+                <div class="modal-body">
+
+                    <div class="form-group ">
+                        <label>Lawyers</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width select2-hidden-accessible" id="laywer_assignment_form_select" name="laywer_assignment_form_select"
+                            data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            {{!-- <option value="">Select Lawyer</option> --}}
+                            {{!-- {{#each lawyerDetails}}
+                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}} </option>
+                            {{/each}} --}}
+                        </select>
+                        <div class="lawyerListLabelErrorTargetMulti"></div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="mulLawyerAssign">Submit</button>
+                </div>
+                {{!--
+            </form> --}}
+        </div>
+    </div>
+</div>
+
+<!--multiple lawyer Assign end-->
+<div class="modal fade" id="assignFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">File Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" id="fileAssign" method="POST" action="/challan/case/files/assign">
+                <input type="hidden" id="hiddenFileId" name="hiddenFileId">
+                <input type="hidden" id="caseTypeHidden" name="caseTypeHidden" value="{{caseType}}">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <div class="modal-body">
+                    <div class="form-group ">
+                        <label>Files</label>
+                        <span class="requiredErr">*</span>
+
+                        <div class="form-group form-group-default form-group-default-select2">
+                            <label>Files</label>
+                            <select class="full-width select2-hidden-accessible" id="fileList" name="fileList[]"
+                                data-init-plugin="select2" tabindex="-1" aria-hidden="true" multiple>
+                                {{#each filesAll}}
+                                <option value="{{this.id}}">{{this.name}} </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="fileAssignmentDetails">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" id="UploadExcelType1Frm" method="POST" action="/upload-case-excel" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                    <div class="form-group">
+                        <label>Upload Excel</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_1" id="file_name_type_1" />
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnUploadExcelType1">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" id="UploadFileType1Frm" method="POST" action="/upload-case-files" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_2" id="file_name_type_2"
+                            multiple />
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnUploadExcelType1">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" id="UploadFileType1Frm" method="POST" action="/upload-case-files" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                    <input type="hidden" name="bulk_id" value="{{bulk_id}}">
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_2" id="file_name_type_2"
+                            multiple />
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnUploadExcelType1">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="fileDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Case File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" name="caseFile_id" id="caseFile_id">
+            <div class="modal-body">
+                <div class="form-group">
+                    <p class="p-b-10">Are you sure you went to delete this File?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="allFileDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-inputmask/jquery.inputmask.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).on("click", "#caseDelete_conform", function(){
+        $("#caseFile_id").val($(this).data("case_delete_id"));
+        $("#fileDeleteModal").modal("show");
+    });
+
+   $(document).on('click', '#allFileDelete', function () {
+
+        var file_id = $("#caseFile_id").val();
+
+        $.ajax({
+            url: '/delete-file_for_case/',
+            type: 'POST',
+            data: { file_id: file_id, },
+            success: function (response) {
+                console.log(response);
+                // $("#caseFile").addClass('active')
+                // $("#caseFile" ).tabs({ active: # });
+                $("#fileDeleteModal").modal("hide");
+                window.location.reload();
+            }
+        });
+
+    });
+    
+    $(document).on("click", "#lawyerDeleteBtn", function () {
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    //file show
+    $(document).on('click','.allCaseData',function(){
+        $("#lawyerAssignment").show();
+        $(".allFileDownloads").hide();
+    });
+
+    //file show
+    $(document).on('click','.allFileData',function(){
+        $("#lawyerAssignment").hide();
+        $(".allFileDownloads").show();
+    });
+
+    /*$(document).on('clcik', '#allFileDownloadFiles', function () {
+        $.ajax({
+            url: '/create-zip-for-Files/',
+            type: 'POST',
+            data: { case_id: client_id, },
+            success: function (response) {
+                response.lawyerDetails.forEach((element, index) => {
+                    if (element.lawyers[0].panel_member == '1') {
+                        $('#laywer_assignment_form_select').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                    }
+                    $('#legalCart_lawyer_assignment').modal("show");
+
+                });
+            }
+        });
+    });*/
+
+    $(document).on("click", "#lawyerAssignment", function () {
+        var client_id = [];
+        $("#laywer_assignment_form_select").find('option').not(':first').remove();
+        $('input[name="case_check_id"]:checked').each(function () {
+            client_id.push(this.value);
+        });
+
+        if (client_id.length == 0) {
+            swal("", "Please select at least one case!", "warning");
+        } else {
+            $.ajax({
+                url: '/lawyer/show/for-assignment/',
+                type: 'POST',
+                data: { case_id: client_id, type: "M" },
+                success: function (response) {
+                    if(response.lawyerDetails.length != "0"){
+                    response.lawyerDetails.forEach((element, index) => {
+                        if (element.lawyers[0].panel_member == '1') {
+                            $('#laywer_assignment_form_select').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                        }
+                        $('#legalCart_lawyer_assignment').modal("show");
+
+                    });
+                    }
+                    else
+                    {
+                        swal("Warning!", "Lawyer not found in this City", "warning");
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on("click", "#btnCaseAdd", function () {
+        var caseType = $("#case_type").val();
+        window.location.href = "/case/add/" + caseType;
+    });
+
+    $(document).on('click', "#caseView", function () {
+        var case_no = $(this).data("casedetails-no");
+        var cab_no = $(this).data("cab-no");
+        var case_type = $(this).data("case-type");
+        $("#view_case").val(case_no);
+        $("#view_cab").val(cab_no);
+        $("#view_type").val(case_type);
+        $("#viewcaseModal").modal('show');
+    });
+
+    $(document).on('click', "#caseViewSend", function () {
+        var bulkid = $(this).data("bulk-id");
+        $("#laywerList").find('option').not(':first').remove();
+        var caseId = $(this).data("caseno-id");
+        $('#hiddencaseId').val(caseId);
+        $.ajax({
+            url: '/lawyer/show/for-assignment/',
+            type: 'POST',
+            data: { bulkid: bulkid, type: "C",case_id:caseId },
+            success: function (response) {
+                if(response.lawyerDetails.length != "0")
+                {
+                 response.lawyerDetails.forEach(function(element,index){
+                     if (element.lawyers[0].panel_member == '1') {
+                        $('#laywerList').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                     }
+                        $("#sendLoyerModal").modal('show');
+
+                 });
+                }
+                else
+                {
+                    swal("Warning!", "Lawyer not found in this City", "warning");
+                }
+            }
+        });
+
+    });
+
+    $(document).on('click', '#caseFileAssign', function () {
+        var caseId = $(this).data("caseno-id");
+        $('#hiddenFileId').val(caseId);
+        $("#assignFile").modal('show');
+    });
+
+
+    $(document).ready(function () {
+        $("#selectLawyer").validate({
+            rules: {
+                laywerList: {
+                    required: true
+                }
+            },
+            messages: {
+                laywerList: {
+                    required: "Please Select a Lawyer"
+                }
+            },
+            errorPlacement: function (error, element) {
+                var lawyerListLabelError = $(error).html();
+                $(".lawyerListLabelErrorTarget").addClass("error").text(lawyerListLabelError);
+            }
+        });
+
+        $('#fileAssign').validate({
+            rules: {
+                fileList: {
+                    required: true
+                },
+                messages: {
+                    fileList: {
+                        required: "Please select a File"
+                    }
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#legalCart_lawyer_assignment_form').validate({
+            rules: {
+                laywer_assignment_form_select: {
+                    required: true
+                },
+                messages: {
+                    laywer_assignment_form_select: {
+                        required: "Please select a File"
+                    }
+                }
+            }
+        })
+    });
+
+
+
+    function checkall(source) {
+        var checkboxes = document.getElementsByName('case_check_id');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    $(document).on('click', '#mulLawyerAssign', function () {
+        var case_id = [];
+        var selectId = $('#laywer_assignment_form_select').val();
+        $('input[name="case_check_id"]:checked').each(function () {
+            case_id.push(this.value);
+        });
+        $.ajax({
+            url: '/case/multi-assign-laywer/',
+            type: 'POST',
+            data: { lawyer_id: selectId, case_id: case_id, caseTypeHidden: $("#caseTypeHidden").val(), caseTypeIdHidden: $("#caseTypeIdHidden").val() },
+            success: function (response) {
+                if (response.msg == 'You have Already Assign') {
+                    swal({
+                        title: "Nice!",
+                        text: response.msg,
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                } else {
+                    swal({
+                        title: "Nice!",
+                        text: "Lawyer Assign successfully",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+
+
+            }
+        });
+    });
+    function baba() {
+        $(".DatePickers").datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: '+0d',
+            autoclose: true
+        });
+        $(".number_validators").inputmask("mask", {
+            "mask": "9999999999"
+        });
+    }
+    function xxx() {
+        $(".mmmm").hide();
+        $(".mmmm").show();
+
+    }
+
+    $(document).ready(function () {
+        baba();
+        $("#UploadExcelType1Frm").validate({
+            rules: {
+                file_name_type_1: {
+                    required: true,
+                    extension: "xls|xlsx"
+                }
+
+            },
+            messages:
+            {
+                file_name_type_1: {
+                    required: "Please choose a file",
+                    extension: "only xlsx or xls file"
+                },
+                file_name_type_2: {
+                    required: "Please choose a file",
+                }
+            }
+        });
+
+        $('#UploadFileType1Frm').validate({
+            rules: {
+                file_name_type_2: {
+                    required: true,
+                },
+                messages: {
+                    file_name_type_2: {
+                        required: "Please choose a file",
+                    }
+                }
+            }
+        });
+
+        $("#addCasesFrm").validate({
+            rules: {
+                cab_no: {
+                    required: true
+                },
+                inpound_status: {
+                    required: true
+                },
+                name_of_ps: {
+                    required: true
+                },
+                judge_name: {
+                    required: true
+                },
+                court: {
+                    required: true
+                },
+                driver_name: {
+                    required: true
+                },
+                driver_mobile_no: {
+                    required: true
+                },
+                advocate: {
+                    required: true
+                }
+            },
+            messages: {
+                cab_no: {
+                    required: "Cab no. can't be blank"
+                },
+                inpound_status: {
+                    required: "Impound Status can't be blank"
+                },
+                name_of_ps: {
+                    required: "Name of PS can't be blank"
+                },
+                judge_name: {
+                    required: "Judge name can't be blank"
+                },
+                court: {
+                    required: "Please select court name"
+                },
+                driver_name: {
+                    required: "Driver name can't be blank"
+                },
+                driver_mobile_no: {
+                    required: "Driver mobile no can't be blank"
+                },
+                advocate: {
+                    required: "Advocate can't be blank"
+                }
+            }
+        });
+
+        $("#addCasesTypeFrm").validate({
+            rules: {
+                case_no: {
+                    required: true
+                },
+                case_type: {
+                    required: true
+                },
+                case_file: {
+                    required: true
+                },
+                judge_name: {
+                    required: true
+                }
+            },
+            messages: {
+                case_no: {
+                    required: "Case no. can't be blank"
+                },
+                case_type: {
+                    required: "Case type can't be blank"
+                },
+                case_file: {
+                    required: "Case file can't be blank"
+                },
+                judge_name: {
+                    required: "Judge name can't be blank"
+                }
+            }
+        });
+
+        $(document).on("click", "#addCaseFormRowBtn", function () {
+            $(".addRowCaseform1").append($(".addRowCaseform1Row").html());
+            baba();
+            xxx();
+
+        });
+    });
+    $(document).on('click', "#caseRowRemoveBtn", function (e) {
+        $(this).closest(".row").remove();
+    });
+
+    $(document).on("click", "#caseClose", function () {
+             var case_id = $(this).data('case-id');
+            swal({
+                title: "Are you sure?",
+                text: "You want to close this case?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/case-close-legalcart",
+                    data: { case_id: case_id },
+                    success: function (response) {
+                        if (response.success == true) {
+                            swal({
+                                title: "Success!",
+                                text: "Case close successfully",
+                                type: "success"
+                            }, function () {
+
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            });
+
+        });
+
+        $(document).ready(function(){
+            $("#imgCaseFileHover").mouseover(function () {
+                console.log("1");
+            });
+
+            $("#imgCaseFileHover").mouseout(function () {
+               console.log("2");
+            });
+        })
+
+        $(document).on('click', "#caseDeleteBtn", function(){
+            $("#delete_case_id").val($(this).data('case-id'));
+            $("#caseDeleteModal").modal('show');
+        });
+
+        $(document).on("click","#lawyerAssnWithoutfileAssgn", function(){
+            $(".sweet-overlay").show();
+            swal({
+                title: "",
+                text: "Do You want to continue without attaching file?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false
+            }, function () {
+                var bulkid = $("#lawyerAssnWithoutfileAssgn").data("bulk-id");
+                $("#laywerList").find('option').not(':first').remove();
+                var caseId = $("#lawyerAssnWithoutfileAssgn").data("caseno-id");
+                $('#hiddencaseId').val(caseId);
+                $.ajax({
+                    url: '/lawyer/show/for-assignment/',
+                    type: 'POST',
+                    data: { bulkid: bulkid, type: "C" },
+                    success: function (response) {
+                        if(response.lawyerDetails.length != "0")
+                        {
+                        response.lawyerDetails.forEach(function(element,index){
+                            if (element.lawyers[0].panel_member == '1') {
+                                $('#laywerList').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                            }
+                                $(".sweet-overlay").hide();
+                                $(".sweet-alert").hide();
+                                $("#sendLoyerModal").modal('show');
+
+                        });
+                        }
+                        else
+                        {
+                            swal("Warning!", "Lawyer not found in this City", "warning");
+                        }
+                    }
+                });
+            });
+        });
+
+</script> {{/content}}
+

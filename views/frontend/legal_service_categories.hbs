@@ -1,0 +1,51 @@
+<main class="main-content inner-page lk-about">
+    <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">Legal Service Categories</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+    <!--... Inner page Common Banner -->
+    <!--  Legal Service Categories Content Area -->
+    <div class="lk-legal-service-categories-content lk-categories-common m-tb-30">
+        <div class="container">
+            <div class="row">
+                {{#each legal_service}}
+                   <div class="col-md-4 m-b-30 col-sm-6">
+                        <div class="card bg-light">
+                            <div class="card-header text-uppercase">{{this.name}}</div>
+                            <div class="card-body">
+                                <ul class="m-0 p-l-20" type="square">
+                                    {{#each this.legal_service_sub_categories}}
+                                    {{#if_eq this.status "1"}}
+                                        <li style="list-style-type: none;">
+                                            <h5 class="font-weight-bold font-16 sub-ctg">{{this.name}}</h5>
+                                        </li>
+                                    {{else}}
+                                     {{#if_eq this.publish_status "1"}}
+                                    <li style="position:relative;">
+                                        <a href="/legal-service-details/{{this.id}}" class="font-16 m-b-5 d-block">
+                                              {{this.name}}
+                                        </a>
+                                    </li>
+                                    {{/if_eq}}
+                                    {{/if_eq}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            {{/each}}
+            </div>
+        </div>
+    </div>
+    <!--  Legal Service Categories Content Area -->
+</main>

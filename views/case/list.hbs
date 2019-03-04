@@ -1,0 +1,87 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">All Cases Type</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_cases}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_cases}}
+        </div>
+        {{/if}} {{#if delete_add_cases}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_cases}}
+        </div>
+        {{/if}} {{#if edit_cases}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_cases}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>All Cases Type</h5>
+        </div>
+        
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Tags</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each all_case}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.tag}}</p>
+                    </td>
+                    <td>
+                        <a href="/cases/all/{{this.name}}" class="btn btn-complete" title="View All Cases">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#lawyerDeleteBtn", function () {
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    $(document).on("click", "#caseAddBtn", function() {
+        $("#addCaseTypeModal").modal("show");
+    });
+    
+    $(document).on("click", "#btnCaseAdd", function() {
+        var caseType = $("#case_type").val();
+        window.location.href = "/case/add/" + caseType;
+    });
+
+</script> {{/content}}
+<!-- END card -->

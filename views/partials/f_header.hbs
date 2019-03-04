@@ -1,0 +1,189 @@
+<!-- START HEADER -->
+
+<header>
+    <!-- starts Header-Top -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 visible-lg text-left">
+                    <div class="help-desk">
+                        <ul>
+                            <li>
+                                <a href="tel:844-844-50-49">
+                                    <i class="fa fa-tty"></i>Call us: 844-844-50-49</a>
+                            </li>
+                            <li>
+                                <a href="mailto:info@legalkart.com">
+                                    <i class="fa fa-envelope-o"></i>Mail us: info@legalkart.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12 visible-lg text-right">
+                    <div class="header-data-social hidden-xs">
+                        <!-- social -->
+                        <ul class="social">
+                            <li>
+                                <a target="&quot;_blank&quot;" href="https://play.google.com/store/apps/details?id=com.wrctpl.legalkart">
+                                    <i class="fa fa-download"></i>
+                                    Click to downlaod lawyers's app
+                            </li>
+                        </ul>
+                        <!-- social -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ends Header-Top -->
+
+    <!-- starts Header-Bottom -->
+
+    <div class="header-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 full-page">
+                    <div class="menu">
+                        <a href="/" class="logo">
+                            <img src="/frontend/images/logo.png" alt="Logo">
+                        </a>
+                        <ul class="clearfix">
+                            {{#if_eq client_url ""}}
+                            {{else}}
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            {{/if_eq}}
+                            {{!-- <li class="legal-advice-categories">
+                                <a href="/legal-advice-categories">Legal Advice</a>
+                                <ul>
+                                    {{#each practice_area}}
+                                    <li>
+                                        <h6>{{this.name}}</h6>
+                                        <ul>
+                                            {{#each this.sub_pacticeareas}}
+                                            <li>
+                                                <a href="/lawyers-directory/{{this.id}}">{{this.name}}</a>
+                                            </li>
+                                            {{/each}}
+                                        </ul>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </li>
+                             <li class="legal-service-categories">
+                                <a href="/legal-service-categories">Legal Service</a>
+                                <ul>
+                                    {{#each legal_service}}
+                                    <li>
+                                        <h6>{{this.name}}</h6>
+                                        <ul>
+                                            {{#each this.legal_service_sub_categories}}
+                                            {{#if_eq this.status "1"}}
+                                                <li><h5>{{this.name}}</h5></li>
+                                            {{else}}
+                                             {{#if_eq this.publish_status "1"}}
+                                            <li>
+                                                <a href="/legal-service-details/{{this.id}}">{{this.name}}</a>
+                                            </li>
+                                            {{/if_eq}}
+                                            {{/if_eq}}
+                                            {{/each}}
+                                        </ul>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/resources">Resources</a>
+                            </li>
+                            <li>
+                                <a href="/stamppaper">Stamp Paper</a>
+                            </li> --}}
+                            <li>
+                                <a href="/about-us">About</a>
+                            </li>
+                            <li>
+                                <a href="/why-choose-us">Why us</a>
+                            </li>
+                            <li>
+                                <a href="/lawyer-signup">Lawyer Sign up</a>
+                            </li>
+                            <li>
+                                <a href="/terms-condition">Terms &amp; Conditions</a>
+                            </li>
+                            {{!-- <li class="about-dropdown">
+                                <a href="#">About Us</a>
+                                <ul>
+                                    
+                                    
+                                    <li>
+                                        <a href="/in-media">In Media</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Career</a>
+                                    </li>
+                                    
+                                    
+                                </ul>
+                            </li> --}}
+                            {{!--
+                            <li>
+                                <a href="#">Free Consultaion</a>
+                            </li> --}}
+                            {{#if user}}
+                            <li  class="about-dropdown">
+
+                                <a href="#">{{user.first_name}}
+                                <span class="frontend-auth-header-img">
+                                    <img src="{{user.avatar}}" alt="" data-src="{{user.avatar}}" data-src-retina="{{user.avatar}}" width="32" height="32">
+                                </span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        {{#if_eq user.login_first_status "1"}}
+                                            <a href="/dashboard">Dashboard</a>
+                                        {{else}}
+                                            <a href="/edit-lawyer-profile">Dashboard</a>
+                                        {{/if_eq}}
+                                    </li>
+                                    <li>
+                                        <a href="/site-profile">Profile</a>
+                                    </li>
+                                     {{#if_eq user.role_id "2"}}
+                                    <li>
+                                        <a href="edit-lawyer-profile">Edit Profile</a>
+                                    </li>
+                                    {{else}}
+                                    <li>
+                                        <a href="/edit-site-profile">Edit Profile</a>
+                                    </li>
+                                    {{/if_eq}}
+                                    <li>
+                                        <a href="/change-password">Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="/logout">Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {{!-- {{else}}
+                            <li>
+                                <a href="/admin">Login</a>
+                            </li> --}}
+                            {{/if}}
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ends Header-Bottom -->
+</header>
+
+<!-- Ends Header -->

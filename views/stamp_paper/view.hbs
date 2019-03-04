@@ -1,0 +1,146 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/stamp-papers/list">Stamp Papers</a>
+                </li>
+                <li class="breadcrumb-item active">View Stamp Paper</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    <div class="pull-left">
+                        <h5>View Stamp Paper</h5>
+                    </div>
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld" href="#">Stamp Paper Detail</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2FollowUs">Shipping Detail</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2Inspire">Delivery Status</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Customer Name :</strong> {{stamp_paper_detail.user.first_name}}
+                                                            {{stamp_paper_detail.user.last_name}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Customer Email Address :</strong> {{stamp_paper_detail.user.email}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>State :</strong> {{stamp_paper_detail.state.name}}</li>
+                                                        <li>
+                                                            <strong>Name of First Party :</strong> {{stamp_paper_detail.first_party}}</li>
+                                                        <li>
+                                                            <strong>Name of Second Party :</strong> {{stamp_paper_detail.second_party}}</li>
+                                                        <li>
+                                                            <strong>Name of Purchaser :</strong> {{stamp_paper_detail.purchaser}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Stamp Duty paid by :</strong> {{#if_eq stamp_paper_detail.stampduty_paid_by
+                                                            "first_party_paid"}}First Party{{/if_eq}} {{#if_eq stamp_paper_detail.stampduty_paid_by
+                                                            "second_party_paid"}}Second Party{{/if_eq}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Stamp Paper Value :</strong> {{stamp_paper_detail.stamp_paper_value}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>No. of e Stamp Paper :</strong> {{stamp_paper_detail.no_of_stamp_paper}}</li>
+                                                        <li>
+                                                            <strong>Document Description :</strong> {{stamp_paper_detail.document_description}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Property Description :</strong> {{stamp_paper_detail.property_description}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2FollowUs">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Customer Full Name :</strong> {{stamp_paper_detail.shipping_customer_full_name}}</li>
+                                                        <li>
+                                                            <strong>Telephone :</strong> {{stamp_paper_detail.shipping_telephone_no}}</li>
+                                                        <li>
+                                                            <strong>Email ID :</strong> {{stamp_paper_detail.shipping_email_id}}</li>
+                                                        <li>
+                                                            <strong>State :</strong> {{stamp_paper_detail.state.name}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Shipping Address :</strong> {{stamp_paper_detail.shipping_address}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>City :</strong> {{stamp_paper_detail.shipping_city}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Pin Code :</strong> {{stamp_paper_detail.shipping_pincode}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2Inspire">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Delivery Status :</strong> {{#if_eq stamp_paper_detail.status
+                                                            "0"}}Pending{{/if_eq}} {{#if_eq stamp_paper_detail.status "1"}}Delivered{{/if_eq}}
+                                                            {{#if_eq stamp_paper_detail.status "2"}}Rejected{{/if_eq}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>

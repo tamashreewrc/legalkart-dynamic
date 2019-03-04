@@ -1,0 +1,705 @@
+<!-- BEGIN SIDEBPANEL-->
+<nav class="page-sidebar" data-pages="sidebar">
+    <!-- BEGIN SIDEBAR MENU TOP TRAY CONTENT-->
+    <!-- END SIDEBAR MENU TOP TRAY CONTENT-->
+    <!-- BEGIN SIDEBAR MENU HEADER-->
+    <div class="sidebar-header">
+        <img src="/assets/img/LEGAL_KART_LOGO.jpg" alt="logo" class="brand" data-src="/assets/img/LEGAL_KART_LOGO.jpg" data-src-retina="/assets/img/LEGAL_KART_LOGO.jpg"
+            width="200" height="40">
+    </div>
+    <!-- END SIDEBAR MENU HEADER-->
+    <!-- START SIDEBAR MENU -->
+    <div class="sidebar-menu">
+        <!-- BEGIN SIDEBAR MENU ITEMS-->
+        {{#if_eq user.role_id "1"}}
+        <ul class="menu-items">
+
+            <li {{#if_eq client_url "dashboard" }} class="m-t-30 active" {{else}} class="m-t-30" {{/if_eq}}>
+                <a href="/dashboard" class="detailed">
+                    <span class="title">Dashboard</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-tachometer"></i>
+                </span>
+            </li>
+
+            <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}} {{#if_eq client_url "legalcart-mact" }} class="active"
+                {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}}
+                {{#if_eq client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">My Cases</span>
+                    <span {{#if_eq client_url "legalcart-challan" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-mact" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-superdari" }} class="arrow open active" {{else}} class="arrow" {{/if_eq}}></span>
+                </a>
+
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-case">Cases</a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-challan" class="detailed">
+                            <span class="title">Challan {{new_challan_count}}</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-superdari" class="detailed">
+                            <span class="title">Superdari {{new_superdari_count}}</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-mact" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-mact" class="detailed">
+                            <span class="title">MACT {{new_mact_count}}</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+
+            <li {{#if_eq client_url "lawyers" }} class="active" {{/if_eq}}>
+                <a href="/lawyers" class="detailed">
+                    <span class="title">Lawyers</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-gavel"></i>
+                </span>
+            </li>
+
+            {{!-- <li {{#if_eq client_url "dynamic-form-builder" }} class="active" {{/if_eq}}>
+                <a href="/dynamic-form-builder" class="detailed">
+                    <span class="title">Form Builder</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li> --}}
+
+            <li {{#if_eq client_url "ligalcart-gst" }} class="open active" {{/if_eq}} {{#if_eq client_url "rates" }} class="open active"
+                {{/if_eq}} {{#if_eq client_url "jurisdiction" }} class="open active" {{/if_eq}} {{#if_eq client_url
+                "practiceArea" }} class="open active" {{/if_eq}} {{#if_eq client_url "court" }} class="open active" {{/if_eq}} {{#if_eq client_url
+                "legal-service" }} class="open active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">Setup</span>
+                    <span {{#if_eq client_url "rates" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "jurisdiction" }} class="arrow open active"
+                        {{#if_eq client_url "legalkart-gst" }} class="arrow open active" {{/if_eq}} {{/if_eq}}
+                        {{#if_eq client_url "court" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legal-service" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "practiceArea" }} class="arrow open active" {{else}} class="arrow"
+                        {{/if_eq}}>
+                    </span>
+                    {{!-- {{#if_eq client_url "jurisdiction" }}
+                    <span class="arrow open active"></span> {{else}}
+                    <span class="arrow"></span> {{/if_eq}} {{#if_eq client_url "practiceArea" }}
+                    <span class="arrow open active"></span> {{else}}
+                    <span class="arrow"></span> {{/if_eq}} --}}
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-cog"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "practiceArea" }} class="active" {{/if_eq}}>
+                        <a href="/practiceArea" class="detailed">
+                            <span class="title">Practice Area</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-gavel"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legal-service" }} class="active" {{/if_eq}}>
+                        <a href="/legal-service" class="detailed">
+                            <span class="title">Legal Service</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-gavel"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "jurisdiction" }} class="active" {{/if_eq}}>
+                        <a href="/jurisdiction" class="detailed">
+                            <span class="title">Jurisdiction</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-balance-scale"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "court" }} class="active" {{/if_eq}}>
+                        <a href="/court" class="detailed">
+                            <span class="title">Court</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "rates" }} class="active" {{/if_eq}}>
+                        <a href="/rates" class="detailed">
+                            <span class="title">Rate</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-inr" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalkart-gst" }} class="active" {{/if_eq}}>
+                        <a href="/legalkart-gst" class="detailed">
+                            <span class="title">GST</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-percent" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+
+            <li {{#if_eq client_url "legaljart_faq" }} class="open active" {{/if_eq}} {{#if_eq client_url "legal-service-content" }}
+                class="open active" {{/if_eq}} {{#if_eq client_url "about-us-content" }} class="open active" {{/if_eq}} {{#if_eq
+                client_url "why-choose-us-content" }} class="arrow open active" {{/if_eq}}>
+                <a href="javascript:;">
+                        <span class="title">CMS</span>
+                        
+                        <span {{#if_eq client_url "legal-service-content" }} class="arrow open active" {{/if_eq}} {{#if_eq client_url "about-us-content" }} class="arrow open active" {{/if_eq}} {{#if_eq client_url "why-choose-us-content" }} class="arrow open active" {{/if_eq}}
+                         {{#if_eq client_url "legaljart_faq" }} class="arrow open active" {{else}}  class="arrow" {{/if_eq}}
+                        ></span>
+                    </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "about-us-content" }} class="open active" {{/if_eq}}>
+                        <a href="javascript:;">
+                            <span class="title">Pages</span>
+                            <span {{#if_eq client_url "about-us-content" }} class="arrow open active" {{else}}  class="arrow" {{/if_eq}}
+                        ></span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+
+                        <ul class="sub-menu">
+                            <li {{#if_eq client_url "about-us-content" }} class="active" {{/if_eq}}>
+                                <a href="/about-us-content" class="detailed">
+                                <span class="title">About Us</span>
+                            </a>
+                                <span class="icon-thumbnail">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                            </span>
+                            </li>
+                            <li {{#if_eq client_url "why-choose-us-content" }} class="active" {{/if_eq}}>
+                                <a href="/why-choose-us-content" class="detailed">
+                                <span class="title">Why Choose Us</span>
+                            </a>
+                                <span class="icon-thumbnail">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                            </span>
+                            </li>
+                        </ul>
+                    </li>
+
+            </li>
+
+            <li {{#if_eq client_url "legal-service-content" }} class="active" {{/if_eq}}>
+                <a href="/legal-service-content" class="detailed">
+                    <span class="title">Legal Service Content</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                </span>
+            </li>
+
+            <li {{#if_eq client_url "legaljart_faq" }} class="active" {{/if_eq}}>
+                <a href="/legaljart_faq" class="detailed">
+                    <span class="title">FAQ</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-question" aria-hidden="true"></i>
+                </span>
+            </li>
+
+            </ul>
+
+            {{!-- </li> --}}
+
+            <li {{#if_eq client_url "all-enquiry" }} class="active" {{/if_eq}}>
+                <a href="/all-enquiry" class="detailed">
+                        <span class="title">Enquiries</span>
+                    </a>
+                <span class="icon-thumbnail">
+                        <i class="fa fa-handshake-o"></i>
+                    </span>
+            </li>
+            <li {{#if_eq client_url "free-legal-advices" }} class="active" {{/if_eq}}>
+                <a href="/free-legal-advices" class="detailed">
+                    <span class="title">Free Legal Advices</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-balance-scale"></i>
+                </span>
+            </li>
+            <li {{#if_eq client_url "admin-resources" }} class="active" {{/if_eq}}>
+                <a href="/admin-resources" class="detailed">
+                    <span class="title">Resources</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-book"></i>
+                </span>
+            </li>
+
+            {{!-- <li {{#if_eq client_url "lawyers" }} class="active" {{/if_eq}}>
+                <a href="/lawyers" class="detailed">
+                    <span class="title">Lawyers</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-gavel"></i>
+                </span>
+            </li> --}}
+
+            <li {{#if_eq client_url "employee" }} class="active" {{/if_eq}}>
+                <a href="/employees" class="detailed">
+                    <span class="title">Employees</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-users"></i>
+                </span>
+            </li>
+            <li {{#if_eq client_url "employee" }} class="active" {{/if_eq}}>
+                <a href="/customer" class="detailed">
+                    <span class="title">Customer</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-user"></i>
+                </span>
+            </li>
+
+            {{!-- <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}{{#if_eq client_url "legalcart-mact" }} class="active"
+                {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}} {{#if_eq client_url
+                "legalcart-superdari" }} class="active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">My Cases</span>
+                    <span {{#if_eq client_url "legalcart-challan" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-mact" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-superdari" }} class="arrow open active" {{else}} class="arrow" {{/if_eq}}></span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-case">All Cases</a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-challan" class="detailed">
+                            <span class="title">All Challan</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-superdari" class="detailed">
+                            <span class="title">All Superdari</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-mact" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-mact" class="detailed">
+                            <span class="title">All MACT</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </ul>
+            </li> --}}
+
+            <li {{#if_eq client_url "stamp-papers" }} class="active" {{/if_eq}}>
+                <a href="/stamp-papers/list" class="detailed">
+                    <span class="title">Stamp Paper</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-paperclip"></i>
+                </span>
+            </li>
+            <li {{#if_eq client_url "invoice" }} class="active" {{/if_eq}}>
+                <a href="/invoice" class="detailed">
+                    <span class="title">Invoices</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-file"></i>
+                </span>
+            </li>
+
+        </ul>
+        {{/if_eq}} {{#if_eq user.role_id "2"}}
+        <ul class="menu-items">
+            {{#if_eq user.login_first_status "1"}}
+            <li {{#if_eq client_url "dashboard" }} class="m-t-30 active" {{else}} class="m-t-30" {{/if_eq}}>
+                <a href="/dashboard" class="detailed">
+                    <span class="title">Dashboard</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li>
+
+            <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}}
+                {{#if_eq client_url "assign-superdari-all" }} class="active" {{/if_eq}}
+                {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}}
+                {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">My Cases</span>
+                    
+                    <span {{#if_eq client_url "assign-challan-all" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "assign-superdari-all" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "assign-mact-all" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "assign-case-all" }} class="arrow open active" {{else}} class="arrow" {{/if_eq}}>
+                    </span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-case-all">Cases</a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+                    </li>
+
+                    <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-challan-all" class="detailed">
+                            <span class="title">Challan</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+
+                    <li {{#if_eq client_url "assign-superdari-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-superdari-all" class="detailed">
+                            <span class="title">Superdari</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+
+                    <li {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-mact-all" class="detailed">
+                            <span class="title">MACT</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </li>
+            
+            <li {{#if_eq client_url "case-invitation" }} class="active" {{/if_eq}}>
+                <a href="/case-invitation" class="detailed">
+                    <span class="title">New Case Invitation</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-user"></i>
+                </span>
+            </li>
+
+            <li {{#if_eq client_url "all-enquiry" }} class="active" {{/if_eq}}>
+                <a href="/site-profile" class="detailed">
+                    <span class="title">View Profile</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-user"></i> 
+                </span>
+            </li>
+            <li {{#if_eq client_url "all-enquiry" }} class="active" {{/if_eq}}>
+                <a href="/all-enquiry" class="detailed">
+                    <span class="title">Enquiries</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-handshake-o"></i>
+                </span>
+            </li>
+
+            {{!--
+            <li {{#if_eq client_url "my-caces" }} class="active" {{/if_eq}}>
+                <a href="/my-caces" class="detailed">
+                    <span class="title">My Cases//<span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                </span>
+            </li> --}}
+
+            {{!-- <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}}
+                {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}}
+                {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">My Cases</span>
+                    
+                    <span {{#if_eq client_url "assign-challan-all" }} class="arrow open active" {{/if_eq}}{{#if_eq client_url "assign-mact-all" }} class="arrow open active" {{/if_eq}} {{#if_eq client_url
+                        "assign-case-all" }} class="arrow open active" {{else}} class="arrow" {{/if_eq}}></span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-case-all">All Cases</a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-challan-all" class="detailed">
+                            <span class="title">All Challan</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "assign-superdari-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-superdari-all" class="detailed">
+                            <span class="title">All Superdari</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}}>
+                        <a href="/assign-mact-all" class="detailed">
+                            <span class="title">All MACT</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </ul>
+            </li> --}}
+
+
+            <li {{#if_eq client_url "admin-resources" }} class="active" {{/if_eq}}>
+                <a href="/admin-resources" class="detailed">
+                    <span class="title">Resources</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-th"></i>
+                </span>
+            </li>
+            <li {{#if_eq client_url "invoice" }} class="active" {{/if_eq}}>
+                <a href="/invoice" class="detailed">
+                    <span class="title">Invoices</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-file"></i>
+                </span>
+            </li>
+            {{/if_eq}}
+        </ul>
+        {{/if_eq}} {{#if_eq user.role_id "3"}} {{#if_eq user.sub_role "C"}}
+        <ul class="menu-items">
+            <li {{#if_eq client_url "dashboard" }} class="m-t-30 active" {{else}} class="m-t-30" {{/if_eq}}>
+                <a href="/dashboard" class="detailed">
+                    <span class="title">Dashboard</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li>
+
+            {{!--
+            <li {{#if_eq client_url "my-cases" }} class="active" {{/if_eq}}>
+                <a href="/my-cases" class="detailed">
+                    <span class="title">My Cases//</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-gavel"></i>
+                </span>
+            </li> --}}
+            <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active"
+                {{/if_eq}} {{#if_eq client_url "legalcart-mact" }} class="active" {{/if_eq}} {{#if_eq client_url
+                "legalcart-superdari" }} class="active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">My Cases</span>
+                    <span {{#if_eq client_url "legalcart-challan" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-mact" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-superdari" }} class="arrow open active" {{else}} class="arrow" {{/if_eq}}></span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-case">Cases</a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-challan" class="detailed">
+                            <span class="title">Challan</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-superdari" class="detailed">
+                            <span class="title">Superdari</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-mact" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-mact" class="detailed">
+                            <span class="title">MACT</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+
+            <li {{#if_eq client_url "manager" }} class="active" {{/if_eq}}>
+                <a href="/manager" class="detailed">
+                    <span class="title">Cities</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-gavel"></i>
+                </span>
+            </li>
+            <li {{#if_eq client_url "invoice" }} class="active" {{/if_eq}}>
+                <a href="/invoice" class="detailed">
+                    <span class="title">Invoices</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-file"></i>
+                </span>
+            </li>
+
+        </ul>
+        {{/if_eq}} {{#if_eq user.sub_role "R"}}
+        <ul class="menu-items">
+            <li {{#if_eq client_url "dashboard" }} class="m-t-30 active" {{else}} class="m-t-30" {{/if_eq}}>
+                <a href="/dashboard" class="detailed">
+                    <span class="title">Dashboard</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li>
+            <li {{#if_eq client_url "stamp-paper" }} class="active" {{/if_eq}}>
+                <a href="/stamp-paper-all-list" class="detailed">
+                    <span class="title">Stamp Paper</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-paperclip"></i>
+                </span>
+            </li>
+        </ul>
+        {{/if_eq}} {{/if_eq}} {{#if_eq user.role_id "4"}}
+        <ul class="menu-items">
+            <li {{#if_eq client_url "dashboard" }} class="m-t-30 active" {{else}} class="m-t-30" {{/if_eq}}>
+                <a href="/dashboard" class="detailed">
+                    <span class="title">Dashboard</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li>
+        </ul>
+        {{/if_eq}} {{#if_eq user.role_id "5"}}
+        <ul class="menu-items">
+            <li {{#if_eq client_url "dashboard" }} class="m-t-30 active" {{else}} class="m-t-30" {{/if_eq}}>
+                <a href="/dashboard" class="detailed">
+                    <span class="title">Dashboard</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li>
+
+            {{!--
+            <li {{#if_eq client_url "my-cases" }} class="active" {{/if_eq}}>
+                <a href="/my-cases" class="detailed">
+                    <span class="title">My Cases/</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-gavel"></i>
+                </span>
+            </li> --}}
+
+            <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active"
+                {{/if_eq}} {{#if_eq client_url "legalcart-mact" }} class="active" {{/if_eq}} {{#if_eq client_url
+                "legalcart-superdari" }} class="active" {{/if_eq}}>
+                <a href="javascript:;">
+                    <span class="title">My Cases</span>
+                    <span {{#if_eq client_url "legalcart-challan" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-mact" }} class="arrow open active" {{/if_eq}}
+                        {{#if_eq client_url "legalcart-superdari" }} class="arrow open active" {{else}} class="arrow" {{/if_eq}}></span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                    <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-case">Cases</a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-challan" class="detailed">
+                            <span class="title">Challan</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-superdari" class="detailed">
+                            <span class="title">Superdari</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                    <li {{#if_eq client_url "legalcart-mact" }} class="active" {{/if_eq}}>
+                        <a href="/legalcart-mact" class="detailed">
+                            <span class="title">MACT</span>
+                        </a>
+                        <span class="icon-thumbnail">
+                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        {{/if_eq}}
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- END SIDEBAR MENU -->
+</nav>
+<!-- END SIDEBAR -->

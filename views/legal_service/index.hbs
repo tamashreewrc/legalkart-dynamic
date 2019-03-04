@@ -1,0 +1,185 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Legal Service</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent lk-categories-common">
+    <div class="card-header ">
+        {{#if success_add_legal_service_category}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_legal_service_category}}
+        </div>
+        {{/if}} {{#if success_del_legal_service_category}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_del_legal_service_category}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Legal Service</h5>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary btn-cons m-b-10" id="publishLegalServiceCategoryBtn"><i class="fa fa-upload"></i> Click to Publish</button>
+            <a href="/legal-service/add" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-plus"></i> Add Legal Service</a>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+        {{!-- <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Name</th>
+                    <th>Remarks</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each jurisdiction}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.remarks}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{dateFormat this.cratedAt "DD-MM-YYYY"}}</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-complete" type="button" id="viewJurisdiction" title="View" data-jurisdiction-id="{{this.id}}" data-jurisdiction-name="{{this.name}}"
+                            data-jurisdiction-remarks="{{this.remarks}}">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button class="btn btn-info" type="button" title="Edit" id="editJurisdiction" data-jurisdiction-id="{{this.id}}" data-jurisdiction-name="{{this.name}}"
+                            data-jurisdiction-remarks="{{this.remarks}}">
+                            <i class="fa fa-paste"></i>
+                        </button>
+                        <a href="/jurisdiction/delete/{{this.id}}" class="btn btn-danger" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table> --}}
+        <div class="row">
+            {{#each legal_service}}
+            <div class="col-md-4 m-b-30">
+                <div class="card bg-light">
+                    <div class="card-header text-uppercase">{{this.name}}</div>
+                    <div class="card-body">
+                        <ul class="m-0 p-l-20" type="square">
+                            {{#each this.legal_service_sub_categories}}
+                             {{#if_eq this.status "1"}}
+                               <li style="list-style-type: none;">
+                                   <h5 class="font-weight-bold font-16 sub-ctg">{{this.name}}</h5>
+                                </li>
+                             {{else}}
+                            <li style="position:relative;">
+                                <input type="checkbox" name="publish_status" class="publish_status" value="{{this.id}}" {{#if_eq this.publish_status "1"}} checked {{/if_eq}} title="publish or not">
+                                {{this.name}}
+                                <a href="javascript:void(0);" class="font-16 m-b-5 d-block" data-legalservice-id="{{this.id}}" id="legalServiceDelBtn"><i class="fa fa-trash legalServiceIndexi"></i></a>
+                            </li>
+                            {{/if_eq}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="legalServiceDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Lawyer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/legal-service-categry/delete" method="post">
+                <input type="hidden" name="legal_service_id" id="legal_service_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this Legal service?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script>
+$(document).on("click","#legalServiceDelBtn", function(){
+    var legal_service_id = $(this).data("legalservice-id");
+    $("#legal_service_id").val(legal_service_id);
+    $("#legalServiceDeleteModal").modal('show');
+});
+
+$(document).on("click", "#publishLegalServiceCategoryBtn", function(){
+    var check_publish = [];
+    $(".publish_status").each(function () {
+        if ($(this).is(':checked')) {
+            check_publish.push($(this).val())
+        }
+    });
+    if(check_publish.length == 0)
+    {
+        swal("Warning!","Please select one or more category","warning");
+    }
+    else
+    {
+        $.ajax({
+            type:"POST",
+            url:"/legal-service-category/publish-status",
+            data: {
+                check_publish: check_publish
+            },
+            success:function(response)
+            {
+                if(response.success == true)
+                {
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+            },
+            error:function(xhr)
+            {
+
+            }
+        });
+    }
+});
+</script> {{/content}}

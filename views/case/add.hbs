@@ -1,0 +1,504 @@
+{{#content "style" mode="prepend"}}
+<link href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" media="screen">
+{{/content}}
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/my-cases">Case</a>
+                </li>
+                <li class="breadcrumb-item active">Add Case</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+<!-- START CONTAINER FLUID -->
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-title">
+                    {{#if duplicate_email_lawyer}}
+                    <div class="alert alert-danger">
+                        <strong>Error! </strong>{{duplicate_email_lawyer}}
+                    </div>
+                    {{/if}}
+                    <div class="pull-left">
+                        <h5>
+                            Add {{case_type.tag}}
+                        </h5>
+                    </div>
+                    <div class="pull-right">
+                        {{#if_eq case_type.name "CT1"}}
+                        <a href="/case_excel_format/caseType_1.xlsx" download class="btn btn-primary btn-cons m-t-15"
+                            id="caseAddBtn">
+                            <i class="fa fa-download"></i> Download Excel Template
+                        </a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary btn-cons m-t-15">
+                            <i class="fa fa-upload"></i> Upload Excel
+                        </a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#importFile" class="btn btn-primary btn-cons m-t-15">
+                            <i class="fa fa-upload"></i> Upload File
+                        </a>
+                        {{/if_eq}}
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{#if_eq case_type.name "CT1"}}
+                    <form role="form" id="addCasesFrm" method="POST" action="/case/add">
+                        <div class="addRowCaseform1">
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                            <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                            <div class="row well p-2 m-b-25">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Cab No.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="cab_no[]" id="cab_no" placeholder="Enter cab No.">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date Of Assignment</label>
+                                        <span class="requiredErr">*</span>
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control DatePickers" name="date_of_assign[]"
+                                                id="date_of_assign" placeholder="Select Date of Assignment">
+                                            <div class="input-group-append ">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Impound Status</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="inpound_status[]" id="inpound_status"
+                                            placeholder="Enter Impound Status">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Name of PS</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="name_of_ps[]" id="name_of_ps"
+                                            placeholder="Enter Name of PS">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Judge Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="judge_name[]" id="judge_name"
+                                            placeholder="Enter Judge Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Court</label>
+                                        <span class="requiredErr">*</span>
+                                        <select class="full-width" data-init-plugin="select2" name="court[]" id="court">
+                                            <option value="">Select Court</option>
+                                            {{#each court}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Driver Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="driver_name[]" id="driver_name"
+                                            placeholder="Enter Driver Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Driver Mobile No.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control number_validator" name="driver_mobile_no[]"
+                                            id="driver_mobile_no" placeholder="Enter Driver Mobile Number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Advocate Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="advocate[]" id="advocate"
+                                            placeholder="Enter Advocate Name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center m-auto">
+                            <button class="btn btn-primary btn-cons m-t-10" type="submit">
+                                <i class="fa fa-plus"></i> Add Case</button>
+                            <button class="btn btn-primary btn-cons m-t-10" type="button" id="addCaseFormRowBtn">
+                                <i class="fa fa-plus"></i> Add Row</button>
+                        </div>
+                    </form>
+                    {{else}}
+                        <form role="form" id="addCasesTypeFrm" method="POST" action="/case/type/add" enctype="multipart/form-data" >
+                        <div class="addRowCaseform1">
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                            <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                            <div class="row well p-2 m-b-25">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Case No.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="case_no" id="case_no" placeholder="Enter cab No.">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Case Type</label>
+                                        <span class="requiredErr">*</span>
+                                        <select class="full-width" data-init-plugin="select2" name="case_type" id="case_type">
+                                            <option value="">Select Court</option>
+                                            {{#each rateList}}
+                                            <option value="{{this.id}}">{{this.type_of_case}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Case File</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="file" class="form-control" name="case_file" id="case_file" placeholder="Enter cab No.">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Case Description</label>
+                                        <span class="requiredErr">*</span>
+                                        <textarea type="text" class="form-control" name="case_description" id="case_description"
+                                            placeholder="Enter Impound Status"> </textarea>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="text-center m-auto">
+                            <button class="btn btn-primary btn-cons m-t-10" type="submit">
+                                <i class="fa fa-plus"></i> Add Case</button>
+                        </div>
+                    </form>
+                    {{/if_eq}}
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>
+<div class="addRowCaseform1Row" style="display:none;">
+    <div class="row well p-2 m-b-25" style="position:relative;">
+        <button id="caseRowRemoveBtn" class="btn btn-danger removeCaseBtn" type="button">
+            <i class="fa fa-close"></i>
+        </button>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Cab No.</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control" name="cab_no[]" id="cab_no" placeholder="Enter cab No.">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Date Of Assignment</label>
+                <span class="requiredErr">*</span>
+                <div class="input-group date">
+                    <input type="text" class="form-control DatePickers" name="date_of_assign[]" id="date_of_assign"
+                        placeholder="Select Date of Assignment">
+                    <div class="input-group-append ">
+                        <span class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Impound Status</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control" name="inpound_status[]" id="inpound_status" placeholder="Enter Impound Status">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Name of PS</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control" name="name_of_ps[]" id="name_of_ps" placeholder="Enter Name of PS">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Judge Name</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control" name="judge_name[]" id="judge_name" placeholder="Enter Judge Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Court</label>
+                <span class="requiredErr">*</span>
+                <select class="full-width mmmm" name="court[]" id="court">
+                    <option value="">Select Court</option>
+                    {{#each court}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Driver Name</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control" name="driver_name[]" id="driver_name" placeholder="Enter Driver Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Driver Mobile No.</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control number_validators" name="driver_mobile_no[]" id="driver_mobile_no"
+                    placeholder="Enter Driver Mobile Number">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Advocate Name</label>
+                <span class="requiredErr">*</span>
+                <input type="text" class="form-control" name="advocate[]" id="advocate" placeholder="Enter Advocate Name">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" id="UploadExcelType1Frm" method="POST" action="/upload-case-excel" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                    <div class="form-group">
+                        <label>Upload Excel</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_1" id="file_name_type_1" />
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnUploadExcelType1">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" id="UploadFileType1Frm" method="POST" action="/upload-case-files" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" value="{{case_type.id}}">
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_2" id="file_name_type_2"
+                            multiple />
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnUploadExcelType1">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-inputmask/jquery.inputmask.min.js"></script>
+<script>
+    function baba() {
+        $(".DatePickers").datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: '+0d',
+            autoclose: true
+        });
+        $(".number_validators").inputmask("mask", {
+            "mask": "9999999999"
+        });
+    }
+    function xxx() {
+        $(".mmmm").hide();
+        $(".mmmm").show();
+
+    }
+
+    $(document).ready(function () {
+        baba();
+        $("#UploadExcelType1Frm").validate({
+            rules: {
+                file_name_type_1: {
+                    required: true,
+                    extension: "xls|xlsx"
+                }
+
+            },
+            messages:
+            {
+                file_name_type_1: {
+                    required: "Please choose a file",
+                    extension: "only xlsx or xls file"
+                },
+                file_name_type_2: {
+                    required: "Please choose a file",
+                }
+            }
+        });
+
+        $('#UploadFileType1Frm').validate({
+            rules: {
+                file_name_type_2: {
+                    required: true,
+                },
+                messages: {
+                    file_name_type_2: {
+                        required: "Please choose a file",
+                    }
+                }
+            }
+        });
+
+        $("#addCasesFrm").validate({
+            rules: {
+                cab_no: {
+                    required: true
+                },
+                inpound_status: {
+                    required: true
+                },
+                name_of_ps: {
+                    required: true
+                },
+                judge_name: {
+                    required: true
+                },
+                court: {
+                    required: true
+                },
+                driver_name: {
+                    required: true
+                },
+                driver_mobile_no: {
+                    required: true
+                },
+                advocate: {
+                    required: true
+                }
+            },
+            messages: {
+                cab_no: {
+                    required: "Cab no. can't be blank"
+                },
+                inpound_status: {
+                    required: "Impound Status can't be blank"
+                },
+                name_of_ps: {
+                    required: "Name of PS can't be blank"
+                },
+                judge_name: {
+                    required: "Judge name can't be blank"
+                },
+                court: {
+                    required: "Please select court name"
+                },
+                driver_name: {
+                    required: "Driver name can't be blank"
+                },
+                driver_mobile_no: {
+                    required: "Driver mobile no can't be blank"
+                },
+                advocate: {
+                    required: "Advocate can't be blank"
+                }
+            }
+        });
+
+        $("#addCasesTypeFrm").validate({
+            rules: {
+                case_no: {
+                    required: true
+                },
+                case_type: {
+                    required: true
+                },
+                case_file: {
+                    required: true
+                },
+                judge_name: {
+                    required: true
+                }
+            },
+            messages: {
+                case_no: {
+                    required: "Case no. can't be blank"
+                },
+                case_type: {
+                    required: "Case type can't be blank"
+                },
+                case_file: {
+                    required: "Case file can't be blank"
+                },
+                judge_name: {
+                    required: "Judge name can't be blank"
+                }
+            }
+        });
+
+        $(document).on("click", "#addCaseFormRowBtn", function () {
+            $(".addRowCaseform1").append($(".addRowCaseform1Row").html());
+            baba();
+            xxx();
+
+        });
+    });
+    $(document).on('click', "#caseRowRemoveBtn", function (e) {
+        $(this).closest(".row").remove();
+    });
+
+</script> {{/content}}

@@ -1,0 +1,1419 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{#if_eq user.role_id "2"}}
+                        {{#if_eq caseType.id "6"}}
+                        <a href="/assign-superdari-all">All {{caseType.type_of_case}} Lists</a>
+                        {{/if_eq}}
+                        {{#if_eq caseType.id "7"}}
+                        <a href="/assign-challan-all">All {{caseType.type_of_case}} Lists</a>
+                        {{/if_eq}}
+                        {{#if_eq caseType.id "2"}}
+                        <a href="/assign-mact-all">All {{caseType.type_of_case}} Lists</a>
+                        {{/if_eq}}
+                    {{else}}
+                        {{#if_eq caseType.id "6"}}
+                        <a href="/legalcart-superdari">All {{caseType.type_of_case}} Lists</a>
+                        {{/if_eq}}
+                        {{#if_eq caseType.id "7"}}
+                        <a href="/legalcart-challan">All {{caseType.type_of_case}} Lists</a>
+                        {{/if_eq}}
+                        {{#if_eq caseType.id "2"}}
+                        <a href="/legalcart-mact">All {{caseType.type_of_case}} Lists</a>
+                        {{/if_eq}}
+                    {{/if_eq}}
+                </li>
+                <li class="breadcrumb-item">
+                    {{#if_eq allCaseDetails.case_no '0'}}
+                    <a href="javascript:void(0);">{{allCaseDetails.cab_no}}</a>
+                    {{else}}
+                    <a href="javascript:void(0);">{{allCaseDetails.case_no}}</a>
+                    {{/if_eq}}
+                </li>
+                <li class="breadcrumb-item active">Conversation</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- Case Conversation -->
+<div class="lka-case-conversation">
+    <div class="container-fluid container-fixed-lg">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-transparent">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h5>
+                                {{#if_eq allCaseDetails.case_no '0'}}
+                                {{allCaseDetails.cab_no}}
+                                {{else}}
+                                {{allCaseDetails.case_no}}
+                                {{/if_eq}}
+                            </h5>
+                            
+                        </div>
+                        <div class="pull-right">
+                            {{#if_eq allCaseDetails.status "1"}}
+                            {{#if_eq allCaseDetails.closeing_status "1"}}
+                            <button class="btn btn-primary" data-case-id="{{allCaseDetails.id}}" disabled>Case Closed</button> 
+                            {{else}}
+                            {{#if_eq user.role_id '1'}}
+                            <button class="btn btn-primary" data-case-id="{{allCaseDetails.id}}" id="caseClose" >Click To Close</button> 
+                            {{/if_eq}}
+                            {{/if_eq}}
+                             {{else}}
+
+                            {{#if_eq allCaseDetails.status "2"}}
+
+                                {{#if_eq allCaseDetails.closeing_status "1"}}
+                                    <button class="btn btn-primary" data-case-id="{{allCaseDetails.id}}"  disabled>Case Closed</button> 
+                                {{else}}
+                                    {{#if_eq user.role_id '1'}}
+                                    <button class="btn btn-primary" data-case-id="{{allCaseDetails.id}}" id="caseClose" >Click To Close</button> 
+                                    {{/if_eq}}
+                                {{/if_eq}}
+
+                            {{/if_eq}}
+
+                            {{/if_eq}}
+                            {{#if_eq user.role_id "2"}}
+                                {{#if_eq allCaseDetails.status "3"}}
+                                <a href="javascript:void(0);" id="changeCaseStatus" data-case-id="{{allCaseDetails.id}}" data-status="{{allCaseDetails.status}}" class="btn btn-primary"
+                                        title="Change Status">
+                                        <i class="fa fa-exchange"></i> Change Status
+                                    </a>
+                                    
+                                <button type="button" id="addFeesByLawyerForInvoice" data-case-id="{{allCaseDetails.id}}" class="btn btn-primary"
+                                        title="Change Status" {{#if_eq add_fee_details "2"}} disabled {{/if_eq}}>
+                                        <i class="fa fa-money"></i> Add Fees
+                                    </button>
+                                {{!-- For disabled click to close if not add file --}}
+                                <button type="button" id="caseCloseBylawyer" data-case-id="{{allCaseDetails.id}}" class="btn btn-primary" title="Change Status"
+                                    {{#if_eq add_fee_details "1"}} disabled {{/if_eq}}>
+                                    <i class="fa fa-check"></i> Click to Close
+                                </button>
+                                 {{!-- <button type="button" id="caseCloseBylawyer" data-case-id="{{allCaseDetails.id}}" disabled class="btn btn-primary" title="Change Status" >
+                                    <i class="fa fa-check"></i> Click to Close
+                                </button> --}}
+                            {{/if_eq}}
+                            {{/if_eq}}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="media-list">
+                                    <!--  Comments List -->
+                                    {{#each conversations}}
+                                    <div class="card card-default">
+                                        <div class="card-header separator ">
+                                            <div class="card-title p-r-30">
+                                                {{this.name}}
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="m-0">
+                                                    {{ dateFormat
+                                                    this.date "DD/MM/YYYY, h:mm a"}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-20">
+                                            <div class="media">
+                                                <div class="media-left m-r-20">
+                                                    <img src="{{this.img}}" class="img-circle rounded" width="60"
+                                                        height="60" alt="{{this.img}}">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p>
+                                                        {{{this.message}}}
+                                                    </p>
+
+                                                    {{#if_eq this.c_image 'null'}}
+                                                    {{else}}
+
+                                                    {{#if (or (eq this.extension 'jpeg') (eq this.extension 'png')) }}
+                                                    <a href="{{this.c_image}}" download>
+                                                        <img alt="Profile Image" width="33" height="33" src="{{this.c_image}}">
+                                                    </a>
+                                                    {{else}}
+                                                    <a href="{{this.c_image}}" download class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-file-text m-r-5" aria-hidden="true"></i>
+                                                        <span>Download</span>
+                                                    </a>
+                                                    {{/if}}
+
+                                                    {{/if_eq}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                    <!--...  Comments List -->
+                                    {{!-- Wysiwig Editor --}}
+                                    <div class="wysiwig-editor">
+                                        {{#if_eq user_id 1}}
+                                        {{else}}
+                                        {{#if_eq allCaseDetails.closeing_status 1}}
+                                        {{else}}
+                                        {{#if_eq user.role_id '3'}}
+                                        
+
+                                        <div>
+                                            <form role="form" id="conversationDetails" method="POST" action="/add/case/conversation" enctype="multipart/form-data">
+                                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                                <input type="hidden" name="case_id" value="{{case_id}}">
+                                                <div class="form-group m-b-20">
+                                                    <textarea id="editor" name="conversation" cols="80" rows="10" class="land_no1"></textarea>
+                                                </div>
+                                                {{!-- <div class="form-group">
+                                                    <input type="file" name="conversationFile" id="conversationFile">
+                                                </div> --}}
+                                                <!-- File Input -->
+                                                <div class="form-group m-b-20">
+                                                    <span class="control-fileupload">
+                                                        <label for="file">Choose a file :</label>
+                                                        <input type="file" id="file" name="conversationFile" class="land_no">
+                                                    </span>
+                                                </div>
+                                                <!--... File Input -->
+                                                <button class="btn btn-success file_submit" type="submit">Submit</button>
+                                            </form>
+                                        </div>
+                                        
+
+
+                                        {{else}}
+
+
+
+                                        <div>
+                                            <form role="form" id="conversationDetails" method="POST" action="/add/case/conversation"
+                                                enctype="multipart/form-data">
+                                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                                <input type="hidden" name="case_id" value="{{case_id}}">
+                                                {{!-- <textarea class="form-control" name="conversation" id="name"
+                                                    placeholder="Briefly Describe your Abilities" aria-invalid="false"></textarea>
+                                                --}}
+                                                <div class="form-group m-b-20">
+                                                    <textarea id="editor" name="conversation" cols="80" rows="10" class="land_no1" ></textarea>
+                                                </div>
+                                                {{!-- <div class="form-group">
+                                                    <input type="file" name="conversationFile" id="conversationFile">
+                                                </div> --}}
+                                                <!-- File Input -->
+                                                <div class="form-group m-b-20">
+                                                    <span class="control-fileupload">
+                                                        <label for="file">Choose a file :</label>
+                                                        <input type="file" id="file" name="conversationFile" class="land_no">
+                                                    </span>
+                                                </div>
+                                                <!--... File Input -->
+                                                <button class="btn btn-success" type="submit">Submit</button>
+                                            </form>
+                                        </div>
+                                        {{/if_eq}}
+
+                                        {{/if_eq}}
+                                        {{/if_eq}}
+
+                                    </div>
+
+                                    {{!-- Wysiwig Editor --}}
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <!--  Sidebar Widget -->
+                                <div data-pages="card" class="card card-default">
+                                    <div class="card-header  ">
+                                        <div class="card-title">
+                                            Case Details 
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        {{#if_eq allCaseDetails.cab_no '0'}}
+                                        <div class="case-details">
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Case Type:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <P>{{caseType.type_of_case}}</P>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Description: </h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{allCaseDetails.description}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Date:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{ dateFormat allCaseDetails.createdAt 'DD/MM/YYYY'}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Files:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if filesAll}}
+                                                        {{#each filesAll}}
+                                                        <a href="/upload_Files/{{this.filename}}" title="{{this.name}}" download>
+                                                            <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png">
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Closed Case File:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if AdditionalCost.additional_cost_case_files}}
+                                                        {{#each AdditionalCost.additional_cost_case_files}}
+                                                        <a href="{{this.file_name}}" title="{{this.file_name}}" target="_blank">
+                                                            <p><i class="fa fa-file"></i> {{splitString this.file_name}}</p>
+                                                            {{!-- <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png"> --}}
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            </ul>
+                                        </div>
+                                        {{else}}
+                                        {{#if_eq caseType.id "2"}}
+                                        <div class="case-details">
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Case No.:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{mact_cases.case_no}}</p>
+                                                    </div>
+                                                </li>
+                                        
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Name Of PS:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <P>{{mact_cases.name_of_ps}}</P>
+                                                    </div>
+                                                </li>
+                                        
+                                        
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Judge Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{mact_cases.judge_name}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Court Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{courtName.name}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Advocate Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{mact_cases.advocate}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Claim Amount:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{mact_cases.claim_amount}}/-</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Stage of Hearing:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{mact_cases.stage_of_hearing}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Next Date of Hearing:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{ dateFormat mact_cases.next_date_of_hearing 'DD/MM/YYYY'}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Files:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if filesAll}}
+                                                        {{#each filesAll}}
+                                                        <a href="/upload_Files/{{this.filename}}" title="{{this.name}}" download>
+                                                            <p><i class="fa fa-file"></i> {{splitString this.name}}</p>
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Closed Case File:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if AdditionalCost.additional_cost_case_files}}
+                                                        {{#each AdditionalCost.additional_cost_case_files}}
+                                                        <a href="{{this.file_name}}" title="{{this.file_name}}" target="_blank">
+                                                            <p><i class="fa fa-file"></i> {{splitString this.file_name}}</p>
+                                                            {{!-- <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png"> --}}
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        
+                                            </ul>
+                                        </div>
+                                        {{else}}
+                                        <div class="case-details">
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Judge Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{caseDetails.judge_name}}</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Court Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <P>{{courtName.name}}</P>
+                                                    </div>
+                                                </li>
+
+
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Driver Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{caseDetails.driver_name}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Driver Mobile:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{caseDetails.driver_mobile}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Advocate Name:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{caseDetails.advocate}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Police Station:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{caseDetails.name_of_ps}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Date:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{ dateFormat caseDetails.createdAt 'DD/MM/YYYY'}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Files:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if filesAll}}
+                                                        {{#each filesAll}}
+                                                        <a href="/upload_Files/{{this.filename}}" title="{{this.name}}" download>
+                                                            <p><i class="fa fa-file"></i> {{splitString this.name}}</p>
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Closed Case File:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if AdditionalCost.additional_cost_case_files}}
+                                                        {{#each AdditionalCost.additional_cost_case_files}}
+                                                        <a href="{{this.file_name}}" title="{{this.file_name}}" target="_blank">
+                                                            <p><i class="fa fa-file"></i> {{splitString this.file_name}}</p>
+                                                            {{!-- <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png"> --}}
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+
+                                            </ul>
+                                        </div>
+                                        {{/if_eq}}
+                                        {{/if_eq}}
+                                    </div>
+                                </div>
+                                <!--...  Sidebar Widget -->
+                                {{#if_eq user.role_id "1"}}
+                                {{#if_eq allCaseDetails.status "1"}}
+                                <!--  Sidebar Widget -->
+                                <div data-pages="card" class="card card-default">
+                                    <div class="card-header  ">
+                                        <div class="card-title">
+                                            Case Status &amp; Payment Details
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        {{#if_eq allCaseDetails.cab_no '0'}}
+                                        
+                                        {{else}}
+                                        <div class="case-details">
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Status:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if_eq allCaseDetails.status "1"}}<p>Approved</p>{{/if_eq}}
+                                                        {{#if_eq allCaseDetails.status "2"}}<p>Rejected</p>{{/if_eq}}
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Lawyer Fees:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{lawyer_rate}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Govt. fees</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{AdditionalCost.govt_fee}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Lawyer Additional Cost:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{AdditionalCost.amount}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            {{#if_eq allCaseDetails.closeing_status "1"}}
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Admin Additional Cost:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{AdditionalCost.admin_add_fee}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            {{/if_eq}}
+                                            
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <a href="javascript:void(0);" id="viewAdditionalCostDetailsBtn">View all Details</a>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                            </ul>
+                                        </div>
+                                        {{/if_eq}}
+                                    </div>
+                                </div>
+                                {{/if_eq}}
+                                {{#if_eq allCaseDetails.status "2"}}
+                                <div data-pages="card" class="card card-default">
+                                    <div class="card-header  ">
+                                        <div class="card-title">
+                                            Case Status &amp; Payment Details
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        {{#if_eq allCaseDetails.cab_no '0'}}
+                                        
+                                        {{else}}
+                                        <div class="case-details">
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Status:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if_eq allCaseDetails.status "1"}}<p>Approved</p>{{/if_eq}}
+                                                        {{#if_eq allCaseDetails.status "2"}}<p>Rejected</p>{{/if_eq}}
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Lawyer Fees:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{lawyer_rate}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Govt. fees</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{AdditionalCost.govt_fee}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Lawyer Additional Cost:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{AdditionalCost.amount}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            {{#if_eq allCaseDetails.closeing_status "1"}}
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Admin Additional Cost:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        <p>{{AdditionalCost.admin_add_fee}}/-</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            {{/if_eq}}
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <h5 class="font-14 font-weight-bold">Files:</h5>
+                                                    </div>
+                                                    <div class="right">
+                                                        {{#if AdditionalCost.additional_cost_case_files}}
+                                                        {{#each AdditionalCost.additional_cost_case_files}}
+                                                        <a href="{{this.file_name}}" title="{{this.file_name}}" target="_blank">
+                                                            <p><i class="fa fa-file"></i> {{splitString this.file_name}}</p>
+                                                            {{!-- <img height="30" width="33" src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png"> --}}
+                                                        </a>
+                                                        {{/each}}
+                                                        {{else}}
+                                                        <p>No Files</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    <div class="left">
+                                                        <a href="javascript:void(0);" id="viewAdditionalCostDetailsBtn">View all Details</a>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                            </ul>
+                                        </div>
+                                        {{/if_eq}}
+                                    </div>
+                                </div>
+                                {{/if_eq}}
+                                <!--...  Sidebar Widget -->
+                                {{/if_eq}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--... Case Conversation -->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" name="changeStatusFrm" id="changeStatusFrm">
+                    <input type="hidden" name="case_id" id="case_id">
+                    <input type="hidden" id="case_cate_id" value="{{case_status.case_status_category_id}}">
+                    <div class="form-group">
+                        <label>Select Stage</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="status_category" id="status_category">
+                            <option value="0">Select Stage</option>
+                            {{#each case_status_category}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../case_status.case_status_category_id}} selected {{/if_eq}}>{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="status" id="status">
+                            <option value="0">Select Status</option>
+                            {{#each case_status_name}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../case_status.case_status_id}} selected {{/if_eq}}>{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <span class="requiredErr">*</span>
+                        <textarea name="status_remarks" id="status_remarks" class="form-control" placeholder="Enter Remarks">{{case_status.remarks}}</textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnChangeStatus">Change</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="LawyerPaymentDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Payment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <div class="d-flex m-b-20">
+                    {{!-- <h5 class="modal-title" id="exampleModalLabel">Your Legalkart fees: {{lawyer_rate}}/- </h5> --}}
+                    <button class="btn btn-primary" type="button" id="addAdiitionAddCostBtn">
+                        <i class="fa fa-plus"></i> Add Additional Cost</button>
+                </div>
+                <form role="form" name="addAdditionalCostFrm" id="addAdditionalCostFrm" method="POST" action="/change-case-status" enctype="multipart/form-data">
+                    <input type="hidden" name="case_ids" id="case_ids">
+                    <input type="hidden" name="case_status" id="case_status">
+                    <input type="hidden" name="case_type_id" id="case_type_id" value="{{allCaseDetails.case_type_id}}">
+                    <input type="hidden" name="tot_addi_expense" id="tot_addi_expense">
+                    <div class="row govt-fee-div addGovtother">
+                        <div class="col-md-12">
+                            <h6>Add Govt. Fees</h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Govt. fee detail</label>
+                                    <span class="requiredErr">*</span>
+                                    <input type="text" class="form-control" name="govt_fee_name[]" id="govt_fee_name" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label> Govt. fees</label>
+                                    <span class="requiredErr">*</span>
+                                    <input type="text" class="form-control" name="govt_fee_amount[]" id="govt_fee_amount" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>&nbsp;&nbsp;</label>
+                                    <br>
+                                    <button class="btn btn-primary addGovtFeeBtn" type="button">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row govt-fee-div addAdditionalCostShowDiv" style="display:none">
+                        <h6 class="addAddiCostDiv m-b-5">Add Additional Cost (maximum amount 2000/-)</h6>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="additional_cost_file" id="additional_cost_file" multiple
+                        />
+                    </div>
+                    {{!--
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="status" id="status">
+                            <option value="">Select Status</option>
+                            <option value="1">Approved</option>
+                            <option value="2">Rejected</option>
+                        </select>
+                    </div> --}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnaddAdditionalCost">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addAdminAdditionalCostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Additional Costs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form"method="POST" action="/case-close-legalcart" enctype="multipart/form-data">
+                    <input type="hidden" name="case_id_close_will" id="case_id_close_will">
+                    <input type="hidden" name="case_type_id" id="case_type_id" value="{{allCaseDetails.case_type_id}}">
+                        <div class="govt-fee-div">
+                            <div class="row addAddiCostDivAdmin">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Additional Expence Detail</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="addi_expence_admin[]" id="addi_expence" />
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label> Additional Amount</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control tot_addi_cost_admin" name="tot_addi_cost_admin[]" id="tot_addi_cost" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> &nbsp;</label><br>
+                                        <button class="btn btn-primary" type="button" id="addAdiitionAddCostBtnAdmin">
+                                            <i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label>Upload File</label>
+                            <span class="requiredErr">*</span>
+                            <input type="file" class="form-control" style="height: auto;" name="additional_cost_file_admin" id="additional_cost_file_admin"
+                                multiple />
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnaddAdditionalCostAdmin">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="viewAdditionalCostDetailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View All Additional Costs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <table border="2" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>
+                                     SL#
+                                </th>
+                                <th>Expence Detail</th>
+                                <th>Amount</th>
+                                <th>Added By</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each AdditionalCost.additional_all_expences}}
+                            
+                            <tr>
+                                
+                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.amount}}/-</p>
+                                </td>
+                                <td class="v-align-middle">
+                                   {{#if_eq this.user_id "1"}} <p>Admin</p> 
+                                   {{else}}
+                                   <p>Lawyer</p>
+                                   {{/if_eq}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none">
+    <div id="showAdditionalCostAdd">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Additional Expence Detail</label>
+                    <input type="text" class="form-control" name="addi_expence[]" id="addi_expence" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label> Additional Amount</label>
+                    <input type="text" class="form-control tot_addi_cost" name="tot_addi_cost[]" id="tot_addi_cost" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <br>
+                    <button class="btn btn-danger" id="removeAdditionalCostDivBtn" type="button">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row showGovtCostAdd">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Govt. fee detail</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="govt_fee_name[]" id="govt_fee_name" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label> Govt. fees</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control govt_fee_amount" name="govt_fee_amount[]" id="govt_fee_amount" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <br>
+                    <button class="btn btn-danger" id="removeGovtDivBtn" type="button">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="showAdditionalCostAddAdmin">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Additional Expence Detail</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="addi_expence_admin[]" id="addi_expence" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label> Additional Amount</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control tot_addi_cost_admin" name="tot_addi_cost_admin[]" id="tot_addi_cost" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label> &nbsp;</label>
+                    <br>
+                    <button class="btn btn-danger" id="removeGovtDivBtn" type="button">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{{#content "script" mode="append"}}
+{{!-- Script for CKEDITOR --}}
+<script src="https://cdn.ckeditor.com/4.11.1/standard-all/ckeditor.js"></script>
+<script type="text/javascript">
+    CKEDITOR.replace('editor', {
+        width: '100%',
+        height: 200
+    });
+
+</script>
+{{!-- ...Script for CKEDITOR --}}
+<script type="text/javascript">
+
+
+    $(document).on("click", "#lawyerDeleteBtn", function () {
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    $(document).on("click", "#caseAddBtn", function () {
+        $("#addCaseTypeModal").modal("show");
+    });
+
+    $(document).on("click", "#btnCaseAdd", function () {
+        var caseType = $("#case_type").val();
+        window.location.href = "/case/add/" + caseType;
+    });
+
+    $(document).ready(function () {
+        //alert($("#status_category option:first-child").val());
+        $("#conversationDetails").validate({
+            rules: {
+                conversation: {
+                    required: function () {
+                        if ($('.land_no').val().length>0) {
+                            return false
+                        } else {
+                            return true
+                        }
+                    }
+                }
+            },
+            messages: {
+                conversation: {
+                    required: "Conversation can't be blank"
+                }
+            }
+        });
+       $("#addAdditionalCostFrm").validate({
+            rules: {
+                govt_fee_name: {
+                    required: true
+                },
+                govt_fee_amount: {
+                    required: true
+                },
+                additional_cost_file: {
+                    required: true
+                }
+            },
+            messages: {
+                govt_fee_name: {
+                    required: "name can't be blank"
+                },
+                govt_fee_amount: {
+                    required: "Amount can't be blank"
+                }
+            }
+        });
+        $("#govt_fee_amount").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        }); 
+        
+    });
+
+    $(document).on("click", "#caseClose", function () {
+        var case_id = $(this).data('case-id');
+        $("#case_id_close_will").val(case_id);
+        $("#addAdminAdditionalCostModal").modal('show');
+        {{!-- swal({
+            title: "Are you sure?",
+            text: "You want to close this case?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/case-close-legalcart",
+                data: { case_id: case_id },
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Success!",
+                            text: "Case close successfully",
+                            type: "success"
+                        }, function () {
+
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            });
+        }); --}}
+
+    });
+
+    // File Input Script
+
+    $(function () {
+        $('.control-fileupload input[type=file]').change(function () {
+            var t = $(this).val();
+            var labelText = '' + t.substr(12, t.length);
+            $(this).prev('label').text(labelText);
+        })
+    });
+    $(".tot_addi_cost_admin").keypress(function (e) {
+        //if the letter is not digit then display error and don't type anything
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            //display error message
+            //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+            return false;
+        }
+    });
+
+    //... File Input Script
+
+    
+    $(document).on("click","#addAdiitionAddCostBtn", function(){
+        $(".addAdditionalCostShowDiv").show();
+        $(".addAdditionalCostShowDiv").append($("#showAdditionalCostAdd").html()); 
+        //$("#addAdiitionAddCostBtn").hide(); 
+        $(".tot_addi_cost").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    })
+    $(document).on("click",".addGovtFeeBtn", function(){
+        $(".addGovtother").append($(".showGovtCostAdd").html()); 
+        //$("#addAdiitionAddCostBtn").hide(); 
+        $(".govt_fee_amount").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    })
+    $(document).on("click","#addAdiitionAddCostBtnAdmin", function(){
+        $(".addAddiCostDivAdmin").after($("#showAdditionalCostAddAdmin").html()); 
+        //$("#addAdiitionAddCostBtn").hide(); 
+        $(".tot_addi_cost_admin").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    })
+
+    $(document).on("change", ".tot_addi_cost", function () {
+        var totAddiAmount = [];
+        $(".tot_addi_cost").each(function(){
+            if($(this).val() != "")
+            {
+                totAddiAmount.push(parseInt($(this).val()));
+            }
+        });
+        var total_rate = totAddiAmount.reduce((a, b) => a + b, 0);
+        if (total_rate > 2000){
+            swal("warning","Amount can't greater than 2000/-","warning");
+            $("#btnaddAdditionalCost").attr('disabled',true);
+        }
+        else 
+        {
+            $("#btnaddAdditionalCost").attr('disabled',false);
+            $("#tot_addi_expense").val(total_rate);
+        }
+    });
+    
+    $(document).on("click","#viewAdditionalCostDetailsBtn", function(){
+        $("#viewAdditionalCostDetailsModal").modal('show');
+    });
+
+    $(document).on("click", "#removeGovtDivBtn", function () {
+        $(this).closest(".row").remove();
+    });
+    $(document).on("click", "#removeAdditionalCostDivBtn", function () {
+        $(this).closest(".row").remove();
+    });
+    $(document).on("click", "#addFeesByLawyerForInvoice", function () {
+        $("#case_ids").val($(this).data("case-id"));
+        $("#case_status").val(1);
+        $("#LawyerPaymentDetailModal").modal('show');
+    });
+
+    /* ================================= Starts Status Add 16-01-2019 BM =======================================*/
+
+    $(document).on("click", "#changeCaseStatus", function () {
+        var case_id = $(this).data("case-id");
+        var status = $(this).data("status");
+        $("#case_id").val(case_id);
+        if (status != "3") {
+            /*$("#status").val(status);
+            var xxx = $("#status option:selected").text();
+            $("#select2-status-container").text(xxx);*/
+        }
+        $("#changeStatusModal").modal('show');
+    });
+
+    $(document).on("click", "#btnChangeStatus", function () {
+            if ($("#status_category").val() == "0") {
+                swal("Warning!", "Please Select Category", "warning");
+            }
+            else if ($("#status").val() == "0") {
+                swal("Warning!", "Please Select Status", "warning");
+            }
+            else {
+                var status_category_name = $("#status_category option:selected").text();
+                var status_name = $("#status option:selected").text();
+                $.ajax({
+                    type: "POST",
+                    url: "/add-case-status-by-lawyer",
+                    data: $("#changeStatusFrm").serialize()+"&status_category_name="+status_category_name+"&status_name="+ status_name,
+                    success:function(response)
+                    {
+                        if(response.success == true)
+                        {
+                            swal({
+                                title: "Success!",
+                                text: "Status Changed Successfully!",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            }); 
+                        }
+                    },
+                    error:function(xhr)
+                    {
+
+                    }
+                })
+            }
+        });
+
+    $(document).on("change","#status_category", function(){
+        var current_stage = $("#case_cate_id").val();
+        var stage = $(this).val();
+        if(stage != "0")
+        {
+            if(stage <= current_stage)
+            {
+                $("#status_category").val("0");
+                var xxx = $("#status_category option:selected").text();
+                $("#select2-status_category-container").text(xxx);
+                swal("warning","Already completed this stage","warning")
+            }
+        } 
+    })
+
+
+    
+    /* ================================= Ends Status Add 16-01-2019 BM =======================================*/
+    /* ================================= Starts close case and add fees 05-02-2019 BM =======================================*/
+
+    $(document).on("click","#caseCloseBylawyer", function(){
+        var case_id = $(this).data("case-id");
+        swal({
+            title: "",
+            text: "are you sure you want to close this case?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: 'POST',
+                url: '/close-particular-case-by-lawyer',
+                data: {
+                    case_id: case_id
+                },
+                beforeSend: function() {
+                    // setting a timeout
+                    $(".confirm").html('Please Wait...');
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        swal({
+                            title: "Nice!",
+                            text: "Case Closed Successfully!",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+    
+    /* ================================= Ends close case and add fees 05-02-2019 BM =======================================*/
+</script> {{/content}}
+<!-- END card -->

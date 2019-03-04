@@ -1,0 +1,298 @@
+<main class="main-content inner-page lk-legal-service-details">
+    <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/legal-service-categories">Legal Sevice Categories</a></li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">Blog Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+
+    <!-- Legal Service Details Content Area -->
+    <div class="lk-legal-service-details">
+        <div class="container">
+            <div class="blog-page m-t-30 m-b-30">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="blog-part">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                {{legal_service_category.name}}
+                            </h3>
+                            <img src="{{legal_service_Detail.avatar}}" class="img-fluid" alt="">
+                            {{!-- <div class="blog-title m-b-50">
+                                <ul>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-user"></i> Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-heart"></i> 4.250</a>
+                                    </li>
+                                </ul>
+                            </div> --}}
+                            <p class="m-0 m-b-30 font-16 m-t-50">
+                                {{{legal_service_Detail.content}}}
+                            </p>
+                            <button type="button" id="orderLeaglService" class="btn btn-primary btn-lg btn-primary-color border-radius-0 border-0 m-tb-20">Order Now</button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <div class="blog-filter">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Legal Service Categories
+                            </h4>
+                            <div class="blog-list">
+                                <ul>
+                                    {{#each legal_service_other_category}}
+                                     {{#if_eq this.publish_status "1"}}
+                                        <li>
+                                            <a href="/legal-service-details/{{this.id}}">{{this.name}}</a>
+                                        </li>
+                                    {{/if_eq}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                        {{!-- <div class="blog-filter m-t-80">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Latest News
+                            </h4>
+                            <div class="news-list">
+                                <ul>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--... Lawyers Directory List Content Area -->
+</main>
+
+<div class="modal fade lgx-modal orderLegalServiceModal" id="register-model">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">Order {{legal_service_category.name}} Service</h4>
+            </div>
+            <div class="modal-body">
+                {{!--
+                <h6>Call us 24/7 at 858.122.2450 or fill out the form be;;ow to receive a free and confidential initial consulation.</h6>
+                --}}
+                <form id="orderLegalServiceFrm" name="orderLegalServiceFrm">
+                    <input type="hidden" name="legal_service_category_id" id="legal_service_category_id" value="{{legal_service_category.id}}">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email ID</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile No.</label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" aria-describedby="emailHelp" placeholder="Enter Mobile no"
+                            maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="messages">Messages</label>
+                        <textarea class="form-control" id="messages" name="messages" placeholder="Enter Messages"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script>
+    $(document).on("click", "#orderLeaglService", function () {
+        $(".orderLegalServiceModal").modal('show');
+    });
+    $("#orderLegalServiceFrm").validate({
+        rules:
+        {
+            name: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            mobile: {
+                required: true,
+                number: true
+            },
+            messages: {
+                required: true
+            }
+        },
+        messages:
+        {
+            name: {
+                required: "Name can't be blank"
+            },
+            email: {
+                required: "Email Id can't be blank"
+            },
+            email: {
+                required: "Mobile no can't be blank"
+            },
+            messages: {
+                required: "Messages can't be blank"
+            }
+        },
+        submitHandler: function (form) {
+            $.ajax({
+                type: "POST",
+                url: "/order-legal-service",
+                data: $("#orderLegalServiceFrm").serialize(),
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Thank you!",
+                            text: "for ordered. We will get you soon.",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            })
+        }
+    });
+</script> {{/content}}

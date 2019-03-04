@@ -1,0 +1,442 @@
+<main class="main-content inner-page lk-stamp-paper">
+    <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">Stamp Paper</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+    <!-- Stamp Paper Content Area -->
+    <div class="lk-stamp-paper-content">
+        <div class="container">
+            <div class="m-t-30 m-b-30">
+                <div class="card">
+                    <div class="card-body">
+                        {{#if stamppaper_req_msg_frnt}}
+                        <div class="alert alert-success">
+                            <strong>Success! </strong>{{stamppaper_req_msg_frnt}}
+                        </div>
+                        {{/if}}
+                        <h2 class="m-0 font-50 font-semibold m-b-20">
+                            Stamp Paper
+                        </h2>
+                        <h6 class="m-0 font-14 font-semibold text-uppercase m-b-40">
+                            <span class="text-primary-color">Get e Stamp Paper Online</span>
+                        </h6>
+                        <form role="form" id="reqStamppaperFront" method="POST" action="/stamppaper-request-front">
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <div class="stamp_paper_first_part">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Select State</label>
+                                            <span class="requiredErr">*</span>
+                                            <select class="form-control selectpicker stamp_paper_state_frnt" data-live-search="true" id="stamp_paper_state_frnt" name="stamp_paper_state_frnt">
+                                                <option value="231">Delhi</option>
+                                                <option value="224">Haryana</option>
+                                                <option value="240">Karnataka</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Stamp Paper Value</label>
+                                            <span class="requiredErr">*</span> {{!-- <input type="text" class="form-control"
+                                                name="stamp_paper_value_frnt" id="stamp_paper_value_frnt" placeholder="Enter Stamp Paper Value">                                            --}}
+                                            <select class="form-control selectpicker stamp_paper_value_frnt" data-init-plugin="select2" id="stamp_paper_value_frnt" name="stamp_paper_value_frnt">
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="150">150</option>
+                                                <option value="200">200</option>
+                                                <option value="250">250</option>
+                                                <option value="300">300</option>
+                                                <option value="500">500</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">First Party</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="first_party_frnt" id="first_party_frnt" placeholder="Enter Name of First Party">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">No. of e Stamp Paper</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="no_of_stamp_paper_frnt" id="no_of_stamp_paper_frnt" placeholder="Enter No. of e Stamp Paper">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Second Party</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="second_party_frnt" id="second_party_frnt" placeholder="Enter Name of Second Party">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Document Description</label>
+                                            <span class="requiredErr">*</span>
+                                            <select class="form-control selectpicker document_description_frnt" data-live-search="true" id="document_description_frnt"
+                                                name="document_description_frnt">
+                                                <option value="Adoption Deed">Adoption Deed</option>
+                                                <option value="Affidavit">Affidavit</option>
+                                                <option value="Bank Guarantee I/Bond">Bank Guarantee I/Bond</option>
+                                                <option value="Bond">Bond</option>
+                                                <option value="Cancellation of Wil">Cancellation of Will</option>
+                                                <option value="Cancellation of Agreement">Cancellation of Agreement</option>
+                                                <option value="Cancellation of GPA">Cancellation of GPA</option>
+                                                <option value="Car Loan/Loan Agreement">Car Loan/Loan Agreement</option>
+                                                <option value="Consent Letter">Consent Letter</option>
+                                                <option value="Declaration">Declaration</option>
+                                                <option value="Decree(Sale Deed/Conveyance)">Decree(Sale
+                                                    Deed/Conveyance)</option>
+                                                <option value="Decree(Settlement">Decree(Settlement)</option>
+                                                <option value="Deed of Retirement">Deed of Retirement</option>
+                                                <option value="Disclaimer">Disclaimer</option>
+                                                <option value="Divorce Deed">Divorce Deed</option>
+                                                <option value="GPA-Blood Relatio">GPA-Blood Relation</option>
+                                                <option value="General Agreement">General Agreement</option>
+                                                <option value="General Power of Attorney">General Power of Attorney</option>
+                                                <option value="Gift Deed">Gift Deed</option>
+                                                <option value="Gift Deed Copy">Gift Deed Copy</option>
+                                                <option value="Guarantee Bond">Guarantee Bond</option>
+                                                <option value="Indemnity Bond">Indemnity Bond</option>
+                                                <option value="L.C. (Letter Certificate)">L.C. (Letter Certificate)</option>
+                                                <option value="Lease-Rent Deed upto 1 year">Lease-Rent Deed upto 1
+                                                    year</option>
+                                                <option value="Lease upto 5 years">Lease upto 5 years</option>
+                                                <option value="Lease with security upto 5 years">Lease with
+                                                    security upto 5 years</option>
+                                                <option value="Lease upto 10 years">Lease upto 10 years</option>
+                                                <option value="Lease with security upto 10 years">Lease with
+                                                    security upto 10 years</option>
+                                                <option value="Lease upto 20 years">Lease upto 20 years</option>
+                                                <option value="Lease with security upto 20 years">Lease with
+                                                    security upto 20 years</option>
+                                                <option value="Mortgage Deed">Mortgage Deed</option>
+                                                <option value="Partition">Partition</option>
+                                                <option value="Partnership">Partnership</option>
+                                                <option value="Perpetual">Perpetual</option>
+                                                <option value="Receipt">Receipt</option>
+                                                <option value="Rectification Deed">Rectification Deed</option>
+                                                <option value="Relinquishment Deed">Relinquishment Deed</option>
+                                                <option value="Sale Agreement">Sale Agreement</option>
+                                                <option value="Others">Others</option>
+                                                <option value="Undertaking">Undertaking</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Purchaser</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="purchaser_frnt" id="purchaser_frnt" placeholder="Enter Name of Purchaser">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Property Description</label>
+                                            <span class="requiredErr">*</span>
+                                            <textarea class="form-control" name="property_description_frnt" id="property_description_frnt" placeholder="Enter Property Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Stamp Duty Paid By</label>
+                                            <span class="requiredErr">*</span>
+                                            <div class="radio radio-success">
+                                                <input type="radio" checked="checked" value="first_party_paid" name="stampduty_paid_by_frnt" id="first_party_paid_frnt">
+                                                <label for="first_party_paid">First Party</label>
+                                                <input type="radio" value="second_party_paid" name="stampduty_paid_by_frnt" id="second_party_paid_frnt">
+                                                <label for="second_party_paid">Second Party</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{!--
+                            <hr> --}}
+                            <button class="btn btn-primary btn-lg  btn-primary-color border-radius-0 border-0 m-t-20 stamp_paper_next" type="submit">Next</button>
+                            <div class="shipping_detail" style="display: none">
+                                <h4 class="stamp-paper-shiping font-20 font-weight-bold m-t-20 m-b-20">Shipping / Delivery Details
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Customer Full Name</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="shipping_customer_full_name_frnt" id="shipping_customer_full_name_frnt" placeholder="Enter Customer Full Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Shipping Address</label>
+                                            <span class="requiredErr">*</span>
+                                            <textarea class="form-control" name="shipping_address_frnt" id="shipping_address_frnt" placeholder="Enter Shipping Address"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Telephone</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control number_validator" name="shipping_telephone_no_frnt" id="shipping_telephone_no_frnt"
+                                                placeholder="Enter Telephone No">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">City</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="shipping_city_frnt" id="shipping_city_frnt" placeholder="Enter City">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Email ID</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="email" class="form-control" name="shipping_email_id_frnt" id="shipping_email_id_frnt" placeholder="Enter Email ID">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Pin Code</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control number_validator" name="shipping_pincode_frnt" id="shipping_pincode_frnt" placeholder="Enter Pin Code">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-semibold">Select State</label>
+                                            <select class="form-control selectpicker shipping_state_frnt" data-live-search="true" id="shipping_state_frnt" name="shipping_state_frnt">
+                                                <option value="231">Delhi</option>
+                                                <option value="224">Haryana</option>
+                                                <option value="240">Karnataka</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="hidden" id="pay_id" value="0" name="payment_id" />
+                                        <button class="btn btn-primary btn-lg  btn-primary-color border-radius-0 border-0 m-t-20" type="submit">Get e
+                                            Stamp Paper</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--... Stamp Paper Content Area -->
+</main>
+
+{{#content "script" mode="append"}}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    function myFunction() {
+        var options = {
+            "key": "rzp_test_5sloC6hZ9bO8ym",
+            "key_secret": "zrtrnxAqpVivejebg93rpiLT",
+            "amount": "2000",
+            "name": "LegalKart",
+            "description": "",
+            "image": "/frontend/images/logo.png",
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+            },
+            "modal": {
+                "ondismiss": function () { }
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+    $(document).ready(function () {
+        $("#reqStamppaperFront").validate({
+            rules: {
+                stamp_paper_state_frnt: {
+                    required: true
+                },
+                first_party_frnt: {
+                    required: true
+                },
+                second_party_frnt: {
+                    required: true
+                },
+                purchaser_frnt: {
+                    required: true
+                },
+                stampduty_paid_by_frnt: {
+                    required: true
+                },
+                stamp_paper_value_frnt: {
+                    required: true
+                },
+                no_of_stamp_paper_frnt: {
+                    required: true
+                },
+                document_description_frnt: {
+                    required: true
+                },
+                property_description_frnt: {
+                    required: true
+                },
+                shipping_customer_full_name_frnt: {
+                    required: true
+                },
+                shipping_telephone_no_frnt: {
+                    required: true
+                },
+                shipping_email_id_frnt: {
+                    required: true,
+                    email: true
+                },
+                shipping_state_frnt: {
+                    required: true
+                },
+                shipping_address_frnt: {
+                    required: true
+                },
+                shipping_city_frnt: {
+                    required: true
+                },
+                shipping_pincode_frnt: {
+                    required: true
+                }
+            },
+            messages: {
+                stamp_paper_state_frnt: {
+                    required: "State can't be blank"
+                },
+                first_party_frnt: {
+                    required: "First party can't be blank"
+                },
+                second_party_frnt: {
+                    required: "Second party can't be blank"
+                },
+                purchaser_frnt: {
+                    required: "Purchaser can't be blank"
+                },
+                stampduty_paid_by_frnt: {
+                    required: "Stamp duty paid by can't be blank"
+                },
+                stamp_paper_value_frnt: {
+                    required: "Stamp paper value can't be blank"
+                },
+                no_of_stamp_paper_frnt: {
+                    required: "No. of stamp paper can't be blank"
+                },
+                document_description_frnt: {
+                    required: "Document description can't be blank"
+                },
+                property_description_frnt: {
+                    required: "Property description can't be blank"
+                },
+                shipping_customer_full_name_frnt: {
+                    required: "Customer full name can't be blank"
+                },
+                shipping_telephone_no_frnt: {
+                    required: "Telephone no. can't be blank"
+                },
+                shipping_email_id_frnt: {
+                    required: "Email ID can't be blank",
+                    email: "Plaese enter a valid email ID"
+                },
+                shipping_state_frnt: {
+                    required: "State can't be blank"
+                },
+                shipping_address_frnt: {
+                    required: "Shipping address can't be blank"
+                },
+                shipping_city_frnt: {
+                    required: "City can't be blank"
+                },
+                shipping_pincode_frnt: {
+                    required: "Pincode can't be blank"
+                }
+            },
+            submitHandler: function () {
+                var options = {
+                    "key": "rzp_test_5sloC6hZ9bO8ym",
+                    "key_secret": "zrtrnxAqpVivejebg93rpiLT",
+                    "amount": $("#stamp_paper_value_frnt option:selected").val() * 100,
+                    "name": "LegalKart",
+                    "description": "",
+                    "image": "/frontend/images/logo.png",
+                    "handler": function (response) {
+                        //alert(response.razorpay_payment_id);
+                        $('#pay_id').val(response.razorpay_payment_id);
+                        //$("#reqStamppaperFront").submit();
+                        $.ajax({
+                            url: "/stamppaper-request-front",
+                            type: "post",
+                            data: $("#reqStamppaperFront").serialize(),
+                            success: function (result) {
+                                //alert("Payment Successful");
+                                window.location.href = "/stamppaper";
+                            }
+                        });
+                    },
+                    "modal": {
+                        "ondismiss": function () { }
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+
+            }
+
+        });
+
+        $('.stamp_paper_next').click(function (e) {
+            var stamp_paper_state = $("#stamp_paper_state_frnt option:selected").val();
+            var first_party = $('#first_party_frnt').val();
+            var second_party = $('#second_party_frnt').val();
+            var purchaser = $('#purchaser_frnt').val();
+            var stampduty_paid_by = $('input[type=radio]:checked').val();
+            var stamp_paper_value = $("#stamp_paper_value_frnt option:selected").val();
+            var no_of_stamp_paper = $('#no_of_stamp_paper_frnt').val();
+            var document_description = $("#document_description_frnt option:selected").val();
+            var property_description = $('#property_description_frnt').val();
+            var payment_amount = $('#payment_amount_frnt').val();
+            if (stamp_paper_state != '' && first_party != '' && second_party != '' && purchaser != '' && stampduty_paid_by != '' && stamp_paper_value != '' && no_of_stamp_paper != '' && document_description != '' && property_description != '' && payment_amount != '') {
+                $('.shipping_detail').show('slow');
+                $('html, body').animate({
+                    scrollTop: $(this).offset().top - 10
+                }, 1000);
+                $('.stamp_paper_next').hide('slow');
+            }
+            //$('.stamp_paper_first_part').hide('slow');
+        });
+
+    });
+
+</script> {{/content}}

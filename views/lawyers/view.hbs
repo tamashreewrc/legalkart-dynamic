@@ -1,0 +1,459 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/lawyers">Lawyers</a>
+                </li>
+                <li class="breadcrumb-item active">View Lawyers</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    <div class="pull-left">
+                        <h5>Advocate {{lawyer.first_name}} {{lawyer.last_name}}</h5>
+                    </div> 
+                    <div class="pull-right m-t-15">
+                        <a href="/lawyers/edit/{{lawyer.id}}" class="btn btn-primary btn-cons m-b-10">
+                            <i class="fa fa-pencil-square-o"></i> Edit Lawyer
+                        </a>
+                    </div>
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 bg-white">
+                                <div class="card-body">
+                                    <div class="profile-pic">
+                                        <img src="{{lawyer.avatar}}" alt="" width="200" height="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld" href="#">Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2PracticeArea">Practice Areas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2FollowUs">Rate</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2Inspire">View Cases</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2Ratings">Reviews &amp; Ratings</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Email ID :</strong> {{lawyer.email}}</li>
+                                                        <li>
+                                                            <strong>Mobile No. :</strong> {{lawyer.mobile}}</li>
+                                                        <li>
+                                                            <strong>Primary Jurisdiction :</strong> {{court_name.name}}</li>
+                                                        <li>
+                                                            <strong>Address2 :</strong> {{lawyer.lawyers.0.address2}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>State :</strong> {{state.name}}
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Role :</strong> 
+                                                            {{#if_eq lawyer.sub_role "I"}}Individual Lawyer{{/if_eq}}
+                                                            {{#if_eq lawyer.sub_role "L"}}Legal Consultant{{/if_eq}}
+                                                            {{#if_eq lawyer.sub_role "G"}}Govt Relations{{/if_eq}}
+                                                            {{#if_eq lawyer.sub_role "P"}}Police Officer{{/if_eq}}    
+                                                        </li>
+                                                        <li>
+                                                            <strong>Bar Council ID/Number :</strong> {{lawyer.lawyers.0.bar_council_id}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Address1 :</strong> {{lawyer.lawyers.0.address1}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Address3 :</strong> {{lawyer.lawyers.0.address3}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>City :</strong> {{city.name}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2PracticeArea">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-condensed table-detailed" id="detailedTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:50%">Practice Area</th>
+                                                                <th style="width:50%">Sub Practice Area</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each lawyerPracticeArea}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">{{this.practice_area}}</td>
+                                                                <td class="v-align-middle">{{this.sub_practice_area}}</td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2FollowUs">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-condensed table-detailed" id="detailedTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:75%">Case type</th>
+                                                                <th style="width:25%">Rate</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each lawyer_rate}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">{{this.rate_list.type_of_case}}</td>
+                                                                <td class="v-align-middle semi-bold">Rs. {{this.rate}}/-</td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab2Inspire">
+                                        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl No.</th>
+                                                    <th>Case No</th>
+                                                    <th>Assign Date</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{#each lawyer_assign}}
+                                                <tr>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <p>{{math @index "+" 1}}</p>
+                                                    </td>
+                                                    <td class="v-align-middle">
+                                                        {{#if_eq this.all_case.cab_no "0"}}
+                                                        <p>{{this.all_case.case_no}}</p>
+                                                        {{else}}
+                                                        <p>{{this.all_case.cab_no}}</p>
+                                                        {{/if_eq}}
+                                                    </td>
+                                                    <td class="v-align-middle">
+                                                        <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                                                    </td>
+                                                    <td class="v-align-middle">
+                                                        {{#if_eq this.all_case.closeing_status "1"}}
+                                                        <p class="badge badge-success">Closed Case</p>{{else}} {{#if_eq this.all_case.status "3"}}
+                                                        <p class="badge badge-warning">Current Case</p>{{/if_eq}} {{#if_eq this.all_case.status "1"}}
+                                                        <p class="badge badge-primary">Approved</p>{{/if_eq}} {{#if_eq this.all_case.status "2"}}
+                                                        <p class="badge badge-danger">Rejected</p>{{/if_eq}}{{#if_eq this.all_case.status "0"}}
+                                                        <p class="badge badge-primary">New</p>{{/if_eq}} {{/if_eq}}
+                                                    </td>
+                                                    <td>
+                                        
+                                                        <a href="/case-conversation/{{this.all_case.id}}" id="caseView" class="btn btn-primary" title="View">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="tab2Ratings">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="pull-right">
+                                                    <button class="btn btn-primary m-b-10" id="publishRatingsBtn"><i class="fa fa-upload"></i> Click to Publish</button>
+                                                    <button class="btn btn-primary m-b-10" id="addRatingReviewBtn"><i class="fa fa-plus"></i> Add Review &amp; Ratings</button>
+                                                </div>
+                                                <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <input type="checkbox" name="check_all" id="check_all">
+                                                                Name</th>
+                                                            <th>Reviews</th>
+                                                            <th>Ratings</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="getReviewData">
+                                                        {{#each lawyer.lawyer_rating_reviews}}
+                                                        <tr id="review_{{this.id}}">
+                                                            <td class="v-align-middle">
+                                                                <input type="checkbox" name="publish_lawyer_ratings" id="publish_lawyer_ratings" class="publish_lawyer_ratings" value="{{this.id}}" {{#if_eq this.publish_status
+                                                                    "1"}} checked {{/if_eq}}>
+                                                                <p>{{this.name}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.reviews}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.ratings}} Stars</p>
+                                                            </td>
+                                                            <td>
+                                                                {{!-- <button class="btn btn-primary" id="editReviewsbtn"><i class="fa fa-paste"></i></button> --}}
+                                                                <button class="btn btn-danger" data-review-id="{{this.id}}" id="deleteReviewBtn"><i class="fa fa-trash-o"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                        {{/each}}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addReviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Reviews &amp; Ratings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="addReviewFrm">
+                    <input type="hidden" name="lawyer_id" id="lawyer_id" value="{{lawyer.id}}">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="add_name" id="add_name" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Reviews</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="add_review" name="add_review" placeholder="Briefly Describe your Remarks"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Ratings</label>
+                        <span class="requiredErr">*</span>
+                        <select class="form-control" name="add_rating" id="add_rating" style="    -webkit-appearance: menulist !important;moz-webkit-appearance: menulist !important;o-webkit-appearance: menulist !important;ms-webkit-appearance: menulist !important;">
+                            <option value="">Select Rating</option>
+                            <option value="1">1 Star</option>
+                            <option value="1.5">1.5 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="2.5">2.5 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="3.5">3.5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="4.5">4.5 Stars</option>
+                            <option value="5">5 Stars</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnAddReviewRatings"><i class="fa fa-plus"></i> Add</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reviewDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Reviews</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="delReviewFrm">
+                <input type="hidden" name="review_id" id="review_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this lawyers?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="delRatingReviewBtn">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script>
+    $(document).on("click", "#addRatingReviewBtn", function () {
+        $("#addReviewModal").modal('show');
+    });
+    $(document).on("click", "#deleteReviewBtn", function () {
+        $("#reviewDeleteModal").modal('show');
+        $("#review_id").val($(this).data('review-id'));
+    });
+
+    $(document).ready(function(){
+        $("#addReviewFrm").validate({
+            rules: 
+            {
+                add_name: 
+                {
+                    required: true
+                },
+                add_review: 
+                {
+                    required: true
+                },
+                add_rating: 
+                {
+                    required: true
+                }
+            },
+            messages: 
+            {
+                add_name:
+                {
+                    required: "Name can't be blank"
+                },
+                add_review:
+                {
+                    required: "Please enter your reviews"
+                },
+                add_rating:
+                {
+                    required: "Please select ratings"
+                }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/lawyer/add-reviews-ratings",
+                    data: $("#addReviewFrm").serialize(),
+                    success:function(response)
+                    {
+                        if(response.success == true)
+                        {
+                            $("#getReviewData td.dataTables_empty").parent(".odd").remove();
+                            $("#addReviewModal").modal('hide');
+                            $("#add_name").val("");
+                            $("#add_review").val("");
+                            $("#add_rating").val("");
+                            $("#getReviewData").append('<tr id="review_'+ response.fetch_review.id +'"><td class="v-align-middle"><input type="checkbox" name="publish_lawyer_ratings" id="publish_lawyer_ratings" class="publish_lawyer_ratings" value="'+ response.fetch_review.id+'">'+ response.fetch_review.name+'</td><td class="v-align-middle">' + response.fetch_review.reviews +'</td><td class="v-align-middle">' + response.fetch_review.ratings +' Stars</td><td><button class="btn btn-danger" data-review-id="'+ response.fetch_review.id +'" id="deleteReviewBtn"><i class="fa fa-trash-o"></i></button></td></tr>')
+                        }
+                    },
+                    error: function(xhr)
+                    {
+
+                    }
+                })
+            }
+        });
+
+        $("#check_all").click(function () {
+            $(".publish_lawyer_ratings").prop('checked', $(this).prop('checked'));
+        });
+
+        $(".publish_lawyer_ratings").change(function () {
+            if (!$(this).prop("checked")) {
+                $("#check_all").prop("checked", false);
+            }
+        });
+    });
+
+    $(document).on("click","#delRatingReviewBtn", function(){
+        $.ajax({
+            type: "POST",
+            url: "/lawyers/review-ratings/delete",
+            data: $("#delReviewFrm").serialize(),
+            success: function (response) {
+                if (response.success == true) {
+                    $("#review_"+response.id+"").remove();
+                    $("#reviewDeleteModal").modal('hide');
+                }
+            },
+            error: function (xhr) {
+
+            }
+        })
+    });
+    
+    $(document).on("click", "#publishRatingsBtn", function () {
+        var check_publish = [];
+        $(".publish_lawyer_ratings").each(function () {
+            if ($(this).is(':checked')) {
+                check_publish.push($(this).val())
+            }
+        });
+        if (check_publish.length == 0) {
+            swal("Warning!", "Please select one or more resource", "warning");
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/lawyer-reviews-publish-status",
+                data: {
+                    check_publish: check_publish
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Success!",
+                            text: "",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            });
+        }
+    });
+    
+</script>
+{{/content}}

@@ -1,0 +1,413 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Invoice</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_resource}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_resource}}
+        </div>
+        {{/if}} {{#if success_edit_resource}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_edit_resource}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Invoice</h5>
+        </div>
+        <div class="pull-right">
+            {{#if_eq user.role_id "2"}}
+            <button type="button" class="btn btn-primary btn-cons m-b-10" id="invoiceGenerateBtn">
+                <i class="fa fa-plus"></i> Generate Invoice</button>
+            {{/if_eq}}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {{#if_eq user.role_id "2"}}
+        <div class="card-body">
+            <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                <thead>
+                    <tr>
+                        <th>
+                            Sl No.
+                        </th>
+                        <th>Date</th>
+                        <th>Invoice No</th>
+                        <th>Amount</th>
+                        <th>Invoice file</th>
+                        <th>Current Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each invoice}}
+                    <tr>
+                        <td class="v-align-middle semi-bold">
+                            <p>{{math @index "+" 1}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.invoice_no}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>Rs. {{this.total_amount}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <a href="{{this.invoice_file}}" target="blank" title="{{this.invoice_no}}">
+                                <img src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png" width="50" height="50">
+                            </a>
+                        </td>
+                        <td class="v-align-middle">
+                            {{#if_eq this.payment_status "0"}} <p class="badge badge-primary">Invoice Raised</p> {{/if_eq}}
+                            {{#if_eq this.payment_status "1"}} <p class="badge badge-warning">Payment Released</p><br><a href="javascript:void(0);"data-invoice-id="{{this.id}}" title="View Payment Details" id="ViewInvoicePaymentBtn">View details</a> || <a href="javascript:void(0);" data-invoice-id="{{this.id}}" id="ChangeInvoicePaymentStatusBtn">Click to receive</a>  {{/if_eq}}
+                            {{#if_eq this.payment_status "2"}} <p class="badge badge-success">Payment Received</p><br> <a href="javascript:void(0);" data-invoice-id="{{this.id}}" title="View Payment Details" id="ViewInvoicePaymentBtn">View details</a>{{/if_eq}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{else}}
+        <div class="card-body">
+            <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                <thead>
+                    <tr>
+                        <th>
+                            Sl No.
+                        </th>
+                        <th>Date</th>
+                        <th>Lawyer Name</th>
+                        <th>Invoice No</th>
+                        <th>Amount</th>
+                        <th>Invoice file</th>
+                        <th>Current Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each invoice}}
+                    <tr>
+                        <td class="v-align-middle semi-bold">
+                            <p>{{math @index "+" 1}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.invoice_no}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>Rs. {{this.total_amount}}/-</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <a href="{{this.invoice_file}}" target="blank" title="{{this.invoice_no}}">
+                                <img src="https://www.merajob.in/live/upload_document/employer_logo/EVS0lIfRCm3HwQ21z20IsZUt+guTzK9nCodvonqMjxOwsosXk2WW3PYDVBJcZpRrb4vHgsLOsiOtiQ6Uj0tzg.png"
+                                    width="50" height="50">
+                            </a>
+                        </td>
+                        <td class="v-align-middle">
+                            {{#if_eq this.payment_status "0"}} <p class="badge badge-primary">Invoice Raised</p> {{/if_eq}}
+                            {{#if_eq this.payment_status "1"}} <p class="badge badge-warning">Payment Released</p> {{/if_eq}}
+                            {{#if_eq this.payment_status "2"}} <p class="badge badge-success">Payment Received</p> {{/if_eq}}
+                        </td>
+                        <td>
+                            {{#if_eq this.payment_status "0"}}
+                                <button class="btn btn-primary" data-invoice-id="{{this.id}}" data-lawyer-id="{{this.user.id}}" title="Make Payment" id="makeInvoicePaymentBtn"><i class="fa fa-money"></i></button>
+                            {{/if_eq}}
+                            {{#if_eq this.payment_status "1"}}
+                                <button class="btn btn-primary" data-invoice-id="{{this.id}}" title="View Payment Details" id="ViewInvoicePaymentBtn">
+                                    <i class="fa fa-money"></i>
+                                </button>
+                            {{/if_eq}}
+                             {{#if_eq this.payment_status "2"}}
+                            <button class="btn btn-primary" data-invoice-id="{{this.id}}" title="View Payment Details" id="ViewInvoicePaymentBtn">
+                                <i class="fa fa-money"></i>
+                            </button>{{/if_eq}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/if_eq}}
+</div>
+<!-- END card -->
+
+<div class="modal fade" id="makePaymentInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Make Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" name="makeInvoicePaymentModal" id="makeInvoicePaymentModal">
+                    <input type="hidden" name="invoice_id" id="invoice_id">
+                    <input type="hidden" name="lawyer_id" id="lawyer_id">
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <span class="requiredErr">*</span>
+                        <select class="form-control" name="payment_method" id="payment_method">
+                            <option value="">Select Payment Method</option>
+                            <option value="C">By Cheque</option>
+                            <option value="N">By NEFT</option>
+                            <option value="R">By RTGS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cheque/NEFT/RTGS No.</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="payment_no" id="payment_no" placeholder="Enter Cheque/NEFT/RTGS No.">
+                    </div>
+                    <div class="form-group">
+                        <label>remarks</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="remarks" name="remarks" placeholder="Briefly Describe your Remarks" ></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="makeInvoicePayment">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="viewPaymentInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Payment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group payment_date_div">
+                        <label>Payment Released Date</label>
+                        <input type="text" class="form-control" name="payment_date" id="payment_date"
+                            readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <select class="form-control" name="payment_method_view" id="payment_method_view" readonly>
+                            <option value="">Select Payment Method</option>
+                            <option value="C">By Cheque</option>
+                            <option value="N">By NEFT</option>
+                            <option value="R">By RTGS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cheque/NEFT/RTGS No.</label>
+                        <input type="text" class="form-control" name="payment_no_view" id="payment_no_view" placeholder="Enter Cheque/NEFT/RTGS No."readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>remarks</label>
+                        <textarea class="form-control" id="remarks_view" name="remarks_view" placeholder="Briefly Describe your Remarks" readonly></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script>
+    $(document).on("click","#invoiceGenerateBtn", function(){
+        $.ajax({
+            type: "POST",
+            url: "/lawyer-invoice-generate",
+            cache: false,
+            beforeSend: function (xhr) {
+                $("#invoiceGenerateBtn").prop('disabled', true);
+                $("#invoiceGenerateBtn").html("Please Wait...");
+            },
+            success:function(response){
+                if(response.success_status == "1")
+                {
+                    swal({
+                        title: "Success!",
+                        text: "Invoice Raised Successfully!",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+                else if(response.success_status == "2")
+                {
+                    swal("warning","Case not found","warning");
+                }
+                else if(response.success_status == "3")
+                {
+                    swal("warning","Closed Case not Found","warning");
+                }
+                $("#invoiceGenerateBtn").prop('disabled', false);
+                $("#invoiceGenerateBtn").html('<i class="fa fa-plus"> Generate Invoice');
+            },
+            error: function(xhr)
+            {
+
+            }
+        })
+    });
+
+    $(document).on("click","#makeInvoicePaymentBtn", function(){
+        var invoice_id = $(this).data('invoice-id');
+        var lawyer_id = $(this).data('lawyer-id');
+        $("#invoice_id").val(invoice_id);
+        $("#lawyer_id").val(lawyer_id);       
+        $("#makePaymentInvoiceModal").modal('show');
+    });
+
+    $(document).on("click","#ViewInvoicePaymentBtn", function(){ 
+        var invoice_id = $(this).data('invoice-id');
+        $.ajax({
+            type: "GET",
+            url: "/get-invoice-payment-deatils/"+ invoice_id,
+            success:function(response){
+                $("#payment_method_view").val(response.invoice_detail.payment_mode);
+                $("#payment_no_view").val(response.invoice_detail.payment_no);
+                $("#remarks_view").val(response.invoice_detail.remarks);
+                var today = new Date(response.invoice_detail.createdAt);
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = dd + '/' + mm + '/' + yyyy;
+                $("#payment_date").val(today);
+                if(response.invoice.payment_status == "2")
+                {
+                    var receive_date = new Date(response.invoice_detail.createdAt);
+                    var ddd = receive_date.getDate();
+                    var mmm = receive_date.getMonth() + 1; //January is 0!
+
+                    var yyyyy = receive_date.getFullYear();
+                    if (ddd < 10) {
+                        ddd = '0' + ddd;
+                    }
+                    if (mmm < 10) {
+                        mmm = '0' + mmm;
+                    }
+                    var receive_date = ddd + '/' + mmm + '/' + yyyyy;
+                    $(".payment_date_div").after('<div class="form-group"><label>Payment Received Date</label><input type="text" class="form-control" name="payment_date" id="payment_date" value="'+ receive_date+'" readonly></div>')
+                }
+                $("#viewPaymentInvoiceModal").modal('show');             
+            },
+            error:function(xhr)
+            {
+
+            }
+        })   
+    });
+
+    $(document).ready(function(){
+        $("#makeInvoicePaymentModal").validate({
+            rules: {
+                payment_method: {
+                    required: true
+                },
+                payment_no: {
+                    required: true
+                },
+                remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                payment_method: {
+                    required: "Please select One"
+                },
+                payment_no: {
+                    required: "field can't be blank"
+                },
+                remarks: {
+                    required: "field can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/make-invoice-payment",
+                    data: $("#makeInvoicePaymentModal").serialize(),
+                    success: function (response) {
+                        if (response.success == true) {
+                          swal({
+                                title: "Success!",
+                                text: "Payment Released Successfully!",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });  
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                })
+            }
+        });
+    });
+
+    $(document).on("click","#ChangeInvoicePaymentStatusBtn", function(){
+        var invoice_id= $(this).data('invoice-id');
+        swal({
+            title: "",
+            text: "are you sure you got this invoice payment?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: 'POST',
+                url: '/change-payment-status/'+ invoice_id,
+                success: function (response) {
+                    if (response.success === true) {
+                        swal({
+                            title: "Success!",
+                            text: "Payment Received Successfully!",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script> {{/content}}

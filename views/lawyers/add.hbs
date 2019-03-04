@@ -1,0 +1,689 @@
+{{#content "style" mode="prepend"}}
+<link href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" media="screen">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+{{/content}}
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/lawyers">Lawyers</a>
+                </li>
+                <li class="breadcrumb-item active">Add Lawyers</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+<!-- START CONTAINER FLUID -->
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    {{#if duplicate_email_lawyer}}
+                    <div class="alert alert-danger">
+                        <strong>Error! </strong>{{duplicate_email_lawyer}}
+                    </div>
+                    {{/if}}
+                    <h5>
+                        Add Lawyers
+                    </h5>
+                    <div class="col-xl-12 col-lg-12 col-top">
+                        <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                            <li class="nav-item liTab1">
+                                <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld" href="javascript:void(0)">Profile</a>
+                            </li>
+                            <li class="nav-item liTab2 disabled">
+                                <a href="javascript:void(0)" role="tab" data-target="#tab2FollowUs">Add Practice Area</a>
+                            </li>
+                            <li class="nav-item liTab3 disabled">
+                                <a href="javascript:void(0)" role="tab" data-target="#tab2Inspire">Bank Details &amp; Photo Upload</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane tabDiv1 active" id="tab2hellowWorld">
+                                <form role="form" id="addLawyersFrm" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>First Name</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Gender</label>
+                                                <span class="requiredErr">*</span>
+                                                <select class="full-width" data-init-plugin="select2" name="gender" id="gender">
+                                                    <option value="">Select Gender</option>
+                                                    <option value="M">Male</option>
+                                                    <option value="F">Female</option>
+                                                    <option value="O">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email Id</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email Id">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Role</label>
+                                                <span class="requiredErr">*</span>
+                                                <select class="full-width" data-init-plugin="select2" name="role" id="role">
+                                                    <option value="">Select Role</option>
+                                                    <option value="I">Lawyer</option>
+                                                    <option value="L">Legal Consultant</option>
+                                                    <option value="G">Govt Relations</option>
+                                                    <option value="P">Police Officer</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Mobile No.</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control number_validator" name="mobile" id="mobile" placeholder="Enter Mobile No.">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Primary Jurisdiction (Court Name)</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="jurisdiction_court_name" id="jurisdiction_court_name" placeholder="Enter Primary Jurisdiction">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Bar Council ID/Number</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="bar_council_id" id="bar_council_id"  placeholder="Enter Bar Council ID/Number">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Address Line 1</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" id="address1" name="address1" placeholder="Enter Address Line 1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Address Line 2</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" id="address2" name="address2" placeholder="Enter Address Line 2">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Address Line 3</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" id="address3" name="address3" placeholder="Enter Address Line 3">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                <span class="requiredErr">*</span>
+                                                <select class="full-width" data-init-plugin="select2" name="state" id="state">
+                                                    <option value="">Select State</option>
+                                                    {{#each state}}
+                                                    <option value="{{this.id}}">{{this.name}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                <span class="requiredErr">*</span>
+                                                <select class="full-width" data-init-plugin="select2" name="city" id="city">
+                                                    <option value="">Select City</option>
+                                
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-t-10">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h4>Add Rate</h4>
+                                            </div>
+                                        </div>
+                                        {{#each case_type_list}}
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <b>{{this.type_of_case}} -</b> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="hidden" name="case_type_id" value="{{this.id}}"><input type="text" class="form-control rate" id="rate_by_case_lawyer" name="rate_by_case_lawyer[]" placeholder="Enter Rate">
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <button class="btn btn-primary btn-cons m-t-10" id="primaryLawyerDataAddBtn" type="submit">Next</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane tabDiv2" id="tab2FollowUs">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form role="form" id="addLawyersPracticeAreaFrm">
+                                            <input type="hidden" name="lawyer_id" id="lawyer_id">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Practice Area</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <select class="full-width" data-init-plugin="select2" name="practice_area" id="practice_area">
+                                                            <option value="">Select Practice Area</option>
+                                                            {{#each pacticeArea}}
+                                                            <option value="{{this.id}}">{{this.name}}</option>
+                                                            {{/each}}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Sub Practice Area</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <select class="full-width" data-init-plugin="select2" name="sub_practice_area" id="sub_practice_area">
+                                                            <option value="">Select Sub Practice Area</option>
+                                        
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                        <span class="requiredErr">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                        <button class="btn btn-primary btn-block" id="addPracticeAreaLawyer" type="button">
+                                                            <i class="fa fa-plus"></i> Add
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-condensed table-detailed" id="detailedTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:50%">Practice Area</th>
+                                                        <th style="width:50%">Sub Practice Area</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tablePracticeArea">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button class="btn btn-primary btn-cons m-t-30" type="button" id="nextTab3Btn">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane tabDiv3" id="tab2Inspire">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form action="/lawyers/add-bank-details-photo-upload" method="post" id="addBankPhotoUploadFrm" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                                <input type="hidden" name="law_id" id="law_id">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Account Number</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <input type="text" class="form-control" name="ac_no" id="ac_no" placeholder="Enter Account Number">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>IFSC Code</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <input type="text" class="form-control" name="ifsc_code" id="ifsc_code" placeholder="Enter IFSC Code">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Bank Name</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <input type="text" class="form-control" name="bank_name" id="bank_name" placeholder="Enter Bank Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Account Holder</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <input type="text" class="form-control" name="ac_holder" id="ac_holder" placeholder="Enter Account Holder">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>PAN Number of Account Holder</label>
+                                                        <span class="requiredErr">*</span>
+                                                        <input type="text" class="form-control" name="ac_holder_pan_no" id="ac_holder_pan_no" placeholder="Enter PAN Number of Account Holder">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Upload Photo</label>
+                                                        <input class="upload" type="file" name="avatar" id="avatar">
+                                                        <img class="inline-block" src="https://iupac.org/cms/wp-content/uploads/2018/05/default-avatar.png" alt="user" width="80"
+                                                            height="80">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-primary btn-cons m-t-10" type="submit"><i class="fa fa-plus"></i> Add Lawyer</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-inputmask/jquery.inputmask.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script>
+    $('#court').multiselect({
+        nonSelectedText: 'Select Court',
+        enableFiltering: true,
+        includeSelectAllOption: false,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropDown: true,
+        onChange: function (option, checked) {
+            // Get selected options.
+            var selectedOptions = $('#court option:selected');
+
+            if (selectedOptions.length >= 4) {
+                // Disable all other checkboxes.
+                var nonSelectedOptions = $('#court option').filter(function () {
+                    return !$(this).is(':selected');
+                });
+
+                nonSelectedOptions.each(function () {
+                    var input = $('input[value="' + $(this).val() + '"]');
+                    input.prop('disabled', true);
+                    input.parent('li').addClass('disabled');
+                });
+            }
+            else {
+                // Enable all checkboxes.
+                $('#court option').each(function () {
+                    var input = $('input[value="' + $(this).val() + '"]');
+                    input.prop('disabled', false);
+                    input.parent('li').addClass('disabled');
+                });
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".DatePickers").datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: '+0d',
+            autoclose: true
+        });
+        $(".DatePickerPractice").datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: '+0d',
+            autoclose: true
+        });
+        /*$("#bar_council_id").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });*/
+        $("#ac_no").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+         $("#pass_year").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $(".rate").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: 'Rs. ',
+            rightAlign: false
+        });
+        $("#addLawyersFrm").validate({
+            rules: {
+               first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                },
+                mobile: {
+                    required: true
+                },
+                qualification: {
+                    required: true
+                },
+                university: {
+                    required: true
+                },
+                pass_year: {
+                    required: true
+                },
+                court: {
+                    required: true
+                },
+                bar_council_id: {
+                    required: true
+                },
+                role: {
+                    required: true
+                },
+                language: {
+                    required: true
+                },
+                jurisdiction_court_name: {
+                    required: true
+                },
+                address1: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                state: {
+                    required: true
+                } 
+            },
+            messages: {
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                email: {
+                    required: "Email can't be blank"
+                },
+                password: {
+                    required: "Password can't be blank"
+                },
+                mobile: {
+                    required: "Mobile can't be blank"
+                },
+                dob: {
+                    required: "Dob can't be blank"
+                },
+                qualification: {
+                    required: "Qualification can't be blank"
+                },
+                university: {
+                    required: "University can't be blank"
+                },
+                pass_year: {
+                    required: "Pass year can't be blank"
+                },
+                court: {
+                    required: "Court can't be blank"
+                },
+                practice_area: {
+                    required: "Practice area can't be blank"
+                },
+                sub_practice_area: {
+                    required: "Sub practice area can't be blank"
+                },
+                bar_council_id: {
+                    required: "Bar council no can't be blank"
+                },
+                practice_start: {
+                    required: "Practice start can't be blank"
+                },
+                role: {
+                    required: "Please select role"
+                },
+                language: {
+                    required: "Language Known can't be blank"
+                },
+                jurisdiction_court_name: {
+                    required: "Please enter your primary jurisdiction"
+                },
+                address1: {
+                    required: "Address1 can't be blank"
+                },
+                city: {
+                    required: "City can't be blank"
+                },
+                state: {
+                    required: "State can't be blank"
+                },
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/lawyers/add",
+                    data: $("#addLawyersFrm").serialize(),
+                    beforeSend: function (xhr) {
+                        $("#primaryLawyerDataAddBtn").prop('disabled', true);
+                        $("#primaryLawyerDataAddBtn").html("Please Wait...");
+                    },
+                    success: function(response){
+                        if(response.success == true)
+                        {
+                            $(".liTab1 a").removeClass("active");
+                            $(".liTab1 a").removeAttr("data-toggle");
+                            $(".liTab1 a").addClass("borderAfter");
+                            $(".tabDiv1").removeClass("active");
+                            $(".liTab1").addClass("disabled");
+                            $(".liTab2").removeClass("disabled");
+                            $(".liTab2 a").addClass("active");
+                            $(".liTab2 a").attr("data-toggle","tab");
+                            $(".tabDiv2").addClass("active");
+                            $("#lawyer_id").val(response.lawyer_id);
+                        }
+                        else
+                        {
+                            swal("Warning!","Email Id already exist","warning");
+                            $("#primaryLawyerDataAddBtn").prop('disabled', false);
+                            $("#primaryLawyerDataAddBtn").html("Next");
+                        }
+                    },
+                    error: function(xhr){
+
+                    }
+                })
+            }
+        });
+        $("#addBankPhotoUploadFrm").validate({
+            rules: {
+                ac_no: {
+                    required: true
+                },
+                ifsc_code: {
+                    required: true
+                },
+                bank_name: {
+                    required: true
+                },
+                ac_holder_pan_no: {
+                    required: true
+                },
+                ac_holder: {
+                    required: true
+                }
+            },
+            messages: {
+                ac_no: {
+                    required: "Account number can't be blank"
+                },
+                ifsc_code: {
+                    required: "IFSC code can't be blank"
+                },
+                bank_name: {
+                    required: "Bank Name can't be blank"
+                },
+                ac_holder_pan_no: {
+                    required: "PAN number of account holder can't be blank"
+                },
+                ac_holder: {
+                    required: "Account holder can't be blank"
+                }
+            }
+        });
+        $("#avatar").change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(".inline-block").attr("src", e.target.result);
+                    $(".img-circle").attr("src", e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+    });
+    $(document).on("click", "#addEducationBtn", function(){
+        $("#education").after($("#educationDiv").html());
+    });
+    $(document).on('click', "#removeEducationBtn", function (e) {
+        $(this).parents(".removediv").remove();
+    });
+    $(document).on("change","#practice_area", function(){
+        var p_id = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "/get-sub-practice-area",
+            data: { p_id: p_id },
+            success: function (response) {
+                $("#sub_practice_area").find('option').not(':first').remove();
+                for (var i = 0; i < response.sub_practice_area.length; i++) {
+                    $("#sub_practice_area").append('<option value="' + response.sub_practice_area[i].id + '">' + response.sub_practice_area[i].name + '</option>');
+                }
+                var options = $('#sub_practice_area option:not(:first)');
+                var arr = options.map(function (_, o) {
+                    return {
+                        t: $(o).text(),
+                        v: o.value
+                    };
+                }).get();
+                arr.sort(function (o1, o2) {
+                    return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+                });
+                options.each(function (i, o) {
+                    //console.log(i);
+                    o.value = arr[i].v;
+                    $(o).text(arr[i].t);
+                });
+            },
+            error: function (xhr) {
+
+            }
+        });
+    });
+
+    $(document).on("click", "#addPracticeAreaLawyer", function(){
+        var p_id = $("#practice_area").val();
+        var sub_p_id = $("#sub_practice_area").val();
+        if(p_id == "")
+        {
+            swal("Warning!","Please Select Practice Area","warning");
+        }
+        else if(sub_p_id == "")
+        {
+            swal("Warning!","Please Select Sub Practice Area","warning");
+        }
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: "/lawyers/add-practice-area",
+                data: {
+                    lawyer_id: $("#lawyer_id").val(),
+                    p_id: p_id,
+                    sub_p_id: sub_p_id
+                },
+                success: function(response)
+                {
+                    if(response.success == true)
+                    {
+                        $("#tablePracticeArea").append('<tr><td>'+ response.p_area +'</td><td>'+response.sub_p_area + '</td></tr>');
+                    }
+                    else {
+                        swal("Warning!", "Lawyer already associated with this practice area", "warning");
+                    }
+                },
+                error: function(xhr)
+                {
+
+                }
+            });
+        }
+    });
+
+    $(document).on("click","#nextTab3Btn", function(){
+        $(".liTab2 a").removeClass("active");
+        $(".liTab2 a").removeAttr("data-toggle");
+        $(".liTab2 a").addClass("borderAfter");
+        $(".tabDiv2").removeClass("active");
+        $(".liTab2").addClass("disabled");
+        $(".liTab3").removeClass("disabled");
+        $(".liTab3 a").addClass("active");
+        $(".liTab3 a").attr("data-toggle", "tab");
+        $(".tabDiv3").addClass("active");
+        $("#law_id").val($("#lawyer_id").val());
+    })
+</script> {{/content}}

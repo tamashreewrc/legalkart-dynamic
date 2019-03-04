@@ -1,0 +1,38 @@
+<main class="main-content inner-page lk-legal-advice-categories">
+    <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">Legal Advice Categories</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+    <!--  Legal Advice Categories Content Area -->
+    <div class="lk-legal-advice-categories-content lk-categories-common m-tb-30">
+        <div class="container">
+            <div class="row">
+                {{#each practice_area}}
+                <div class="col-md-4 m-b-30 col-sm-6">
+                    <div class="card bg-light">
+                        <div class="card-header text-uppercase">{{this.name}}</div>
+                        <div class="card-body">
+                            <ul class="m-0 p-l-20" type="square">
+                                {{#each this.sub_pacticeareas}}
+                                <li>
+                                    <a href="/lawyers-directory/{{this.id}}" class="font-16 m-b-5 d-block">{{this.name}}</a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <!--  Legal Advice Categories Content Area -->
+</main>

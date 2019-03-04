@@ -1,0 +1,154 @@
+<main class="main-content inner-page lk-about">
+
+
+    <!-- Login / Sign Up Content Area -->
+    <div class="lk-in-login-content">
+        <div class="container">
+            <div class="login-info m-t-30 m-b-30">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h2>Lawyer Sign Up</span>
+                            </h2>
+                            <h3>
+                                <span>ALL THE LEGAL HELP YOU NEED. ANYTIME. ANYWHERE
+                                </span>SEE EVERYTHING WE CAN HELP YOU WITH</h3>
+                            {{#if err_signup_lawyers}}
+                            <div class="alert alert-danger">
+                                <strong>Error! </strong>{{err_signup_lawyers}}
+                            </div>
+                            {{/if}}
+                        </div>
+                        <div class="lk-login-panel m-t-50">
+                            <div class="panel panel-login">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <a href="#" class="active" id="register-form-link">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form id="register-lawyer-form" method="POST" action="/lawyer-signup-post" >
+                                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="lawyer_role" id="lawyer_role">
+                                                        <option value="">Select Role</option>
+                                                        <option value="I">Lawyer</option>
+                                                        <option value="L">Legal Consultant</option>
+                                                        <option value="G">Govt Relations</option>
+                                                        <option value="P">Police Officer</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="First Name" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="last_name" id="last_name" tabindex="1" class="form-control" placeholder="Last Name" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="mobile_no" id="mobile_no" maxlength="10" tabindex="1" class="form-control" placeholder="Mobile No"
+                                                        value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Id" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="confirm_password" id="confirm_password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="checkbox" name="terms" id="terms"> I accept the Terms &amp; Conditions
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-sm-offset-3">
+                                                            <input type="submit" tabindex="4" class="btn btn-register" value="Register Now">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--... Login / Sign Up Content Area -->
+</main>
+{{#content "script" mode="append"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#register-lawyer-form').validate({
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                },
+                mobile_no: {
+                    required: true,
+                    number: true
+                },
+                lawyer_role: {
+                    required: true
+                },
+                terms: {
+                    required: true
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                email: {
+                    required: "Email can't be blank"
+                },
+                password: {
+                    required: "Password can't be blank"
+                },
+                mobile_no: {
+                    required: "Mobile can't be blank"
+                },
+                terms: {
+                    required: "Please check our terms"
+                },
+                lawyer_role: {
+                    required: "Please select one"
+                }
+            },
+        });
+
+
+        $(".alert").fadeTo(4000, 500).slideUp(500, function () {
+            $(".alert").slideUp(500);
+        });
+    });
+
+</script>
+{{/content}}

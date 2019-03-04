@@ -1,0 +1,162 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/legal-service-content">Legal Service Content</a>
+                </li>
+                <li class="breadcrumb-item active">Legal Service Add Content</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <h5>
+            Legal Service Add Content
+        </h5>
+        <form role="form" id="legal_service_cms" method="POST" action="/legal-service-content/add" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Select Legal Service</label>
+                        <select class="full-width select2-hidden-accessible" data-init-plugin="select2" tabindex="-1" aria-hidden="true" name="legal_advice_head"
+                            id="legal_advice_head">
+                            <option value="">Select</option>
+                            {{#each legal_service_head}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="ErrorTarget"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Legal Service Category</label>
+                        <select class="full-width select2-hidden-accessible" data-init-plugin="select2" tabindex="-1" aria-hidden="true" name="legal_advice_sub"
+                            id="legal_advice_sub">
+                            <option value="">Select</option>
+                            {{#each legal_service_sub}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="ErrorTarget"></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Upload Photo</label>
+                        <input class="upload" type="file" name="avatar" id="avatar">
+                        <img class="inline-block" src="https://iupac.org/cms/wp-content/uploads/2018/05/default-avatar.png" alt="user" width="80"
+                            height="80">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Legal Service Name</label>
+                        <textarea id="editor" name="content"></textarea>
+                    </div>
+                </div>
+            </div>
+           
+            <button class="btn btn-primary btn-cons m-t-10 btn-lg" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+{{#content "script" mode="append"}}
+<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+<script type="text/javascript">
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    $(document).ready(function (e) {
+        
+        $("#legal_service_cms").validate({
+            rules: {
+                legal_advice_head: {
+                    required: true
+                },
+                legal_advice_sub: {
+                    required: true
+                },
+                avatar: {
+                    required: true
+                },
+                content: {
+                    required: true
+                },
+            },
+            messages: {
+                legal_advice_head: {
+                    required: "Please select One"
+                },
+                legal_advice_sub: {
+                    required: "Please select One"
+                },
+                avatar: {
+                    required: "Please choose"
+                },
+                content: {
+                    required: "Content can't be blank"
+                },
+            },
+            errorPlacement: function (error, element) {
+                var lawyerListLabelError = $(error).html();
+                $(".ErrorTarget").addClass("error").text(lawyerListLabelError);
+            }
+        });
+        $("#avatar").change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(".inline-block").attr("src", e.target.result);
+                    $(".img-circle").attr("src", e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
+    $(document).on("change","#legal_advice_head", function(){
+        var legal_advice_head_id = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "/get-sub-legal-service-category",
+            data: {
+                legal_advice_head_id: legal_advice_head_id
+            },
+            success:function(response)
+            {
+                $("#legal_advice_sub").find('option').not(':first').remove();
+                for (var i = 0; i < response.sub_legal_service_category.length; i++) {
+                    $("#legal_advice_sub").append('<option value="' + response.sub_legal_service_category[i].id + '">' + response.sub_legal_service_category[i].name + '</option>');
+                }
+            },
+            error:function(xhr)
+            {
+
+            }
+        })
+    });
+
+</script> 
+{{/content}}

@@ -1,0 +1,509 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">View Profile</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    {{#if update_profile_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{update_profile_message}}
+                    </div>
+                    {{/if}}
+                    <div class="pull-left text-capitalize m-l-20">
+                        <h5>{{user.first_name}} {{user.last_name}}</h5>
+                    </div>
+                    <div class="pull-right m-t-15">
+                        {{#if_eq user.role_id "2"}}
+                        <a href="/edit-lawyer-profile" class="btn btn-primary btn-cons m-b-10">
+                            <i class="fa fa-pencil-square-o"></i> Edit Profile
+                        </a>
+                        {{else}}
+                        <a href="/edit-site-profile" class="btn btn-primary btn-cons m-b-10">
+                            <i class="fa fa-pencil-square-o"></i> Edit Profile
+                        </a>
+                        {{/if_eq}}
+
+                    </div>
+                    {{#if_eq user.role_id "1"}}
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 bg-white">
+                                <div class="card-body">
+                                    <div class="profile-pic">
+                                        <img src="{{user.avatar}}" alt="" width="200" height="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld"
+                                            href="#">Profile Details</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-12">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Full Name :</strong> {{user.first_name}}
+                                                            {{user.last_name}}</li>
+                                                        <li>
+                                                            <strong>Email ID :</strong> {{user.email}}</li>
+                                                        <li>
+                                                            <strong>Mobile No. :</strong> {{user.mobile}}
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if_eq}}
+                    {{#if_eq user.role_id "3"}}
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 bg-white">
+                                <div class="card-body">
+                                    <div class="profile-pic">
+                                        <img src="{{user.avatar}}" alt="" width="200" height="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld"
+                                            href="#">Profile Details</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-12">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>Full Name:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{user.first_name}}
+                                                                        {{user.last_name}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>Email ID:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{user.email}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>Notification Email Id:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    {{#if_eq user.notification_email "0"}}
+                    
+                                                                    {{else}}
+                                                                    <p class="card-text">
+                                                                        {{user.notification_email}}
+                                                                    </p>
+                                                                    {{/if_eq}}
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>Mobile No:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{user.mobile}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>Firm Name:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{firmDetails.name}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>State:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{stateName.name}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>City:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{cityName.name}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>Logo:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <img src="{{firmDetails.image}}" width="30px"
+                                                                        height="30px">
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="m-b-10">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <p class="card-text">
+                                                                        <strong>GST:</strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <p class="card-text">
+                                                                        {{customerDetails.gst}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="row">
+                                                        {{#each ContactPersonDetails}}
+                                                        <div class="col-md-4 m-tb-20">
+                                                            <div class="card text-dark bg-light common-card-height">
+                                                                <div class="card-body">
+                                                                    <div class="row m-b-10">
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                <strong>Contact Person:</strong>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                {{name}}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row m-b-10">
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                <strong>Contact Person Phone:</strong>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                {{phone}}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row m-b-10">
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                <strong>Contact Person Email:</strong>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                {{email}}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{/each}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if_eq}}
+                    {{#if_eq user.role_id "2"}}
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 bg-white">
+                                <div class="card-body">
+                                    <div class="profile-pic">
+                                        <img src="{{lawyer.avatar}}" alt="" width="200" height="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld"
+                                            href="#">Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2PracticeArea">Practice
+                                            Areas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2FollowUs">Education</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Email ID :</strong> {{lawyer.email}}</li>
+                                                        <li>
+                                                            <strong>Mobile No. :</strong> {{lawyer.mobile}}</li>
+                                                        <li>
+                                                            <strong>Date Of Birth :</strong> {{dateFormat
+                                                            lawyer.lawyers.0.dob "DD/MM/YYYY"}}</li>
+                                                        <li>
+                                                            <strong>Jurisdiction :</strong> {{jurisdiction.name}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Rate (Rs.) :</strong> {{lawyer.lawyers.0.rate}}/-
+                                                        </li>
+                                                        <li>
+                                                            <strong>Chember Address :</strong>
+                                                            {{lawyer.lawyers.0.chember_address}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Address2 :</strong> {{lawyer.lawyers.0.address2}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>State :</strong> {{state.name}}
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Role :</strong>
+                                                            {{#if_eq lawyer.sub_role "I"}}Individual Lawyer{{/if_eq}}
+                                                            {{#if_eq lawyer.sub_role "L"}}Legal Consultant{{/if_eq}}
+                                                            {{#if_eq lawyer.sub_role "G"}}Govt Relations{{/if_eq}}
+                                                            {{#if_eq lawyer.sub_role "P"}}Police Officer{{/if_eq}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Bar Council ID/Number :</strong>
+                                                            {{lawyer.lawyers.0.bar_council_id}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Case Handled :</strong>
+                                                            {{lawyer.lawyers.0.case_handled}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Language Spoke :</strong>
+                                                            {{lawyer.lawyers.0.language}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Practicing Since :</strong> {{dateFormat
+                                                            lawyer.lawyers.0.practice_start "DD/MM/YYYY"}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Address1 :</strong> {{lawyer.lawyers.0.address1}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Address3 :</strong> {{lawyer.lawyers.0.address3}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>City :</strong> {{city.name}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Court :</strong>{{#each court}} {{this.name}},
+                                                            {{/each}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>bio :</strong> {{lawyer.lawyers.0.bio}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2PracticeArea">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-condensed table-detailed" id="detailedTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:50%">Practice Area</th>
+                                                                <th style="width:50%">Sub Practice Area</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each lawyerPracticeArea}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">{{this.practice_area}}</td>
+                                                                <td class="v-align-middle">{{this.sub_practice_area}}</td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2FollowUs">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-condensed table-detailed" id="detailedTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:25%">Qualification</th>
+                                                                <th style="width:25%">University</th>
+                                                                <th style="width:25%">Passing Year</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each lawyer.education}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">{{this.degree}}</td>
+                                                                <td class="v-align-middle">{{this.university}}</td>
+                                                                <td class="v-align-middle semi-bold">{{this.year}}</td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if_eq}}
+                     {{#if_eq user.role_id "5"}}
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 bg-white">
+                                <div class="card-body">
+                                    <div class="profile-pic">
+                                        <img src="{{user.avatar}}" alt="" width="200" height="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld" href="#">Profile Details</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-12">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Full Name :</strong> {{user.first_name}} {{user.last_name}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Email ID :</strong> {{user.email}}</li>
+                                                        <li>
+                                                            <strong>Mobile No. :</strong> {{user.mobile}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>State :</strong> {{mang_state}}
+                                                        </li>
+                                                        <li>
+                                                            <strong>City :</strong> {{mang_city}}
+                                                        </li>
+                    
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if_eq}}
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>

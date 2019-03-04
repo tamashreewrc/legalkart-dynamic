@@ -1,0 +1,547 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Superdari Cases</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if add_case_status_lawyer}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{add_case_status_lawyer}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}} {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>All Superdari Case Lists</h5>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body ">
+        <div class="col-xl-12 col-lg-12 col-top">
+            <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item liTab2">
+                    <a href="javascript:void(0)" class="active indivisualAdd" class="legalAdd" data-toggle="tab" role="tab"
+                        data-target="#pending">Current Cases</a>
+                </li>
+                <li class="nav-item liTab3">
+                    <a href="javascript:void(0)" class="govAdd" data-toggle="tab" role="tab" data-target="#approve">Closed
+                        Cases</a>
+                </li>
+                <li class="nav-item liTab4">
+                    <a href="javascript:void(0)" class="policeAdd" data-toggle="tab" role="tab" data-target="#reject">All
+                        Cases</a>
+                </li>
+
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane tabDiv2 active" id="pending">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Cab No</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Driver Mobile</th>
+                                <th>Date &amp; time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_case}}
+                            {{#if_eq this.status "3"}}{{#if_eq this.invitation "1"}}
+                            <tr {{#if_eq this.conversations.0.user_id ../user.id}}{{else}}{{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}{{/if_eq}}>
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                </td>
+                                <td>
+                                    {{!-- <a href="javascript:void(0);" id="changeCaseStatus" data-case-id="{{this.id}}"
+                                        data-status="{{this.status}}" class="btn btn-primary" title="Change Status">
+                                        <i class="fa fa-exchange"></i>
+                                    </a> --}}
+
+                                    <a href="/case-conversation/{{this.id}}" id="caseView" class="btn btn-primary"
+                                        title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/if_eq}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane tabDiv3" id="approve">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Cab No</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Driver Mobile</th>
+                                <th>Date &amp; time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_case}}
+                            {{#if_eq this.closeing_status "1"}}{{#if_eq this.invitation "1"}}
+                            <tr {{#if_eq this.conversations.0.user_id ../user.id}}{{else}}{{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}{{/if_eq}}>
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                </td>
+                                <td>
+
+                                    <a href="/case-conversation/{{this.id}}" id="caseView" class="btn btn-primary"
+                                        title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/if_eq}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane tabDiv4" id="reject">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Cab No</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Driver Mobile</th>
+                                <th>Status</th>
+                                <th>Date &amp; time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_case}}{{#if_eq this.invitation "1"}}
+                            <tr {{#if_eq this.conversations.0.user_id ../user.id}}{{else}}{{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}{{/if_eq}}>
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    {{#if_eq this.closeing_status "1"}}<p class="badge badge-success">Closed Case</p>{{else}}
+                                    {{#if_eq this.status "3"}}<p class="badge badge-warning">Current Case</p>{{/if_eq}}
+                                    {{#if_eq this.status "1"}}
+                                    <p class="badge badge-primary">Approved</p>{{/if_eq}} {{#if_eq this.status "2"}}
+                                    <p class="badge badge-danger">Rejected</p>{{/if_eq}}
+                                    {{/if_eq}}
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                </td>
+                                <td>
+
+                                    <a href="/case-conversation/{{this.id}}" id="caseView" class="btn btn-primary"
+                                        title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- <div class="modal fade" id="lawyerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Lawyer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/lawyers/delete" method="post">
+                <input type="hidden" name="lawyers_id" id="lawyers_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this lawyers?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> --}}
+
+
+<div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" name="changeStatusFrm" id="changeStatusFrm">
+                    <input type="hidden" name="case_id" id="case_id">
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="status" id="status">
+                            <option value="">Select Status</option>
+                            <option value="1">Approved</option>
+                            <option value="2">Rejected</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnChangeStatus">Change</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="LawyerPaymentDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Payment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <div class="d-flex m-b-20">
+                    <h5 class="modal-title" id="exampleModalLabel">Your Legalkart fees: {{lawyer_rate}}/- </h5>
+                    <button class="btn btn-primary m-l-30" type="button" id="addAdiitionAddCostBtn">
+                        <i class="fa fa-plus"></i> Add Additional Cost</button>
+                </div>
+                <form role="form" name="addAdditionalCostFrm" id="addAdditionalCostFrm" method="POST" action="/change-case-status"
+                    enctype="multipart/form-data">
+                    <input type="hidden" name="case_ids" id="case_ids">
+                    <input type="hidden" name="case_status" id="case_status">
+                    <input type="hidden" name="tot_addi_expense" id="tot_addi_expense">
+                    <div class="row govt-fee-div addGovtother">
+                        <div class="col-md-12">
+                            <h6>Add Govt. Fees</h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Govt. fee detail</label>
+                                    <span class="requiredErr">*</span>
+                                    <input type="text" class="form-control" name="govt_fee_name[]" id="govt_fee_name" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label> Govt. fees</label>
+                                    <span class="requiredErr">*</span>
+                                    <input type="text" class="form-control" name="govt_fee_amount[]" id="govt_fee_amount" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>&nbsp;&nbsp;</label>
+                                    <br>
+                                    <button class="btn btn-primary addGovtFeeBtn" type="button">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row govt-fee-div addAdditionalCostShowDiv" style="display:none">
+                        <h6 class="addAddiCostDiv m-b-5">Add Additional Cost (maximum amount 2000/-)</h6>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="additional_cost_file" id="additional_cost_file"
+                            multiple />
+                    </div>
+                    {{!--
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="status" id="status">
+                            <option value="">Select Status</option>
+                            <option value="1">Approved</option>
+                            <option value="2">Rejected</option>
+                        </select>
+                    </div> --}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnaddAdditionalCost">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="display:none">
+    <div id="showAdditionalCostAdd">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Additional Expence Detail</label>
+                    <input type="text" class="form-control" name="addi_expence[]" id="addi_expence" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label> Additional Amount</label>
+                    <input type="text" class="form-control tot_addi_cost" name="tot_addi_cost[]" id="tot_addi_cost" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <br>
+                    <button class="btn btn-danger" id="removeAdditionalCostDivBtn" type="button">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row showGovtCostAdd">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Govt. fee detail</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="govt_fee_name[]" id="govt_fee_name" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label> Govt. fees</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control govt_fee_amount" name="govt_fee_amount[]" id="govt_fee_amount" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>&nbsp;</label><br>
+                    <button class="btn btn-danger" id="removeGovtDivBtn" type="button"><i class="fa fa-close"></i></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#addAdditionalCostFrm").validate({
+            rules: {
+                govt_fee_name: {
+                    required: true
+                },
+                govt_fee_amount: {
+                    required: true
+                },
+                additional_cost_file: {
+                    required: true
+                }
+            },
+            messages: {
+                govt_fee_name: {
+                    required: "name can't be blank"
+                },
+                govt_fee_amount: {
+                    required: "Amount can't be blank"
+                }
+            }
+        });
+        $("#govt_fee_amount").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+    $(document).on("click", "#lawyerDeleteBtn", function () {
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    $(document).on("click", "#caseAddBtn", function () {
+        $("#addCaseTypeModal").modal("show");
+    });
+
+    $(document).on("click", "#btnCaseAdd", function () {
+        var caseType = $("#case_type").val();
+        window.location.href = "/case/add/" + caseType;
+    });
+
+    $(document).on("click", "#changeCaseStatus", function () {
+        var case_id = $(this).data("case-id");
+        var status = $(this).data("status");
+        $("#case_id").val(case_id);
+        if (status != "3") {
+            $("#status").val(status);
+            var xxx = $("#status option:selected").text();
+            $("#select2-status-container").text(xxx);
+        }
+        $("#changeStatusModal").modal('show');
+    });
+    $(document).on("click", "#addAdiitionAddCostBtn", function () {
+        $(".addAdditionalCostShowDiv").show();
+        $(".addAdditionalCostShowDiv").append($("#showAdditionalCostAdd").html());
+        //$("#addAdiitionAddCostBtn").hide(); 
+        $(".tot_addi_cost").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    })
+    $(document).on("click", ".addGovtFeeBtn", function () {
+        $(".addGovtother").append($(".showGovtCostAdd").html());
+        //$("#addAdiitionAddCostBtn").hide(); 
+        $(".govt_fee_amount").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    })
+
+    $(document).on("click", "#btnChangeStatus", function () {
+        if ($("#status").val() == "") {
+            swal("Warning!", "Please Select Status", "warning");
+        }
+        else {
+            $("#case_ids").val($("#case_id").val());
+            $("#case_status").val($("#status").val());
+            $("#LawyerPaymentDetailModal").modal('show');
+        }
+    });
+    $(document).on("change", ".tot_addi_cost", function () {
+        var totAddiAmount = [];
+        $(".tot_addi_cost").each(function () {
+            if ($(this).val() != "") {
+                totAddiAmount.push(parseInt($(this).val()));
+            }
+        });
+        var total_rate = totAddiAmount.reduce((a, b) => a + b, 0);
+        if (total_rate > 2000) {
+            swal("warning", "Amount can't greater than 2000/-", "warning");
+            $("#btnaddAdditionalCost").attr('disabled', true);
+        }
+        else {
+            $("#btnaddAdditionalCost").attr('disabled', false);
+            $("#tot_addi_expense").val(total_rate);
+        }
+    });
+
+    $(document).on("click", "#removeGovtDivBtn", function () {
+        $(this).closest(".row").remove();
+    });
+    $(document).on("click", "#removeAdditionalCostDivBtn", function () {
+        $(this).closest(".row").remove();
+    });
+
+</script> {{/content}}
+<!-- END card -->

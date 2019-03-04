@@ -1,0 +1,94 @@
+
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Message Lists {{firm_name}}</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_manager}}
+        </div>
+        {{/if}} 
+        {{#if success_del_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_del_manager}}
+        </div>
+        {{/if}} {{#if success_edit_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_edit_manager}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Message Lists {{firm_name}}</h5>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body ">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Case No.</th>
+                    <th>Message</th>
+                    <th>Date &amp; Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each msg}}
+                <tr>
+                    <td class="v-align-middle">
+                        <p>{{this.case_no}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>
+                            {{#if_eq this.user_id ../user.id}}
+                                <a href="/case-conversation/{{case_id}}">
+                                        {{{this.msg}}}
+                                </a>
+                                {{else}}
+                                {{#if_eq this.status "0"}}
+                                    <b><a href="/case-conversation/{{case_id}}">
+                                        {{{this.msg}}}
+                                    </a></b>
+                                {{else}}
+                                    <a href="/case-conversation/{{case_id}}">
+                                        {{{this.msg}}}
+                                    </a>
+                                {{/if_eq}}
+                            {{/if_eq}}
+                        </p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.time}}</p>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#managerDeleteBtn", function () {
+        $("#manager_id").val($(this).data("manager-id"));
+        $("#managerDeleteModal").modal("show");
+    });
+
+   
+
+</script> {{/content}}
+<!-- END card -->

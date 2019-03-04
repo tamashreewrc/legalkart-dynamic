@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{invoice_no}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+    <style>
+        @page {
+		  size: A4;
+		}
+        *,
+        *::before,
+        *::after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-size: 7pt;
+        }
+
+        .invoice-container {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 7pt;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            color: #212121;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            margin: 10px 0;
+        }
+
+        a:hover {
+            outline: 0 none;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .text-primary {
+            color: #b68800;
+        }
+
+        .border-bottom-2 {
+            border-bottom: 2px solid #b68800;
+        }
+
+        .table-auto {
+            display: table;
+            margin: 0 auto;
+        }
+
+        .separator {
+            height: 2px;
+            width: 100%;
+            max-width: 1000px;
+            background: #b68800;
+            display: table;
+            margin: 0 auto 20px;
+        }
+
+        .clearfix {
+            clear: both;
+            overflow: hidden;
+        }
+
+        .float-left {
+            float: left;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .max-width-1000 {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .col-50 {
+            width: 50%
+        }
+
+        .m-tb-70 {
+            margin: 70px 0;
+        }
+
+        table,
+        td,
+        th {
+            font-size: 7pt;
+            border: 1px solid #999;
+            padding: 10px;
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            height: 50px;
+            vertical-align: bottom;
+        }
+
+        caption {
+            display: table-caption;
+            text-align: center;
+            padding: 20px 0;
+            font-weight: bold;
+            font-size: 11pt;
+            color: #333;
+        }
+
+        .contact-info {
+            max-width: 800px;
+            margin: 10px auto 0;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="invoice-container">
+        <div class="max-width-1000">
+            <div class="bio-details">
+                <h1 class="text-center text-uppercase text-primary table-auto">
+                    Advocate {{lawyer.first_name}} {{lawyer.last_name}}
+                </h1>
+                <address class="text-center ">
+                    Chamber Address- {{lawyer.lawyers.0.chember_address}}
+                </address>
+                <div class="clearfix contact-info">
+                    <p class="float-left">
+                        <strong>
+                            Contact No-
+                        </strong>
+                        {{lawyer.mobile}}
+                    </p>
+                    <p class="float-right">
+                        <strong>
+                            Email ID-
+                        </strong>
+                        {{lawyer.email}}
+                    </p>
+                </div>
+
+                <div class="separator"></div>
+            </div>
+            <div class="invoice-body">
+                <h2 class="text-center text-uppercase">
+                    <strong>INVOICE</strong>
+                </h2>
+                <div class="row clearfix">
+                    <div class="left col-50 float-left">
+                        <p>
+                            <strong>
+                                General Details:
+                            </strong>
+                            <br>
+                            <br> Date: {{today}}
+                            <br> Invoice no: {{invoice_no}} 
+                            <br>To,
+                            <br>&nbsp;&nbsp;&nbsp; LEGALKART.
+                        </p>
+                    </div>
+                    <div class="right col-50 float-right">
+                        <p class="float-right">
+                            <strong>
+                                Account Details:
+                            </strong>
+                            <br>
+                            <br> Name: {{lawyer.lawyer_bank_details.0.account_holder}}
+                            <br> A/c No.:{{lawyer.lawyer_bank_details.0.account_number}}
+                            <br> IFSC Code: {{lawyer.lawyer_bank_details.0.ifsc_code}}
+                            <br> Branch:{{lawyer.lawyer_bank_details.0.bank_name}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice-data">
+                <table>
+                    <caption>Professional/Expense Bill</caption>
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Description of service</th>
+                            <th>Vehicle No</th>
+                            <th>Reimbursement of Amount towards Challan payment (TDS not Applicable)</th>
+                            <th>Advocate fees towards Challan (TDS Applicable)</th>
+                            <th>Total Amount in Rs.</th>
+                            <th>Court of Challan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each cases}}
+                        <tr>
+                            <td>{{this.serial_no}}</td>
+                            <td>{{this.service_type}}</td>
+                            <td>{{this.case_no}}</td>
+                            <td>{{this.additional_cost}}/-</td>
+                            <td>{{this.amount}}/-</td>
+                            <td>{{this.total_cost}}/-</td>
+                            <td>{{this.court}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                Total
+                            </td>
+                            <td colspan="2">
+                                {{total_rate}}/-
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <p class="m-tb-70 text-center">
+                    The Grand total of amount is
+                    <strong>
+                         {{tot_rate_word}}
+                    </strong> only.
+                </p>
+
+                <p class="float-right text-center">
+                    <strong>
+                         {{lawyer.first_name}} {{lawyer.last_name}}
+                        <br> ADVOCATE
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

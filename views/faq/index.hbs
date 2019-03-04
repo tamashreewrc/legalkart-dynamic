@@ -1,0 +1,247 @@
+
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+    <div class="inner">
+        <!-- START BREADCRUMB -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/dashboard">Home</a>
+            </li>
+            <li class="breadcrumb-item active">FAQ</li>
+        </ol>
+        <!-- END BREADCRUMB -->
+    </div>
+</div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_Faq}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_Faq}}
+        </div>
+        {{/if}}
+        {{#if success_del_Faq}}
+        <div class="alert alert-success"  style="color:red">
+            <strong>Success! </strong>{{success_del_Faq}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>FAQ Listing</h5>
+        </div>
+        <div class="pull-right">
+            <a href="/faq-add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add FAQ</a>
+           
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each faq}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.question}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.answer}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.remarks}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{dateFormat this.cratedAt "DD-MM-YYYY"}}</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-complete" type="button" id="viewfaq" title="View" data-faq-id="{{this.id}}" data-faq-question="{{this.question}}" data-faq-answer="{{this.answer}}" data-faq-remarks="{{this.remarks}}"><i class="fa fa-eye"></i></button>  
+                        <button class="btn btn-info" type="button" title="Edit" id="editfaq" data-faq-id="{{this.id}}" data-faq-question="{{this.question}}" data-faq-answer={{this.answer}} data-faq-remarks="{{this.remarks}}"><i class="fa fa-paste"></i></button>  
+
+                        {{!-- <a href="/faq/delete/{{this.id}}" class="btn btn-danger" id="deleteFaq" title="Delete"><i class="fa fa-trash-o"></i></a>   --}}
+
+                        <button class="btn btn-danger" type="button" title="Edit" id="deleteFaq" data-faq-id="{{this.id}}">
+                            <i class="fa fa-trash-o"></i>
+                        </button>  
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- END card -->
+<div class="modal fade" id="viewfaqModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Faq</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Question</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="view_question" id="view_question" placeholder="Please Enter your Question" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Answer</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="view_answer" id="view_answer" placeholder="Please Enter your Answer" readonly>
+                </div>
+                <div class="form-group">
+                    <label>remarks</label>
+                    <span class="requiredErr">*</span>
+                    <textarea class="form-control" id="view_remarks" name="view_remarks" placeholder="Briefly Describe your Remarks" readonly></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editfaqModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Faq</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form" id="editfaqModelFrm" method="POST" action="/faq/edit">
+                <input type="hidden" name="faq_id" id="faq_id">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}"> 
+                <div class="form-group">
+                    <label>Question</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="question" id="edit_question" placeholder="Please Enter your Question" >
+                </div>
+                <div class="form-group">
+                    <label>Answer</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="answer" id="edit_answer" placeholder="Please Enter your Answer" >
+                </div>
+                <div class="form-group">
+                    <label>remarks</label>
+                    <span class="requiredErr">*</span>
+                    <textarea class="form-control" id="edit_remarks" name="remarks" placeholder="Briefly Describe your Remarks"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnEditfaq">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deletefacModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Faq</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form" id="editfaqModelFrm" method="POST" action="/faq/delete">
+                <input type="hidden" name="faqId" id="faqId">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}"> 
+                <div class="form-group">
+                    <p>Area you sure you went to delete this Faq?</p>
+                </div>
+                
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnEditfaq">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+    <script>
+        $(document).on('click', "#viewfaq", function(){
+            var faq_id = $(this).data("faq-id");
+            var faq_question = $(this).data("faq-question");
+            var faq_answer = $(this).data("faq-answer");
+            var faq_remarks = $(this).data("faq-remarks");
+            $("#view_question").val(faq_question);    
+            $("#view_answer").val(faq_answer);         
+            $("#view_remarks").val(faq_remarks);
+            $("#viewfaqModal").modal('show');
+        });
+
+        $(document).on('click', "#editfaq", function(){
+            var faq_id = $(this).data("faq-id");
+            var faq_question = $(this).data("faq-question");
+            var faq_answer = $(this).data("faq-answer");
+            var faq_remarks = $(this).data("faq-remarks");
+            $("#faq_id").val(faq_id);
+            $("#edit_question").val(faq_question);    
+            $("#edit_answer").val(faq_answer);         
+            $("#edit_remarks").val(faq_remarks)
+            $("#editfaqModal").modal('show');
+        });
+
+        $(document).on('click','#deleteFaq', function() {
+            var faq_id = $(this).data("faq-id");
+            $("#faqId").val(faq_id);
+            $("#deletefacModal").modal('show');
+        });
+
+        $(document).ready(function(e){
+           
+            $("#editfaqModelFrm").validate({
+                rules: {
+                    question: {
+                        required: true
+                    },
+                    answer: {
+                        required: true
+                    },
+                    remarks: {
+                        required: true
+                    }
+                },
+                messages: {
+                    question: {
+                        required: "Question can't be blank"
+                    },
+                    answer: {
+                        required: "Answer can't be blank"
+                    },
+                    remarks :{
+                        required: "Remarks can't be blank"
+                    }
+                }
+            });
+        });
+    </script>
+{{/content}}

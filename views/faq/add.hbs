@@ -1,0 +1,80 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/legaljart_faq">FAQ</a>
+                </li>
+                <li class="breadcrumb-item active">Add FAQ</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+<!-- START CONTAINER FLUID -->
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    <h5>
+                        Add FAQ
+                    </h5>
+                    <form role="form" id="addFaq" method="POST" action="/faq/add">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}"> 
+                        <div class="form-group">
+                            <label>Question</label><span class="requiredErr">*</span>
+                            <input type="text" class="form-control" name="question" id="question" placeholder="Please Enter your Question">
+                        </div>
+                        <div class="form-group">
+                            <label>Answer</label><span class="requiredErr">*</span>
+                            <input type="text" class="form-control" name="answer" id="answer" placeholder="Please Enter your Answer">
+                        </div>
+                        <div class="form-group">
+                            <label>remarks</label><span class="requiredErr">*</span>
+                            <textarea class="form-control" id="remarks" name="remarks" placeholder="Briefly Describe your Remarks"></textarea>
+                        </div>
+                        <button class="btn btn-primary btn-cons m-t-10" type="submit">Add Faq</button>
+                    </form>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>
+ {{#content "script" mode="append"}}
+<script>
+    $(document).ready(function () {
+        $("#addFaq").validate({
+            rules: {
+                question: {
+                    required: true
+                },
+                answer: {
+                    required: true
+                },
+                remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                question: {
+                    required: "Question can't be blank"
+                },
+                answer: {
+                    required: "Answer can't be blank"
+                },
+                remarks: {
+                    required: "Remarks can't be blank"
+                }
+            }
+        });
+    });
+</script> {{/content}}

@@ -1,0 +1,85 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/practiceArea">Practice Area</a>
+                </li>
+                <li class="breadcrumb-item active">Practice Area Add</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <h5>
+            Practice Area Add
+        </h5>
+        <form role="form" id="practicearea" method="POST" action="/practicearea_add">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+            <div class="form-group ">
+                <label>Practice Area Head</label>
+                <select class="full-width select2-hidden-accessible" data-init-plugin="select2" tabindex="-1"
+                    aria-hidden="true" name="practice_status">
+                    <option value="0">Select</option>
+                    {{#each pacticearea}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Practice Area Name</label>
+                <input type="text" class="form-control" name="practice_name" id="practice_name" placeholder="Enter Practice Area Name">
+            </div>
+
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea type="textarea" class="form-control" name="practice_remarks" id="practice_remarks"  placeholder="Briefly Describe your Remarks" ></textarea>
+            </div>
+
+            <button class="btn btn-primary btn-cons m-t-10 btn-lg" type="submit">Submit</button>
+
+        </form>
+    </div>
+</div>
+
+
+
+{{#content "script" mode="append"}}
+
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        $("#practicearea").validate({
+
+            rules: {
+                practice_name: {
+                    required: true
+                },
+                practice_remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                practice_name: {
+                    required: "Name can't be blank"
+                },
+                practice_remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+        });
+    });
+
+</script>
+
+{{/content}}

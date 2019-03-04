@@ -1,0 +1,1502 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                {{!-- <li class="breadcrumb-item">
+                    <a href="/my-cases">My Cases Type</a>
+                </li> --}}
+                <li class="breadcrumb-item active">All Corporate Superdari Cases</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if caseAdd}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{caseAdd}}
+            <input type="hidden" id="case_add" name="case_add" value="{{caseAdd}}">
+        </div>
+        {{/if}}
+        {{#if success_add_cases}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_cases}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}} {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}} {{#if add_case_close_status_lawyer}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{add_case_close_status_lawyer}}
+        </div>
+        {{/if}} {{#if existing_CT1_cases}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{existing_CT1_cases}}
+        </div>
+        {{/if}}
+
+        {{#if_eq user.role_id '1'}}
+        <div class="card-title">
+            <h5>List All Corporate Superdari Cases</h5>
+        </div>
+        {{else}}
+        {{#if_eq user.role_id '3'}}
+        <div class="card-title">
+            <h5>List All Corporate Superdari Cases</h5>
+        </div>
+        {{else}}
+        <div class="card-title">
+            <h5>List All Superdari Case</h5>
+        </div>
+        {{/if_eq}}
+        {{/if_eq}}
+
+        <div class="pull-right">
+            {{#if_eq user.role_id '1'}}
+            <a href="javascript:void(0)" class="btn btn-primary btn-cons m-b-10" id="lawyerAssignment" style="display:none">
+                <i class="fa fa-share-square-o"></i>Assignment</a>
+            {{else}}
+            {{#if_eq user.role_id "5"}}
+            <a href="/case_excel_format/caseType_1.xlsx" download class="btn btn-primary btn-cons m-t-15" id="caseAddBtn">
+                <i class="fa fa-download"></i> Download Excel Template
+            </a>
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary btn-cons m-t-15">
+                <i class="fa fa-upload"></i> Upload Excel
+            </a>
+            {{!-- <a href="javascript:void(0)" data-toggle="modal" data-target="#importFile" class="btn btn-primary btn-cons m-t-15">
+                <i class="fa fa-upload"></i> Upload File
+            </a> --}}
+            <a href="/legalcart-challan/add/6" class="btn btn-primary btn-cons m-t-15"><i class="fa fa-plus"></i> Add
+                Superdari</a>
+            {{/if_eq}}
+            {{/if_eq}}
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <div class="col-xl-12 col-lg-12 col-top">
+            <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item liTab2">
+                    <a href="javascript:void(0)" class="active indivisualAdd hide-lawyerAssignment" class="legalAdd"
+                        data-toggle="tab" role="tab" data-target="#pending">New</a>
+                </li>
+                <li class="nav-item liTab3">
+                    <a href="javascript:void(0)" class="govAdd hide-lawyerAssignment" data-toggle="tab" role="tab"
+                        data-target="#approve">pending {{pending_superdari_count}} </a>
+                </li>
+                {{#if_eq user.role_id '1'}}
+                <li class="nav-item liTab3">
+                    <a href="javascript:void(0)" class="govAdd hide-lawyerAssignment" data-toggle="tab" role="tab"
+                        data-target="#complete">Completed By Lawyer {{#if_eq user.role_id "1"}}{{complete_lawyer_superdari_count}} {{/if_eq}}</a>
+                </li>
+                {{/if_eq}}
+                <li class="nav-item liTab4">
+                    <a href="javascript:void(0)" class="policeAdd hide-lawyerAssignment" data-toggle="tab" role="tab"
+                        data-target="#reject">Closed</a>
+                </li>
+
+                {{#if_eq user.role_id '1'}}
+                <li class="nav-item liTab4">
+                    <a href="javascript:void(0)" class="policeAdd hide-lawyerAssignment" data-toggle="tab" role="tab" data-target="#rejected">Reject</a>
+                </li>
+                {{/if_eq}}
+
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane tabDiv2 active" id="pending">
+
+                    {{#if_eq user.role_id '1'}}
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Corporate</th>
+                                <th>Name</th>
+                                <th>No of Case</th>
+                                <th>Date of Upload</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each customerDetails}}
+                            <tr class="">
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <img src="{{this.firm.image}}" width="50">
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <a href="/challan/case/list/{{this.id}}">
+                                        <p>{{this.case_length}}</p>
+                                    </a>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                                    <p>{{dateFormat this.createdAt "hh:mm a"}}</p>
+                                </td>
+                                <td>
+                                    <a href="/challan/case/list/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{#if this.excel_file_name}}
+                                    <a href="{{this.excel_file_name}}" download class="btn btn-primary" title="Download Uploaded Excel Sheet">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{else}}
+                    {{#if_eq user.role_id '3'}}
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Corporate</th>
+                                <th>Name</th>
+                                <th>No of Case</th>
+                                <th>Date &amp; time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each customerDetails}}
+                            {{#compare_date this.createdAt}}
+                            <tr class="">
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <img src="{{this.firm.image}}" width="50">
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.case_length}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                </td>
+                                <td>
+                                    <a href="/challan/case/list/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{!-- <a href="javascript:void(0)" data-toggle="modal" data-bulk-id="{{this.id}}" id="indiBulkFileUpload"
+                                        class="btn btn-primary" title="Upload File">
+                                        <i class="fa fa-upload"></i></a> --}}
+                                    {{#if this.excel_file_name}}
+                                    <a href="{{this.excel_file_name}}" download class="btn btn-primary" title="Download Uploaded Excel Sheet">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                            {{/compare_date}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{else}}
+                    {{!-- <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                {{#if_eq user.role_id '1'}}
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                </th>
+                                {{else}}
+                                <th>
+                                    SL#
+                                </th>
+                                {{/if_eq}}
+                                <th>Cab No. {{dateFormat formatDate "DD/MM/YYYY"}}</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Driver Mobile</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_cases}}
+                            {{#if_eq this.status "0"}}
+                            {{#compare_date this.createdAt}}
+                            <tr>
+                                {{#if_eq ../user.role_id '1'}}
+                                <td class="v-align-middle semi-bold">
+                                    {{#if_eq assign 0}}
+                                    <input type="checkbox" name="case_check_id" value="{{this.id}}" />{{math @index "+"
+                                    1}}
+                                    {{else}}
+                                    <input type="checkbox" name="case_check_id_" value="{{this.id}}" checked disabled />{{math
+                                    @index "+" 1}}
+                                    {{/if_eq}}
+                                </td>
+                                {{else}}
+                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                {{/if_eq}}
+
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.driver_mobile}}</p>
+                                </td>
+                                <td>
+                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{#if_eq ../user.role_id '1'}}
+                                    {{#if_eq assign 0}}
+                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}"
+                                        class="btn btn-info" title="Send">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </button>
+                                    {{/if_eq}}
+                                    {{#if_eq assign_file 0}}
+                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success"
+                                        title="File Assignment">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </button>
+                                    {{/if_eq}}
+                                    {{/if_eq}}
+
+                                </td>
+                            </tr>
+                            {{/compare_date}}
+                            {{/if_eq}}
+                            {{/each}}
+                        </tbody>
+                    </table> --}}
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Corporate</th>
+                                <th>Name</th>
+                                <th>No of Case</th>
+                                <th>Date &amp; time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each customerDetails}}
+                            {{#compare_date this.createdAt}}
+                            <tr class="">
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <img src="{{this.firm.image}}" width="50">
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.case_length}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                </td>
+                                <td>
+                                    <a href="/challan/case/list/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-bulk-id="{{this.id}}" id="indiBulkFileUpload"
+                                        class="btn btn-primary" title="Upload File">
+                                        <i class="fa fa-upload"></i></a>
+                                    {{#if this.excel_file_name}}
+                                    <a href="{{this.excel_file_name}}" download class="btn btn-primary" title="Download Uploaded Excel Sheet">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                            {{/compare_date}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{/if_eq}}
+                    {{/if_eq}}
+                </div>
+                <div class="tab-pane tabDiv3" id="approve">
+                    <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                        {{#each allCase}}
+                        <div class="card card-default m-b-0">
+                            <div class="card-header " role="tab" id="heading_{{@index}}" {{#if_eq conv_len "0"}}{{else}} style="background-color:#e6bf83;"  {{/if_eq}}>
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{@index}}"
+                                        aria-expanded="true" aria-controls="collapse_{{@index}}">
+                                        Date :{{this.date}}
+                                        Total Cases: {{this.count}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse_{{@index}}" class="collapse" role="tabcard" aria-labelledby="heading_{{@index}}">
+                                <div class="card-body">
+                                    <table class="table table-hover demo-table-search table-responsive-block data-tables"
+                                        id="tableWithSearch">
+                                        <thead>
+                                            {{#if_eq ../user.role_id "1"}}
+                                            <tr>
+                                                {{#if_eq ../user.role_id '1'}}
+                                                <th>
+                                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                                </th>
+                                                {{else}}
+                                                <th>
+                                                    SL#
+                                                </th>
+                                                {{/if_eq}}
+                                                <th>Cab No.</th>
+                                                <th>Assign Lawyer</th>
+                                                <th>Name of PS</th>
+                                                <th>Impound Status</th>
+                                                <th>Driver Name</th>
+                                                <th>Date &amp; time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            {{else}}
+                                            <tr>
+                                                {{#if_eq ../user.role_id '1'}}
+                                                <th>
+                                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                                </th>
+                                                {{else}}
+                                                <th>
+                                                    SL#
+                                                </th>
+                                                {{/if_eq}}
+                                                <th>Cab No.</th>
+                                                <th>Name of PS</th>
+                                                <th>Impound Status</th>
+                                                <th>Driver Name</th>
+                                                <th>Driver Mobile</th>
+                                                <th>Date &amp; time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            {{/if_eq}}
+                                        </thead>
+                                        <tbody>
+                                            {{#if_eq ../user.role_id "1"}}
+                                            {{#each this.all_case}}
+                                            <tr {{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}>
+                                                {{#if_eq ../user.role_id '1'}}
+                                                <td class="v-align-middle semi-bold">
+                                                    {{#if_eq assign 0}}
+                                                    <input type="checkbox" name="case_check_id" value="{{this.id}}" />{{math
+                                                    @index "+" 1}}
+                                                    {{else}}
+                                                    <input type="checkbox" name="case_check_id_" value="{{this.id}}"
+                                                        checked disabled />{{math
+                                                    @index "+" 1}}
+                                                    {{/if_eq}}
+                                                </td>
+                                                {{else}}
+                                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                                {{/if_eq}}
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_no}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.lawyer_assignments.0.user.first_name}}
+                                                        {{this.lawyer_assignments.0.user.last_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                                </td>
+                                                <td>
+                                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    {{#if_eq ../user.role_id '1'}}
+                                                    {{#check_length this.lawyer_assignments "0"}}
+                                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}"
+                                                        class="btn btn-info" title="Send">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </button>
+                                                    {{/check_length}}
+                                                    {{#check_length this.file_for_cases 0}}
+                                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success"
+                                                        title="File Assignment">
+                                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                    </button>
+                                                    {{/check_length}}
+                                                    {{/if_eq}}
+
+                                                    <button id="case_reassign_for_lawyer" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}"
+                                                        class="btn btn-info" title="Reassign">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                            {{else}}
+                                            {{#each this.all_case}}
+                                            {{#if_eq this.closeing_status "0"}}
+                                            <tr {{#if_eq this.conversations.0.user_id ../../user.id}}{{else}}{{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}{{/if_eq}}>
+                                                {{#if_eq ../user.role_id '1'}}
+                                                <td class="v-align-middle semi-bold">
+                                                    {{#if_eq assign 0}}
+                                                    <input type="checkbox" name="case_check_id" value="{{this.id}}" />{{math
+                                                    @index "+" 1}}
+                                                    {{else}}
+                                                    <input type="checkbox" name="case_check_id_" value="{{this.id}}"
+                                                        checked disabled />{{math
+                                                    @index "+" 1}}
+                                                    {{/if_eq}}
+                                                </td>
+                                                {{else}}
+                                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                                {{/if_eq}}
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_no}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                                </td>
+                                                <td>
+                                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    {{#if_eq ../user.role_id '1'}}
+                                                    {{#check_length this.lawyer_assignments "0"}}
+                                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}"
+                                                        class="btn btn-info" title="Send">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </button>
+                                                    {{/check_length}}
+                                                    {{#check_length this.file_for_cases 0}}
+                                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success"
+                                                        title="File Assignment">
+                                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                    </button>
+                                                    {{/check_length}}
+                                                    {{/if_eq}}
+
+                                                </td>
+                                            </tr>
+                                            {{/if_eq}}
+                                            {{/each}}
+                                            {{/if_eq}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="tab-pane tabDiv3" id="complete">
+                    <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                        {{#each allCaseLawyerComplete}}
+                        <div class="card card-default m-b-0">
+                            <div class="card-header " role="tab" id="lawyer_heading_{{@index}}" {{#if_eq close_by_lawyer_conv_len "0"}}{{else}} style="background-color:#e6bf83;"  {{/if_eq}}>
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#lawyer_collapse_{{@index}}"
+                                        aria-expanded="true" aria-controls="lawyer_collapse_{{@index}}">
+                                        Date :{{this.date}}
+                                        Total Cases: {{this.count}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="lawyer_collapse_{{@index}}" class="collapse" role="tabcard" aria-labelledby="lawyer_heading_{{@index}}">
+                                <div class="card-body">
+                                    <table class="table table-hover demo-table-search table-responsive-block data-tables"
+                                        id="tableWithSearch">
+                                        <thead>
+                                            <tr>
+                                                {{#if_eq ../user.role_id '1'}}
+                                                <th>
+                                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                                </th>
+                                                {{else}}
+                                                <th>
+                                                    SL#
+                                                </th>
+                                                {{/if_eq}}
+                                                <th>Cab No.</th>
+                                                <th>Lawyer Name</th>
+                                                <th>Name of PS</th>
+                                                <th>Impound Status</th>
+                                                <th>Driver Name</th>
+                                                <th>Date &amp; time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each this.all_case}}
+                                            <tr {{#if_eq this.conversations.0.user_id ../../user.id}}{{else}}{{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}{{/if_eq}}>
+
+                                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_no}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.lawyer_assignments.0.user.first_name}}
+                                                        {{this.lawyer_assignments.0.user.last_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                                </td>
+                                                <td>
+                                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="tab-pane tabDiv4" id="reject">
+                    <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                        {{#each allCloseCase}}
+                        <div class="card card-default m-b-0">
+                            <div class="card-header " role="tab" id="closeheading_{{@index}}" {{#if_eq close_conv_len "0"}}{{else}} style="background-color:#e6bf83;"  {{/if_eq}}>
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#closecollapse_{{@index}}"
+                                        aria-expanded="true" aria-controls="closecollapse_{{@index}}">
+                                        Date :{{this.close_date}}
+                                        Total Cases: {{this.close_count}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="closecollapse_{{@index}}" class="collapse" role="tabcard" aria-labelledby="closeheading_{{@index}}">
+                                <div class="card-body">
+                                    <table class="table table-hover demo-table-search table-responsive-block data-tables"
+                                        id="tableWithSearch">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    SL#
+                                                </th>
+                                                <th>Cab No.</th>
+                                                {{#if_eq ../user.role_id '1'}}
+                                                <th>Lawyer Name</th>
+                                                {{/if_eq}}
+                                                <th>Name of PS</th>
+                                                <th>Impound Status</th>
+                                                <th>Driver Name</th>
+                                                <th>Driver Mobile</th>
+                                                <th>Date &amp; time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each this.all_case_close}}
+                                            <tr {{#if_eq this.conversations.0.user_id ../../user.id}}{{else}}{{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}{{/if_eq}}>
+
+                                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_no}}</p>
+                                                </td>
+                                                {{#if_eq ../../user.role_id '1'}}
+                                                <td class="v-align-middle">
+                                                    <p>{{this.lawyer_assignments.0.user.first_name}}
+                                                        {{this.lawyer_assignments.0.user.last_name}}</p>
+                                                </td>
+                                                {{/if_eq}}
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                                </td>
+                                                <td>
+                                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    {{#if_eq ../user.role_id '1'}}
+                                                    {{#if_eq assign 0}}
+                                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" class="btn btn-info"
+                                                        title="Send">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </button>
+                                                    {{/if_eq}}
+                                                    {{#if_eq assign_file 0}}
+                                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success"
+                                                        title="File Assignment">
+                                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                    </button>
+                                                    {{/if_eq}}
+                                                    {{/if_eq}}
+
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="tab-pane tabDiv4" id="rejected">
+                    <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                        {{#each rejectedCase}}
+                        <div class="card card-default m-b-0">
+                            <div class="card-header " role="tab" id="rejected_{{@index}}" {{#if_eq close_conv_len "0"}}{{else}} style="background-color:#e6bf83;"  {{/if_eq}}>
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#rejecteds_{{@index}}"
+                                        aria-expanded="true" aria-controls="rejecteds_{{@index}}">
+                                        Date :{{this.close_date}}
+                                        Total Cases: {{this.close_count}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="rejecteds_{{@index}}" class="collapse" role="tabcard" aria-labelledby="rejected_{{@index}}">
+                                <div class="card-body">
+                                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                SL#
+                                            </th>
+                                            <th>Cab No.</th>
+                                            {{#if_eq ../user.role_id '1'}}
+                                            <th>Lawyer Name</th>
+                                            {{/if_eq}}
+                                            <th>Name of PS</th>
+                                            <th>Impound Status</th>
+                                            <th>Driver Name</th>
+                                            <th>Driver Mobile</th>
+                                            <th>Date &amp; time</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each this.reject_cases}}
+                                            <tr {{#if_eq this.conversations.0.status "0"}} style="color:green;" {{/if_eq}}>
+                                            
+                                                <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_no}}</p>
+                                                </td>
+                                                {{#if_eq ../../user.role_id '1'}}
+                                                <td class="v-align-middle">
+                                                    <p>{{this.lawyer_assignments.0.user.first_name}} {{this.lawyer_assignments.0.user.last_name}}</p>
+                                                </td>
+                                                {{/if_eq}}
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p>{{dateFormat this.updatedAt "DD/MM/YYYY"}}</p>
+                                                    <p>{{dateFormat this.updatedAt "hh:mm a"}}</p>
+                                                </td>
+                                                <td>
+                                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    {{#if_eq ../user.role_id '1'}}
+                                                    {{#if_eq assign 0}}
+                                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" class="btn btn-info" title="Send">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </button>
+                                                    {{/if_eq}}
+                                                    {{#if_eq assign_file 0}}
+                                                    <button id="caseFileAssign" data-caseno-id="{{this.id}}" class="btn btn-success" title="File Assignment">
+                                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                    </button>
+                                                    {{/if_eq}}
+                                                    {{/if_eq}}
+
+                                                    <button id="caseViewSend" data-caseno-id="{{this.id}}" data-bulk-id="{{this.bulk_case_id}}" class="btn btn-info"
+                                                        title="Send">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </button>
+                                            
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="viewcaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Cases</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Case No</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="view_name" id="view_case" placeholder="Enter Jurisdiction Name"
+                            readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Cab No</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="view_cab" name="view_remarks" placeholder="Briefly Describe your Remarks"
+                            readonly></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Case Type</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="view_type" name="view_remarks" placeholder="Briefly Describe your Remarks"
+                            readonly></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sendLoyerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lawyer Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" id="selectLawyer">
+                <input type="hidden" id="hiddencaseId" name="hiddencaseId">
+                <div class="modal-body">
+                    <div class="form-group ">
+                        <label>Lawyers</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width select2-hidden-accessible" id="laywerList" name="laywerList"
+                            data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <option value="">Select Lawyer</option>
+                            {{!-- {{#each lawyerDetails}}
+                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}} </option>
+                            {{/each}} --}}
+                        </select>
+                        <div class="lawyerListLabelErrorTarget"></div>
+                        
+                    </div>
+                    <div style="display:none" id="previous_accounted">
+                        <input type="checkbox" value="1" name="accounted" id="lawyer_accounted">
+                        <label> <p>Will the previous lawyer be accounted?</p></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="lawyerAssignmentDetails">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!--multiple lawyer Assign start-->
+<div class="modal fade" id="legalCart_lawyer_assignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lawyer Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{!-- <form role="form" id="legalCart_lawyer_assignment_form" method="POST"> --}}
+                <input type="hidden" id="caseTypeHidden" name="caseTypeHidden" value="{{caseType}}">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <input type="hidden" id="hiddencaseId" name="hiddencaseId">
+                <div class="modal-body">
+
+                    <div class="form-group ">
+                        <label>Lawyers</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width select2-hidden-accessible" id="laywer_assignment_form_select" name="laywer_assignment_form_select"
+                            data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            {{!-- <option value="">Select Lawyer</option> --}}
+                            {{!-- {{#each lawyerDetails}}
+                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}} </option>
+                            {{/each}} --}}
+                        </select>
+                        <div class="lawyerListLabelErrorTargetMulti"></div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="mulLawyerAssign">Submit</button>
+                </div>
+                {{!--
+            </form> --}}
+        </div>
+    </div>
+</div>
+
+<!--multiple lawyer Assign end-->
+<div class="modal fade" id="assignFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">File Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" id="fileAssign" method="POST" action="/files-assign">
+                <input type="hidden" id="hiddenFileId" name="hiddenFileId">
+                <input type="hidden" id="caseTypeHidden" name="caseTypeHidden" value="{{caseType}}">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <div class="modal-body">
+                    <div class="form-group ">
+                        <label>Files</label>
+                        <span class="requiredErr">*</span>
+
+                        <div class="form-group form-group-default form-group-default-select2">
+                            <label>Files</label>
+                            <select class="full-width select2-hidden-accessible" id="fileList" name="fileList[]"
+                                data-init-plugin="select2" tabindex="-1" aria-hidden="true" multiple>
+                                {{#each filesAll}}
+                                <option value="{{this.id}}">{{this.name}} </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="fileAssignmentDetails">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" id="UploadExcelType1Frm" method="POST" action="/upload-case-excel" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" value="6">
+                    <div class="form-group">
+                        <p style="color:#a56c15;">* Please upload the excel with data as in the template.</p>
+                        <label>Upload Excel</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_1" id="file_name_type_1" />
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary upload-excel" id="btnUploadExcelType1">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <div class="loading-centered" style="display:none;">
+                    <img src="/assets/img/loading.gif">
+                </div>
+                <form id="UploadFileType1Frm" enctype="multipart/form-data">
+                    <input type="hidden" name="case_type_name" id="case_type_name" value="{{case_type.name}}">
+                    <input type="hidden" name="case_type_id" id="case_type_id" value="6">
+                    <input type="hidden" name="bulk_id" id="bulk_id_individual_upload" value="{{bulk_id}}">
+                    <div class="form-group">
+                        <p style="color:#a56c15;">* Please select multiple files associated with the cases uploading in
+                            excel. You can select as many associated files as necessary. </p>
+                        <p style="color:red;">* Please Don not upload Zip file. </p>
+                        <label>Upload File</label>
+                        <span class="requiredErr">*</span>
+                        <input type="file" class="form-control" style="height: auto;" name="file_name_type_2"
+                            id="file_name_type_2" multiple />
+                    </div>
+                    <div class="progress-bar" style="width:0%"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnUploadExcelType12222">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-inputmask/jquery.inputmask.min.js"></script>
+
+<script type="text/javascript">
+    // File upload show
+    $(document).ready(function () {
+        var caseAdd = $('#case_add').val();
+        if (caseAdd) {
+            $('#importFile').modal("show");
+        }
+    });
+
+
+    $(document).on("click", "#lawyerDeleteBtn", function () {
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    $(document).on("click", "#lawyerAssignment", function () {
+        var client_id = [];
+        $("#laywer_assignment_form_select").find('option').not(':first').remove();
+        $('input[name="case_check_id"]:checked').each(function () {
+            client_id.push(this.value);
+        });
+        if (client_id.length == 0) {
+            swal("", "Please select at least one case!", "warning");
+        } else {
+
+            $.ajax({
+                url: '/lawyer/show/for-assignment/',
+                type: 'POST',
+                data: { case_id: client_id, type: "M" },
+                success: function (response) {
+                    response.lawyerDetails.forEach((element, index) => {
+                        if (element.lawyers[0].panel_member == '1') {
+                            $('#laywer_assignment_form_select').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                        }
+                        $('#legalCart_lawyer_assignment').modal("show");
+
+                    });
+                }
+            });
+        }
+    });
+
+    $(document).on("click", "#btnCaseAdd", function () {
+        var caseType = $("#case_type").val();
+        window.location.href = "/case/add/" + caseType;
+    });
+
+    $(document).on('click', "#caseView", function () {
+        var case_no = $(this).data("casedetails-no");
+        var cab_no = $(this).data("cab-no");
+        var case_type = $(this).data("case-type");
+        $("#view_case").val(case_no);
+        $("#view_cab").val(cab_no);
+        $("#view_type").val(case_type);
+        $("#viewcaseModal").modal('show');
+    });
+
+    $(document).on('click', "#caseViewSend", function () {
+        var bulkid = $(this).data("bulk-id");
+        $("#laywerList").find('option').not(':first').remove();
+        var caseId = $(this).data("caseno-id");
+        $('#hiddencaseId').val(caseId);
+        $.ajax({
+            url: '/lawyer/show/for-assignment/',
+            type: 'POST',
+            data: { bulkid: bulkid, case_id: caseId, type: "R" },
+            success: function (response) {
+                response.lawyerDetails.forEach(function (element, index) {
+                    if (element.lawyers[0].panel_member == '1') {
+                        $('#laywerList').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                    }
+                    $("#sendLoyerModal").modal('show');
+                    $("#previous_accounted").hide()
+
+                });
+            }
+        });
+    });
+
+    $(document).on('click', '#caseFileAssign', function () {
+        var caseId = $(this).data("caseno-id");
+        $('#hiddenFileId').val(caseId);
+        $("#assignFile").modal('show');
+    });
+
+
+    $(document).ready(function () {
+        $("#selectLawyer").validate({
+            rules: {
+                laywerList: {
+                    required: true
+                }
+            },
+            messages: {
+                laywerList: {
+                    required: "Please Select a Lawyer"
+                }
+            },
+            errorPlacement: function (error, element) {
+                var lawyerListLabelError = $(error).html();
+                $(".lawyerListLabelErrorTarget").addClass("error").text(lawyerListLabelError);
+            }
+        });
+
+        $('#fileAssign').validate({
+            rules: {
+                fileList: {
+                    required: true
+                },
+                messages: {
+                    fileList: {
+                        required: "Please select a File"
+                    }
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#legalCart_lawyer_assignment_form').validate({
+            rules: {
+                laywer_assignment_form_select: {
+                    required: true
+                },
+                messages: {
+                    laywer_assignment_form_select: {
+                        required: "Please select a File"
+                    }
+                }
+            }
+        })
+    });
+
+
+    $(document).on("click", "#lawyerAssignmentDetails", function () {
+        var selectId = $('#laywerList').val();
+        var caseId = $('#hiddencaseId').val();
+        $.ajax({
+            type: "POST",
+            url: "/lawyer/challan/case/assignment",
+            data: { laywerList: selectId, hiddencaseId: caseId},
+            success: function (response) {
+                swal({
+                        title: "Success!",
+                        text: "Lawyer Assignment Successfully!",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+            },
+            error: function (xhr) {
+
+            }
+        });
+    })
+
+    function checkall(source) {
+        var checkboxes = document.getElementsByName('case_check_id');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    $(document).on('click', '#mulLawyerAssign', function () {
+        var case_id = [];
+        var selectId = $('#laywer_assignment_form_select').val();
+        $('input[name="case_check_id"]:checked').each(function () {
+            case_id.push(this.value);
+        });
+        $.ajax({
+            url: '/case/multi-assign-laywer/',
+            type: 'POST',
+            data: { lawyer_id: selectId, case_id: case_id },
+            success: function (response) {
+                if (response.msg == 'You have Already Assign') {
+                    swal({
+                        title: "Nice!",
+                        text: response.msg,
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                } else {
+                    swal({
+                        title: "Nice!",
+                        text: "Lawyer Assign successfully",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+
+
+            }
+        });
+    });
+    function baba() {
+        $(".DatePickers").datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: '+0d',
+            autoclose: true
+        });
+        $(".number_validators").inputmask("mask", {
+            "mask": "9999999999"
+        });
+    }
+    function xxx() {
+        $(".mmmm").hide();
+        $(".mmmm").show();
+
+    }
+
+    $(document).ready(function () {
+        baba();
+        $("#UploadExcelType1Frm").validate({
+            rules: {
+                file_name_type_1: {
+                    required: true,
+                    extension: "xls|xlsx"
+                }
+
+            },
+            messages:
+            {
+                file_name_type_1: {
+                    required: "Please choose a file",
+                    extension: "only xlsx or xls file"
+                },
+                file_name_type_2: {
+                    required: "Please choose a file",
+                }
+            }
+        });
+
+        $('#UploadFileType1Frm').validate({
+            rules: {
+                file_name_type_2: {
+                    required: true,
+                }
+            },
+            messages: {
+                file_name_type_2: {
+                    required: "Please choose a file",
+                }
+            },
+            submitHandler: function (form) {
+                var filedata = document.getElementById("file_name_type_2");
+                formdata = new FormData();
+                var i = 0, len = filedata.files.length, file;
+                for (i; i < len; i++) {
+                    file = filedata.files[i];
+                    formdata.append("file_name_type_2", file);
+                }
+                formdata.append("json", true);
+                formdata.append("case_type_id", $("#case_type_id").val());
+                formdata.append("bulk_id", $("#bulk_id_individual_upload").val());
+                $.ajax({
+                    type: "POST",
+                    url: "/upload-case-files",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        $("#btnUploadExcelType12222").attr("disabled", true);
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                console.log(percentComplete);
+                                $(".progress-bar").width(`${(Math.round(percentComplete * 100))}%`).html(`${(Math.round(percentComplete * 100))}%`);
+                                
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        if (response.success == true) {
+                            $("#btnUploadExcelType12222").attr("disabled", false);
+                            $(".loading-centered").hide();
+                            window.location.reload();
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                })
+            }
+        });
+
+        $("#addCasesFrm").validate({
+            rules: {
+                cab_no: {
+                    required: true
+                },
+                inpound_status: {
+                    required: true
+                },
+                name_of_ps: {
+                    required: true
+                },
+                judge_name: {
+                    required: true
+                },
+                court: {
+                    required: true
+                },
+                driver_name: {
+                    required: true
+                },
+                driver_mobile_no: {
+                    required: true
+                },
+                advocate: {
+                    required: true
+                }
+            },
+            messages: {
+                cab_no: {
+                    required: "Cab no. can't be blank"
+                },
+                inpound_status: {
+                    required: "Impound Status can't be blank"
+                },
+                name_of_ps: {
+                    required: "Name of PS can't be blank"
+                },
+                judge_name: {
+                    required: "Judge name can't be blank"
+                },
+                court: {
+                    required: "Please select court name"
+                },
+                driver_name: {
+                    required: "Driver name can't be blank"
+                },
+                driver_mobile_no: {
+                    required: "Driver mobile no can't be blank"
+                },
+                advocate: {
+                    required: "Advocate can't be blank"
+                }
+            }
+        });
+
+        $("#addCasesTypeFrm").validate({
+            rules: {
+                case_no: {
+                    required: true
+                },
+                case_type: {
+                    required: true
+                },
+                case_file: {
+                    required: true
+                },
+                judge_name: {
+                    required: true
+                }
+            },
+            messages: {
+                case_no: {
+                    required: "Case no. can't be blank"
+                },
+                case_type: {
+                    required: "Case type can't be blank"
+                },
+                case_file: {
+                    required: "Case file can't be blank"
+                },
+                judge_name: {
+                    required: "Judge name can't be blank"
+                }
+            }
+        });
+
+        $(document).on("click", "#addCaseFormRowBtn", function () {
+            $(".addRowCaseform1").append($(".addRowCaseform1Row").html());
+            baba();
+            xxx();
+
+        });
+    });
+    $(document).on('click', "#caseRowRemoveBtn", function (e) {
+        $(this).closest(".row").remove();
+    });
+
+    $(document).on("click", "#caseClose", function () {
+        var case_id = $(this).data('case-id');
+        swal({
+            title: "Are you sure?",
+            text: "You want to close this case?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/case-close-legalcart",
+                data: { case_id: case_id },
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Success!",
+                            text: "Case close successfully",
+                            type: "success"
+                        }, function () {
+
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            });
+        });
+
+    });
+
+    $(document).on('click', '.show-lawyerAssignment', function () {
+        $('#lawyerAssignment').show();
+    });
+
+    $(document).on('click', '.hide-lawyerAssignment', function () {
+        $('#lawyerAssignment').hide();
+    });
+
+    $(document).on("click", "#indiBulkFileUpload", function () {
+        var bulk_id = $(this).data("bulk-id");
+        $("#bulk_id_individual_upload").val(bulk_id);
+        $('#importFile').modal("show");
+    });
+
+    //Case Reassign -> 10-03-2019
+    $(document).on('click', "#case_reassign_for_lawyer", function () {
+        var bulkid = $(this).data("bulk-id");
+        $("#laywerList").find('option').not(':first').remove();
+        var caseId = $(this).data("caseno-id");
+        $('#hiddencaseId').val(caseId);
+        $.ajax({
+            url: '/lawyer/show/for-assignment/',
+            type: 'POST',
+            data: { bulkid: bulkid, type: "R", case_id:caseId },
+            success: function (response) {
+                 response.lawyerDetails.forEach(function(element,index){
+                     if (element.lawyers[0].panel_member == '1') {
+                        $('#laywerList').append(`<option value="${element.id}">${element.first_name} ${element.last_name} </option>`);
+                     }
+                    $("#sendLoyerModal").modal('show');
+                    $("#previous_accounted").show()
+                 });
+            }
+        });
+    });
+
+</script> {{/content}}

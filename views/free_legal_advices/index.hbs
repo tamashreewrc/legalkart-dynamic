@@ -1,0 +1,75 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Free Legal Advices</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- Leagal Free Advices -->
+<div class="lk-free-legal-advices">
+    <div class="card card-transparent">
+        <div class="card-body">
+            <table class="table table-hover table-responsive-block data-tables">
+                <thead>
+                    <tr>
+                        <th>Sl No.</th>
+                        <th>Name</th>
+                        <th>Email Id</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Mobile</th>
+                        <th>Subject</th>
+                        <th class="width-300">Message</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each getFreeLegalAdvices}}
+                    <tr>
+                        <td class="v-align-middle semi-bold">
+                            <p>{{math @index "+" 1}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.name}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.email}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.state}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.city}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.mobile}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.subject}}</p>
+                        </td>
+                        <td class="v-align-middle width-300">
+                            <p>{{this.message}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <a href="#" class="btn btn-complete" title="Assign">
+                               Assign
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--... Leagal Free Advices -->

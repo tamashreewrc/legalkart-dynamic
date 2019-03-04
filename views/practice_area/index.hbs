@@ -1,0 +1,245 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Practice Area <Area:r></Area:r>
+                </li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        <div class="card-header ">
+            {{#if success_add_practicearea}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_add_practicearea}}
+            </div>
+            {{/if}}
+            {{#if success_del_practicearea}}
+            <div class="alert alert-success" style="color:red;">
+                <strong>Success! </strong>{{success_del_practicearea}}
+            </div>
+            {{/if}}
+            <div class="card-title">
+                <h5>Practice Area</h5>
+            </div>
+            <div class="pull-right">
+                <a href="/practicearea_add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add
+                    Practice Area</a>
+                
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                <thead>
+                    <tr>
+                        <th>Sl NO</th>
+                        <th>Title</th>
+                        <th>Remark</th>
+                        <th>Create Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each pacticearea}}
+                    <tr>
+                        <td>{{math @index "+" 1}}</td>
+                        <td class="v-align-middle">
+                            {{this.name}}
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.remarks}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{dateFormat this.createdAt "DD-MM-YYYY"}}</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" type="button" title="Edit" id="practicearea"
+                                data-practicearea-id="{{this.id}}" data-practicearea-name="{{this.name}}"
+                                data-practicearea-remarks="{{this.remarks}}">
+                                <i class="fa fa-paste"></i>
+                            </button>
+
+                            <button class="btn btn-complete" type="button" title="view" id="practiceareaView"
+                                data-practicearea-id="{{this.id}}" data-practicearea-name="{{this.name}}"
+                                data-practicearea-remarks="{{this.remarks}}">
+                                <i class="fa fa-eye"></i>
+                            </button>
+
+                            <button class="btn btn-danger" type="button" title="delete" id="practiceareaDelete"
+                                data-practicearea-id="{{this.id}}">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="practiceareaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit practice Area</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="addpracticeareaFrm" method="POST" action="/practicearea/edit">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <input type="hidden" id="practice_id" name="practice_id">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="practice_name" id="practice_name" placeholder="Enter practicearea Name">
+                    </div>
+                    <div class="form-group">
+                        <label>remarks</label>
+                        <span class="requiredErr">*</span>
+                        <textarea class="form-control" id="practice_remarks" name="practice_remarks" placeholder="Briefly Describe your Remarks"></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="practiceareaview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View practice Area</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="practiceView_name" id="practiceView_name" placeholder="Enter practicearea Name">
+                </div>
+                <div class="form-group">
+                    <label>remarks</label>
+                    <span class="requiredErr">*</span>
+                    <textarea class="form-control" id="practiceView_remarks" name="practiceView_remarks" placeholder="Briefly Describe your Remarks"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="practiceareadelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete practice Area</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="addpracticeareaFrm" method="POST" action="/practicearea/delete">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <input type="hidden" id="practicedelete_id" name="practicedelete_id">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this practice Area?</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+
+{{#content "script" mode="append"}}
+
+<script type="text/javascript">
+
+    $(document).on('click', "#practicearea", function () {
+        var juris_id = $(this).data("practicearea-id");
+        var juris_name = $(this).data("practicearea-name");
+        var juris_remarks = $(this).data("practicearea-remarks");
+        $("#practice_name").val(juris_name);
+        $("#practice_remarks").val(juris_remarks);
+        $("#practice_id").val(juris_id);
+        $("#practiceareaModal").modal('show');
+    });
+
+    $(document).on('click', "#practiceareaView", function () {
+        var juris_name = $(this).data("practicearea-name");
+        var juris_remarks = $(this).data("practicearea-remarks");
+        $("#practiceView_name").val(juris_name);
+        $("#practiceView_remarks").val(juris_remarks);
+        $("#practiceareaview").modal('show');
+    });
+
+    $(document).on('click', "#practiceareaDelete", function () {
+        var juris_id = $(this).data("practicearea-id");
+        $("#practicedelete_id").val(juris_id);
+        $("#practiceareadelete").modal('show');
+    });
+
+    $(document).ready(function (e) {
+        $("#practicearea").validate({
+
+            rules: {
+                practice_name: {
+                    required: true
+                },
+                practice_remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                practice_name: {
+                    required: "Name can't be blank"
+                },
+                practice_remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+        });
+    });
+
+</script>
+
+{{/content}}
+
+<!-- END card -->

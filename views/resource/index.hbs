@@ -1,0 +1,203 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Resources</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_resource}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_resource}}
+        </div>
+        {{/if}} {{#if success_edit_resource}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_edit_resource}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Resources</h5>
+        </div>
+        <div class="pull-right">
+            {{#if_eq user.role_id "1"}}
+            <button class="btn btn-primary btn-cons m-b-10" id="publishResourceBtn"><i class="fa fa-upload"></i> Click to Publish</button>       {{/if_eq}}
+            <a href="/admin-resources/add" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-plus"></i> Add Resources</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>
+                        {{#if_eq user.role_id "1"}}
+                        <input type="checkbox" name="check_all" id="check_all">
+                        {{/if_eq}}
+                        Sl No.
+                    </th>
+                    <th>Resource Type</th>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>content</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each resource}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        {{#if_eq ../user.role_id "1"}}
+                        <input type="checkbox" name="publish_blog" id="publish_blog" class="publish_blog" value="{{this.id}}" {{#if_eq this.status "1"}} checked {{/if_eq}}>
+                        {{/if_eq}}
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{#if_eq this.resource_type "articles"}} Articles {{/if_eq}} {{#if_eq this.resource_type "bare_acts"}}
+                        Bare Acts {{/if_eq}} {{#if_eq this.resource_type "latest_judgements"}} Latest Judgements {{/if_eq}} {{#if_eq this.resource_type
+                        "legal_news"}} Legal News {{/if_eq}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <img src="{{this.avatar}}" alt="" width="60" height="60">
+                    </td>
+                    <td class="v-align-middle">
+                        <p  style="height:80px;overflow:hidden;">{{striptags this.content}}</p>
+                    </td>
+                    <td>
+                        {{!--
+                        <button class="btn btn-complete" type="button" id="viewJurisdiction" title="View" data-jurisdiction-id="{{this.id}}"
+                            data-jurisdiction-name="{{this.name}}" data-jurisdiction-remarks="{{this.remarks}}">
+                            <i class="fa fa-eye"></i>
+                        </button> --}}
+                        <a href="/admin-resources/edit/{{this.id}}" class="btn btn-primary" title="Edit">
+                            <i class="fa fa-paste"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END card -->
+
+{{#content "script" mode="append"}}
+<script>
+    
+
+    $(document).ready(function (e) {
+        $("#btnEditjurisdiction").click(function () {
+            $("#editJurisdictionFrm").submit();
+        });
+
+        $("#editJurisdictionFrm").validate({
+            rules: {
+                edit_name: {
+                    required: true
+                },
+                edit_remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Jurisdiction Name can't be blank"
+                },
+                edit_remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/edit-jurisdiction",
+                    data: $("#editJurisdictionFrm").serialize(),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnEditjurisdiction").prop('disabled', true);
+                        $("#btnEditjurisdiction").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.success == true) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Jurisdiction Edited Successfully</div>`).insertBefore("#editJurisdictionFrm");
+                            setTimeout(function () {
+                                window.location.href = "/jurisdiction";
+                            }, 2000);
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+       
+        
+
+        $("#check_all").click(function () {
+            $(".publish_blog").prop('checked', $(this).prop('checked'));
+        });
+        
+        $(".publish_blog").change(function(){
+            if (!$(this).prop("checked")){
+                $("#check_all").prop("checked",false);
+            }
+        });
+    });
+
+    $(document).on("click", "#publishResourceBtn", function(){
+    var check_publish = [];
+    $(".publish_blog").each(function () {
+        if ($(this).is(':checked')) {
+            check_publish.push($(this).val())
+        }
+    });
+    if(check_publish.length == 0)
+    {
+        swal("Warning!","Please select one or more resource","warning");
+    }
+    else
+    {
+        $.ajax({
+            type:"POST",
+            url:"/resource/publish-status",
+            data: {
+                check_publish: check_publish
+            },
+            success:function(response)
+            {
+                if(response.success == true)
+                {
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+            },
+            error:function(xhr)
+            {
+
+            }
+        });
+    }
+});
+</script> {{/content}}

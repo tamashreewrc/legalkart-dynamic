@@ -1,0 +1,263 @@
+<main class="main-content inner-page lk-lawyer-list-city">
+    <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">{{city.name}}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+    <!-- Lawyers Directory List Content Area -->
+    <div class="lk-lawyer-directory-content">
+        <div class="container">
+            <div class="lawyer-directory-top m-t-30 m-b-30">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="desc">
+                            <img src="/frontend/images/lawyer-directory-top.jpg" class="img-fluid m-b-50" alt="">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                Consult Top Attorneys & Legal
+                                <br> Advisors in {{city.name}}
+                            </h3>
+                            <p class="m-0 m-b-30 font-16">
+                                We help you to consult and hire the best lawyers in {{city.name}} for District Courts,
+                                High Court & Supreme Court matters. Use
+                                filters to narrow your search and find the best advocate in {{city.name}} for your
+                                legal matter. Get top lawyers in {{city.name}} for family
+                                dispute or divorce matters, property matter, employment or labor court matter, criminal
+                                matter, recovery or cheque bounce
+                                matters, taxation or corporate matters, or a lawyer expert in any other field of law.
+                            </p>
+                            {{!-- <h3 class="font-40 font-semibold m-0 m-b-40">
+                                What is {{sub_practice_area.name}}?
+                            </h3>
+                            <p class="m-0 m-b-30 font-16">
+                                {{sub_practice_area.name}} regulate succession to property, inheritance, marriage,
+                                divorce, custody, alimony and adoption.
+                            </p> --}}
+                            <a class="text-decoration-none text-primary-color font-15" href="">
+                                <i class="fa fa-calendar m-r-10"></i>
+                                <span class="border-bottom border-bottom-primary-2">
+                                    <span class="m-r-5">Make an Appoinment</span>
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="search-filter">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Search
+                            </h4>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select City</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Family</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Court</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Experience</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Language</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Service Mode</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Gender</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control selectpicker" data-live-search="true">
+                                    <option>Select Ratings</option>
+                                    <option value="Option1">Option1</option>
+                                    <option value="Option2">Option2</option>
+                                    <option value="Option3">Option3</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-lg btn-block clearfix btn-primary-color border-radius-0 border-0">
+                                <span class="pull-left">
+                                    Filter
+                                </span>
+                                <i class="fa fa-filter pull-right" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block clearfix btn-primary-color border-radius-0 border-0">
+                                <span class="pull-left">
+                                    Reset
+                                </span>
+                                <i class="fa fa-repeat pull-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lawyer-directory-list">
+                <div class="row">
+                    {{#each lawyers_list}}
+                    <div class="col-md-6">
+                        <div class="item-list m-b-30">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="left">
+                                        <div class="image-box common-image-box m-b-40">
+                                            <img class="img-fluid" src="{{this.lawyer.avatar}}" alt="">
+                                        </div>
+                                        <a href="/view-profile/{{this.lawyer.id}}" class="btn btn-primary btn-lg btn-block clearfix btn-primary-color border-radius-0 border-0">
+                                            <span class="pull-left">
+                                                View Profile
+                                            </span>
+                                            <i class="fa fa-address-card" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 offset-1">
+                                    <div class="right">
+                                        <h4 class="font-20">Advocate {{this.lawyer.first_name}}
+                                            {{this.lawyer.last_name}}
+                                        </h4>
+                                        <p>
+                                            Advocate {{this.lawyer.first_name}} {{this.lawyer.last_name}} has since
+                                            been practicing and handling cases independently
+                                            with a result oriented approach.
+                                        </p>
+                                        <p class="m-0 m-b-10">
+                                            <i class="fa fa-map-marker text-primary-color" aria-hidden="true"></i>
+                                            <span>
+                                                {{city}}, {{state}}
+                                            </span>
+                                        </p>
+                                        <p class="m-0 m-b-10">
+                                            <i class="fa fa-briefcase text-primary-color" aria-hidden="true"></i>
+                                            <span>
+                                                {{experience}} years Experience
+                                            </span>
+                                        </p>
+                                        <p class="m-0 m-b-10">
+                                            {{#if_eq star_set "0"}}
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "0.5"}}
+                                            <i class="fa fa-star-half-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "1"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "1.5"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-half-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "2"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "2.5"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-half-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "3"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "3.5"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-half-o text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "4"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "4.5"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star-half-o text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{#if_eq star_set "5"}}
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            <i class="fa fa-star text-primary-color" aria-hidden="true"></i>
+                                            {{/if_eq}} {{avg_rating}} I {{tot_user_ratings}} user ratings
+                                        </p>
+                                        <p>
+                                            <strong class="d-block">Practice area & skills</strong>
+                                            {{#each lawyer_practice}} {{this}}, {{/each}}{{#if over_length}}
+                                            +{{over_length}} more {{/if}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--... Lawyers Directory List Content Area -->
+</main>

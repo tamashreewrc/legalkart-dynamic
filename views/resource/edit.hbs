@@ -1,0 +1,129 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/admin-resources">Resources</a>
+                </li>
+                <li class="breadcrumb-item active">Edit Resources</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <h5>
+            Edit Resources
+        </h5>
+        <form role="form" id="add_resources_cms" name="add_resources_cms" method="POST" action="/admin-resources/edit/{{resource_edit.id}}" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Select Resource Type</label>
+                        <select class="full-width select2-hidden-accessible" data-init-plugin="select2" tabindex="-1" aria-hidden="true" name="resource_type"
+                            id="resource_type">
+                            <option value="">Select</option>
+                            <option value="articles"{{#if_eq resource_edit.resource_type "articles"}} selected {{/if_eq}}>Articles</option>
+                            <option value="bare_acts"{{#if_eq resource_edit.resource_type "bare_acts"}} selected {{/if_eq}}>Bare Acts</option>
+                            <option value="latest_judgements"{{#if_eq resource_edit.resource_type "latest_judgements"}} selected {{/if_eq}}>Latest Judgements</option>
+                            <option value="legal_news"{{#if_eq resource_edit.resource_type "legal_news"}} selected {{/if_eq}}>Legal News</option>
+                        </select>
+                    </div>
+                    <div class="ErrorTarget"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Resources Name</label>
+                        <input type="text" name="name" id="name" value="{{resource_edit.name}}" class="form-control">
+                    </div>
+                    <div class="ErrorTarget"></div>
+                </div>
+                <input type="hidden" name="old_img" value="{{resource_edit.avatar}}">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Upload Photo</label>
+                        <input class="upload" type="file" name="avatar" id="avatar">
+                        <img class="inline-block" src="{{resource_edit.avatar}}" alt="user" width="80"
+                            height="80">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Resources Content</label>
+                        <textarea id="editor" name="content">{{resource_edit.content}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-cons m-t-10 btn-lg" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+{{#content "script" mode="append"}}
+<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+<script type="text/javascript">
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    $(document).ready(function (e) {
+
+        $("#add_resources_cms").validate({
+            rules: {
+                legal_advice_head: {
+                    required: true
+                },
+                name: {
+                    required: true
+                },
+                content: {
+                    required: true
+                },
+            },
+            messages: {
+                legal_advice_head: {
+                    required: "Please select One"
+                },
+                name: {
+                    required: "Name can't be blank"
+                },
+                content: {
+                    required: "Content can't be blank"
+                },
+            },
+            errorPlacement: function (error, element) {
+                var lawyerListLabelError = $(error).html();
+                $(".ErrorTarget").addClass("error").text(lawyerListLabelError);
+            }
+        });
+        $("#avatar").change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(".inline-block").attr("src", e.target.result);
+                    $(".img-circle").attr("src", e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
+</script> {{/content}}

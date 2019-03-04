@@ -1,0 +1,269 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">All Enquiries</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_cases}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_cases}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}} {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>List All Enquiries</h5>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {{#if_eq user.role_id "1"}}
+        <div class="card-body lawyers-add">
+            <div class="col-xl-12 col-lg-12 col-top">
+                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item liTab2">
+                        <a href="javascript:void(0)" class="active indivisualAdd" class="legalAdd" data-toggle="tab" role="tab" data-target="#pending">Lawyer Contact</a>
+                    </li>
+                    <li class="nav-item liTab3">
+                        <a href="javascript:void(0)" class="govAdd" data-toggle="tab" role="tab" data-target="#approve">Buy Legal Service</a>
+                    </li>
+                    <li class="nav-item liTab4">
+                        <a href="javascript:void(0)" class="policeAdd" data-toggle="tab" role="tab" data-target="#reject">Book a Call Back</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane tabDiv2 active" id="pending">
+                        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Lawyer Name</th>
+                                    <th>From Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile No.</th>
+                                    <th>Subject</th>
+                                    <th>Messages</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each lawyer_contact}}
+                                {{#if_eq this.subject "call"}}{{else}}
+                                <tr>
+                                    <td class="v-align-middle semi-bold">
+                                        <p>{{math @index "+" 1}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.name}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.email}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.mobile}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.subject}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.messages}}
+                                    </td>
+                                    
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane tabDiv3" id="approve">
+                        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>legal Service Name</th>
+                                    <th>From Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile No.</th>
+                                    <th>Send Date</th>
+                                    <th>Messages</th>
+                            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each order_legal_service}}
+                                <tr>
+                                    <td class="v-align-middle semi-bold">
+                                        <p>{{math @index "+" 1}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.legal_service_sub_category.name}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.name}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.email}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.mobile}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{dateFormat this.createdAt "DD/MM/YYYY"}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.messages}}
+                                    </td>
+                            
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane tabDiv4" id="reject">
+                        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>From Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile No.</th>
+                                    <th>Messages</th>
+                                    <th>Received Date</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each lawyer_contact}}
+                                {{#if_eq this.subject "call"}}
+                                <tr>
+                                    <td class="v-align-middle semi-bold">
+                                        <p>{{math @index "+" 1}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.name}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p>{{this.email}}</p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.mobile}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.messages}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{dateFormat this.createdAt "DD/MM/YYYY"}}
+                                    </td>
+                                    
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    {{else}}
+        <div class="card-body lawyers-add">
+            <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                <thead>
+                    <tr>
+                        <th>Sl No.</th>
+                        <th>From Name</th>
+                        <th>Email</th>
+                        <th>Mobile No.</th>
+                        <th>Subject</th>
+                        <th>Messages</th>
+                
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each lawyer_contact}}
+                    <tr>
+                        <td class="v-align-middle semi-bold">
+                            <p>{{math @index "+" 1}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.name}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p>{{this.email}}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            {{this.mobile}}
+                        </td>
+                        <td class="v-align-middle">
+                            {{this.subject}}
+                        </td>
+                        <td class="v-align-middle">
+                            {{this.messages}}
+                        </td>
+                
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    {{/if_eq}}
+</div>
+
+<div class="modal fade" id="lawyerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Lawyer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/lawyers/delete" method="post">
+                <input type="hidden" name="lawyers_id" id="lawyers_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this lawyers?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+
+
+
+</script> {{/content}}
+<!-- END card -->

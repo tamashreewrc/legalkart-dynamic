@@ -1,0 +1,761 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Rate <Area:r></Area:r>
+                </li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+        <div class="card-header ">
+            {{#if success_add_rate}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_add_rate}}
+            </div>
+            {{/if}}
+            {{#if success_del_rate}}
+            <div class="alert alert-success" style="color:red;">
+                <strong>Success! </strong>{{success_del_rate}}
+            </div>
+            {{/if}}
+            {{#if success_edit_rate}}
+            <div class="alert alert-success" >
+                <strong>Success! </strong>{{success_edit_rate}}
+            </div>
+            {{/if}}
+            <div class="card-title">
+                <h5>Rate</h5>
+            </div>
+            <div class="pull-right">
+                {{!-- Individual Lawyer --}}
+                <div class="indivisual-add">
+                    <a href="/rate/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add Rate</a>
+                </div>
+
+                {{!-- Service --}}
+                <div class="service-add">
+                    <a href="/rate/service/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add
+                        Rate</a>
+                </div>
+
+                {{!-- Legal Consultant --}}
+                <div class="legal-add">
+                    <a href="/rate/legal/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add
+                        Rate </a>
+                </div>
+
+                {{!-- Govt Relations --}}
+
+                <div class="gov-add">
+                    <a href="/rate/gov/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add Rate</a>
+                </div>
+
+                {{!-- Police Officer --}}
+
+                <div class="police-add">
+                    <a href="/rate/police/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add
+                        Rate </a>
+                </div>
+
+
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="card-body">
+            <div class="col-xl-12 col-lg-12 col-top">
+                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item liTab1">
+                        <a class="active indivisualAdd" data-toggle="tab" role="tab" data-target="#individualLawyer"
+                            href="javascript:void(0)">Individual Lawyer</a>
+                    </li>
+                    <li class="nav-item liTab2">
+                        <a href="javascript:void(0)" class="legalAdd" data-toggle="tab" role="tab" data-target="#legalConsultant">Legal
+                            Consultant</a>
+                    </li>
+                    <li class="nav-item liTab3">
+                        <a href="javascript:void(0)" class="govAdd" data-toggle="tab" role="tab" data-target="#govtRelations">Govt
+                            Relations</a>
+                    </li>
+                    <li class="nav-item liTab4">
+                        <a href="javascript:void(0)" class="policeAdd" data-toggle="tab" role="tab" data-target="#policeOfficer">Police
+                            Officer</a>
+                    </li>
+                    <li class="nav-item liTab5">
+                        <a href="javascript:void(0)" id="serviceAdd" data-toggle="tab" role="tab" data-target="#service">Service</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane tabDiv1 active" id="individualLawyer">
+                        <table class="table table-hover datatable-w200 table-responsive-block data-tables">
+                            <thead>
+                                <tr>
+                                    <th>Sl NOlll</th>
+                                    <th>One To One</th>
+                                    <th>Phone consultation</th>
+                                    <th>Email consultation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each get_rate}}
+                                {{#if_eq this.status 'I'}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+
+                                    <td class="v-align-middle">
+                                        {{this.one_to_one}}
+                                    </td>
+
+                                    <td class="v-align-middle">
+                                        {{this.phone_consal}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.email_consal}}
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-complete" type="button" id="viewcourtRate" title="View"
+                                            data-court-id="{{this.id}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-eye"></i></button>
+
+                                        <button class="btn btn-info" type="button" title="Edit" id="editcourtRate"
+                                            data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-paste"></i></button>
+
+                                        <button class="btn btn-danger" type="button" title="delete" id="courtDeleteById"
+                                            data-court-id="{{this.id}}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane tabDiv2" id="legalConsultant">
+                        <table class="table table-hover datatable-w200 table-responsive-block data-tables">
+                            <thead>
+                                <tr>
+                                    <th>Sl NOlll</th>
+                                    <th>One To One</th>
+                                    <th>Phone consultation</th>
+                                    <th>Email consultation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each get_rate}}
+                                {{#if_eq this.status 'L'}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+
+                                    <td class="v-align-middle">
+                                        {{this.one_to_one}}
+                                    </td>
+
+                                    <td class="v-align-middle">
+                                        {{this.phone_consal}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.email_consal}}
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-complete" type="button" id="viewcourtRate" title="View"
+                                            data-court-id="{{this.id}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-eye"></i></button>
+
+                                        <button class="btn btn-info" type="button" title="Edit" id="editcourtRate"
+                                            data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}"="{{this.rate}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-paste"></i></button>
+
+                                        <button class="btn btn-danger" type="button" title="delete" id="courtDeleteById"
+                                            data-court-id="{{this.id}}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane tabDiv3" id="govtRelations">
+                        <table class="table table-hover datatable-w200 table-responsive-block data-tables">
+                            <thead>
+                                <tr>
+                                    <th>Sl NOlll</th>
+                                    <th>One To One</th>
+                                    <th>Phone consultation</th>
+                                    <th>Email consultation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each get_rate}}
+                                {{#if_eq this.status 'G'}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+
+                                    <td class="v-align-middle">
+                                        {{this.one_to_one}}
+                                    </td>
+
+                                    <td class="v-align-middle">
+                                        {{this.phone_consal}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.email_consal}}
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-complete" type="button" id="viewcourtRate" title="View"
+                                            data-court-id="{{this.id}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-eye"></i></button>
+
+                                        <button class="btn btn-info" type="button" title="Edit" id="editcourtRate"
+                                            data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}"="{{this.rate}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-paste"></i></button>
+
+                                        <button class="btn btn-danger" type="button" title="delete" id="courtDeleteById"
+                                            data-court-id="{{this.id}}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane tabDiv4" id="service">
+                        <table class="table table-hover  datatable-w200 table-responsive-block data-tables">
+                            <thead>
+                                <tr>
+                                    <th>Sl NO</th>
+                                    <th>Name</th>
+                                    <th>Rate</th>
+                                    <th>Lawyer Rate</th>
+                                    <th>Create Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each get_rate}}
+                                {{#if_eq this.status 'S'}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+
+                                    <td class="v-align-middle">
+                                        {{this.name}}
+                                    </td>
+
+                                    <td class="v-align-middle">
+                                        <p>{{this.rate}}</p>
+                                    </td>
+
+                                    <td class="v-align-middle">
+                                        <p>{{this.rate_lawyers}}</p>
+                                    </td>
+
+                                    <td class="v-align-middle">
+                                        <p>{{dateFormat updatedAt 'DD-MM-YYYY'}}</p>
+                                    </td>
+
+                                    <td>
+                                        {{!-- <button class="btn btn-complete" type="button" id="viewcourt" title="View"
+                                            data-court-id="{{this.id}}" data-court-name="{{this.name}}"
+                                            data-court-remarks="{{this.remarks}}"><i class="fa fa-eye"></i></button>
+                                        --}}
+                                        <button class="btn btn-complete" type="button" id="viewcourt" title="View"
+                                            data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-court-rate="{{this.rate}}"
+                                            data-court-remarks="{{this.remarks}}" data-view-lawyer-rate="{{rate_lawyers}}"><i class="fa fa-eye"></i></button>
+
+                                        <button class="btn btn-info" type="button" title="Edit" id="editcourt"
+                                            data-court-id="{{this.id}}" data-edit-lawyer-rate="{{rate_lawyers}}" data-court-name="{{this.name}}" data-court-rate="{{this.rate}}"
+                                            data-court-old-rate="{{this.old_rate}}"="{{this.rate}}" data-court-remarks="{{this.remarks}}"><i
+                                                class="fa fa-paste"></i></button>
+                                        <button class="btn btn-danger" type="button" title="delete" id="courtDeleteById"
+                                            data-court-id="{{this.id}}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane tabDiv5" id="policeOfficer">
+
+                        <table class="table table-hover  datatable-w200 table-responsive-block data-tables">
+                            <thead>
+                                <tr>
+                                    <th>Sl NOlll</th>
+                                    <th>One To One</th>
+                                    <th>Phone consultation</th>
+                                    <th>Email consultation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each get_rate}}
+                                {{#if_eq this.status 'P'}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+
+                                    <td class="v-align-middle">
+                                        {{this.one_to_one}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.phone_consal}}
+                                    </td>
+                                    <td class="v-align-middle">
+                                        {{this.email_consal}}
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-complete" type="button" id="viewcourtRate" title="View"
+                                            data-court-id="{{this.id}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-eye"></i></button>
+
+                                        <button class="btn btn-info" type="button" title="Edit" id="editcourtRate"
+                                            data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-one-to-one="{{this.one_to_one}}"
+                                            data-phone-consal="{{this.phone_consal}}"="{{this.rate}}" data-email-consal="{{this.email_consal}}"><i
+                                                class="fa fa-paste"></i></button>
+
+                                        <button class="btn btn-danger" type="button" title="delete" id="courtDeleteById"
+                                            data-court-id="{{this.id}}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{/if_eq}}
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewcourtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Rate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="view_name" id="view_name" placeholder="Enter  Name"
+                            readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="view_rate" id="view_rate" placeholder="Enter Rate"
+                            readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Lawyer Rate</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="lawyer_rate" id="lawyer_rate" placeholder="Enter Rate"
+                            readonly>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editrateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Rate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="editcourtFrm" method="POST" action="/rate/edit">
+                    <input type="hidden" name="court_id" id="court_id">
+                    <div class="form-group">
+                        <label>Type of Case</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="edit_name" id="edit_name">
+                            {{#each rateTypeAll}}
+                            <option value="{{this.type_of_case}}">{{this.type_of_case}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_rate" id="edit_rate" placeholder="Enter Rate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lawyer Rate</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="lawyer_rates" id="lawyer_rates" placeholder="Enter Rate" >
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="old_rate" id="old_rate" placeholder="Entere old Rate">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rateDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Rate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="addcourtFrm" method="POST" action="/rate/delete">
+                <input type="hidden" id="courtdel_id" name="courtdel_id">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this rate?</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="edit_rateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Rate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="secondEditcourtFrm" method="POST" action="/rate/edit">
+                    <input type="hidden" name="rate_id" id="rate_id">
+
+                    <div class="form-group">
+                        <label>One to One</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_one" id="edit_one" placeholder="Enter Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Consultation</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_phone" id="edit_phone" placeholder="Enter Rate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Consultation </label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_email" id="edit_email" placeholder="Enter Rate">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="view_courtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Rate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>One to One</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_oneto" id="edit_oneto" placeholder="Enter Name"
+                            readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Consultation</label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_phones" id="edit_phones" placeholder="Enter Rate"
+                            readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Consultation </label>
+                        <span class="requiredErr">*</span>
+                        <input type="text" class="form-control" name="edit_emails" id="edit_emails" placeholder="Enter Rate"
+                            readonly>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{{#content "script" mode="append"}}
+<script>
+    $(document).on('click', "#viewcourt", function () {
+        var court_id = $(this).data("court-id");
+        var court_name = $(this).data("court-name");
+        var court_rate = $(this).data("court-rate");
+        var lawyerRate = $(this).data("view-lawyer-rate");
+        var court_remarks = $(this).data("court-remarks");
+        $("#view_name").val(court_name);
+        $("#view_rate").val(court_rate);
+
+        $("#view_remarks").val(court_remarks);
+        $('#lawyer_rate').val(lawyerRate);
+        $("#viewcourtModal").modal('show');
+    });
+
+
+
+    $(document).on('click', "#editcourt", function () {
+        var court_id = $(this).data("court-id");
+        var court_name = $(this).data("court-name");
+        var court_rate = $(this).data("court-rate");
+        var court_old_rate = $(this).data("court-old-rate");
+        var court_remarks = $(this).data("court-remarks");
+        var lawyerRate = $(this).data("edit-lawyer-rate");
+
+        $("#edit_name").val(court_name);
+        $("#edit_rate").val(court_rate);
+        $("#old_rate").val(court_rate);
+        $("#court_id").val(court_id);
+        $("#edit_remarks").val(court_remarks);
+        $('#lawyer_rates').val(lawyerRate);
+        $(".select2-selection__rendered").html($("#edit_name option:selected").text());
+        $("#editrateModal").modal('show');
+    });
+
+    $(document).on('click', "#editcourtRate", function () {
+        var court_id = $(this).data("court-id");
+        var court_one = $(this).data("one-to-one");
+        var court_email = $(this).data("email-consal");
+        var court_phone = $(this).data("phone-consal");
+        $("#edit_one").val(court_one);
+        $("#edit_phone").val(court_phone);
+        $("#edit_email").val(court_email);
+        $("#rate_id").val(court_id);
+        $("#edit_rateModal").modal('show');
+    });
+
+    $(document).on('click', "#viewcourtRate", function () {
+        var court_id = $(this).data("court-id");
+        var court_one = $(this).data("one-to-one");
+        var court_email = $(this).data("email-consal");
+        var court_phone = $(this).data("phone-consal");
+        $("#edit_oneto").val(court_one);
+        $("#edit_phones").val(court_phone);
+        $("#edit_emails").val(court_email);
+        $("#rate_ids").val(court_id);
+        $("#view_courtModal").modal('show');
+    });
+
+    $(document).on('click', '#courtDeleteById', function () {
+        var court_id = $(this).data("court-id");
+        $("#courtdel_id").val(court_id);
+        $("#rateDelete").modal('show');
+    });
+
+    $("#serviceAdd").click(function () {
+        $('.indivisual-add').hide();
+        $(".legal-add").hide();
+        $(".police-add").hide();
+        $(".gov-add").hide();
+        $(".service-add").show();
+    });
+
+    $(".indivisualAdd").ready(function () {
+        $('.indivisual-add').show();
+        $(".service-add").hide();
+        $(".legal-add").hide();
+        $(".police-add").hide();
+        $(".gov-add").hide();
+    });
+
+    $(".indivisualAdd").click(function () {
+        $('.indivisual-add').show();
+        $(".service-add").hide();
+        $(".legal-add").hide();
+        $(".police-add").hide();
+        $(".gov-add").hide();
+    });
+
+    $(".policeAdd").click(function () {
+        $('.police-add').show();
+        $(".service-add").hide();
+        $(".legal-add").hide();
+        $(".indivisual-add").hide();
+        $(".gov-add").hide();
+    });
+
+    $(".govAdd").click(function () {
+        $('.gov-add').show();
+        $(".service-add").hide();
+        $(".legal-add").hide();
+        $(".police-add").hide();
+        $(".indivisual-add").hide();
+    });
+
+    $(".legalAdd").click(function () {
+        $('.legal-add').show();
+        $(".service-add").hide();
+        $(".gov-add").hide();
+        $(".police-add").hide();
+        $(".indivisual-add").hide();
+    });
+
+    $(document).ready(function (e) {
+        $("#editcourtFrm").validate({
+
+            rules: {
+                edit_name: {
+                    required: true
+                },
+                edit_rate: {
+                    required: true
+                },
+                lawyer_rates: {
+                    required: true
+                },
+                edit_one: {
+                    required: true
+                },
+                
+            },
+            messages: {
+                edit_name: {
+                    required: "Name can't be blank"
+                },
+                edit_rate: {
+                    required: "Rate can't be blank"
+                },
+                lawyer_rates: {
+                    required: "Lawyer rate can't be blank"
+                },
+                 edit_one: {
+                    required: "Lawyer rate can't be blank"
+                },
+                 
+            },
+        });
+
+        $("#secondEditcourtFrm").validate({
+            rules: {
+                edit_one: {
+                    required: true
+                },
+                edit_phone: {
+                    required: true
+                },
+                edit_email: {
+                    required: true
+                }
+                
+            },
+            messages: { 
+                 edit_one: {
+                    required: "Lawyer rate can't be blank"
+                },
+                edit_phone: {
+                    required: "Phone can't be blank"
+                },
+                edit_email: {
+                    required: "Email can't be blank"
+                }
+                 
+            },
+        });
+        
+
+    });
+
+
+
+
+    /*$("#edit_rate").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: 'Rs. ',
+        rightAlign: false
+    });*/
+</script>
+{{/content}}

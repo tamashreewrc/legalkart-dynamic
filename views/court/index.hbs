@@ -1,0 +1,236 @@
+
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+    <div class="inner">
+        <!-- START BREADCRUMB -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/dashboard">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Court</li>
+        </ol>
+        <!-- END BREADCRUMB -->
+    </div>
+</div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_court}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_court}}
+        </div>
+        {{/if}}
+        {{#if del_add_court}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{del_add_court}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Court</h5>
+        </div>
+        <div class="pull-right">
+            <a href="/court-add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add Court</a>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Name</th>
+                    {{!-- <th>Remarks</th> --}}
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each courtDetails}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.name}}</p>
+                    </td>
+                    {{!-- <td class="v-align-middle">
+                        <p>{{this.remarks}}</p>
+                    </td> --}}
+                    <td class="v-align-middle">
+                        <p>{{dateFormat this.cratedAt "DD-MM-YYYY"}}</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-complete" type="button" id="viewcourt" title="View" data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-court-remarks="{{this.remarks}}"><i class="fa fa-eye"></i></button>  
+                        <button class="btn btn-info" type="button" title="Edit" id="editcourt" data-court-id="{{this.id}}" data-court-name="{{this.name}}" data-court-remarks="{{this.remarks}}"><i class="fa fa-paste"></i></button>  
+                         <button class="btn btn-danger" type="button" title="delete" id="courtDeleteById"
+                                data-court-id="{{this.id}}">
+                                <i class="fa fa-trash-o"></i>
+                            </button> 
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END card -->
+<div class="modal fade" id="viewcourtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View court</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="view_name" id="view_name" placeholder="Enter court Name" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editcourtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit court</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form" id="editcourtFrm">
+                <input type="hidden" name="court_id" id="court_id">
+                <div class="form-group">
+                    <label>Name</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="edit_name" id="edit_name" placeholder="Enter court Name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEditcourt">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="courtDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Court</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="addcourtFrm" method="POST" action="/court/delete">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <input type="hidden" id="courtdel_id" name="courtdel_id">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this practice Area?</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+    <script>
+        $(document).on('click', "#viewcourt", function(){
+            var court_id = $(this).data("court-id");
+            var court_name = $(this).data("court-name");
+            var court_remarks = $(this).data("court-remarks");
+            $("#view_name").val(court_name);            
+            $("#view_remarks").val(court_remarks);
+            $("#viewcourtModal").modal('show');
+        });
+
+        $(document).on('click', "#editcourt", function(){
+            var court_id = $(this).data("court-id");
+            var court_name = $(this).data("court-name");
+            var court_remarks = $(this).data("court-remarks");
+            $("#edit_name").val(court_name);            
+            $("#court_id").val(court_id);            
+            $("#edit_remarks").val(court_remarks);
+            $("#editcourtModal").modal('show');
+        });
+
+        $(document).on('click','#courtDeleteById', function() {
+            var court_id = $(this).data("court-id");
+            $("#courtdel_id").val(court_id);            
+            $("#courtDelete").modal('show');
+        });
+
+        $(document).ready(function(e){
+            $("#btnEditcourt").click(function () {
+                $("#editcourtFrm").submit();
+            });
+
+            $("#editcourtFrm").validate({
+                rules: {
+                    edit_name: {
+                        required: true
+                    }
+                },
+                messages: {
+                    edit_name: {
+                        required: "court Name can't be blank"
+                    }
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/edit-court",
+                        data: $("#editcourtFrm").serialize(),
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                            $("#btnEditcourt").prop('disabled', true);
+                            $("#btnEditcourt").html("Loading...");
+                        },
+                        success: function (response) {
+                            if (response.success == true) {
+                                $(`<div class="alert alert-success"><strong>Success! </strong>court Edited Successfully</div>`).insertBefore("#editcourtFrm");
+                                setTimeout(function () {
+                                    window.location.href = "/court";
+                                }, 2000);
+                            }
+                        },
+                        error: function (xhr) {
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{{/content}}

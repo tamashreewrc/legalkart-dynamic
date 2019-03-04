@@ -1,0 +1,257 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Lawyers</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_lawyers}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}}
+        {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Lawyers</h5>
+        </div>
+        <div class="pull-right">
+            {{#if state_id}}
+            <a href="/lawyers" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-remove"></i> Remove filter</a>
+            {{/if}}
+            <button class="btn btn-primary btn-cons m-b-10" type="button" id="addPanelMemberBtn"><i class="fa fa-user"></i> Add Panel Member</button>
+            <button class="btn btn-primary btn-cons m-b-10" type="button" id="lawyerFilterBtn"><i class="fa fa-filter"></i> Filter</button>
+            <a href="/lawyers/add" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-plus"></i> Add Lawyers</a>
+
+        </div>  
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>
+                        {{!-- <input type="checkbox" name="check_all" id="check_all"> --}}
+                        Sl No.</th>
+                    <th>Name</th>
+                    <th>Email Id</th>
+                    <th>Mobile No.</th>
+                    <th>City &amp; State</th>
+                    <th>Practice Area</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each get_lawyers}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <input type="checkbox" name="panel_member" id="panel_member" class="panel_member" value="{{this.lawyers.id}}"
+                            {{#if_eq this.lawyers.lawyers.0.panel_member "1"}} checked {{/if_eq}}>
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.lawyers.first_name}} {{this.lawyers.last_name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.lawyers.email}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.lawyers.mobile}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>
+                            {{#if this.lawyers.city}}
+                            {{this.lawyers.city.name}}, {{this.lawyers.state.name}}
+                            {{else}}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                            {{/if}}
+                        </p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>
+                            {{#if this.lawyer_practice_area}}
+                                {{#each this.lawyer_practice_area}}
+                                    {{this}},
+                                {{/each}}
+                            {{else}}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                            {{/if}}
+                        </p>
+                    </td>
+                    <td>
+                        <a href="/lawyers/view/{{this.lawyers.id}}" class="btn btn-complete" title="View">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="/lawyers/edit/{{this.lawyers.id}}" class="btn btn-info" title="Edit">
+                            <i class="fa fa-paste"></i>
+                        </a>
+                        <button class="btn btn-danger" id="lawyerDeleteBtn" data-lawyer-id="{{this.lawyers.id}}" title="Delete"><i class="fa fa-trash-o"></i></button>
+
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="lawyerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Lawyer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/lawyers/delete" method="post">
+                <input type="hidden" name="lawyers_id" id="lawyers_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this lawyers?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="lawyerFilterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Find Lawyer By</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form" method="GET">
+                <div class="form-group">
+                    <label>State</label>
+                    <span class="requiredErr">*</span>
+                    <select class="full-width" data-init-plugin="select2" name="state" id="state">
+                        <option value="">Select State</option>
+                        {{#each state}}
+                        <option value="{{this.id}}" {{#if_eq this.id ../state_id}} selected {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <span class="requiredErr">*</span>
+                    <select class="full-width" data-init-plugin="select2" name="city" id="city">
+                        <option value="">Select City</option>
+                        {{#each city}}
+                        <option value="{{this.id}}" {{#if_eq this.id ../city_id}} selected {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="Panel_member_search" value="1" {{#if_eq panel_lawyer_search "1"}} checked {{/if_eq}}> Panel Member
+                </div>
+                {{!-- <div class="form-group">
+                    <label>Answer</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="answer" id="edit_answer" placeholder="Please Enter your Answer" >
+                </div>
+                <div class="form-group">
+                    <label>remarks</label>
+                    <span class="requiredErr">*</span>
+                    <textarea class="form-control" id="edit_remarks" name="remarks" placeholder="Briefly Describe your Remarks"></textarea>
+                </div> --}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnEditfaq">Search</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#lawyerDeleteBtn", function(){
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    $(document).on("click", "#lawyerFilterBtn", function(){
+        $("#lawyerFilterModal").modal("show");
+    });
+
+    $(document).ready(function(){
+        $("#check_all").click(function () {
+            $(".panel_member").prop('checked', $(this).prop('checked'));
+        });
+
+        $(".panel_member").change(function () {
+            if (!$(this).prop("checked")) {
+                $("#check_all").prop("checked", false);
+            }
+        });
+    });
+
+    $(document).on("click", "#addPanelMemberBtn", function () {
+            var check_publish = [];
+            $(".panel_member").each(function () {
+                if ($(this).is(':checked')) {
+                    check_publish.push($(this).val())
+                }
+            });
+            if (check_publish.length == 0) {
+                swal("Warning!", "Please select one or more resource", "warning");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/add-lawyer-panel-member",
+                    data: {
+                        check_publish: check_publish
+                    },
+                    success: function (response) {
+                        if (response.success == true) {
+                            swal({
+                                title: "Success!",
+                                text: "Panel member added successfully",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+
+</script>
+{{/content}}
+<!-- END card -->

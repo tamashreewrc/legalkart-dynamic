@@ -1,0 +1,91 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/rates">Rate</a>
+                </li>
+                <li class="breadcrumb-item active">Rate Add</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <h5>
+            Rate Add
+        </h5>
+        <form role="form" id="practicearea" method="POST" action="/rate/add">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+            <input type="hidden" name="service" value="I">
+            <input type="hidden" name="name" value="">
+            <input type="hidden" name="rate" value="0">
+            <input type="hidden" name="rate_laywers" value="0">
+
+            <div class="form-group">
+                <label> One To One</label>
+                <input type="text" class="form-control" name="one_rate" id="one_rate" placeholder="Enter Name">
+            </div>
+
+            <div class="form-group">
+                <label>Email Conseltance</label>
+                <input type="text" class="form-control" name="email_rate" id="email_rate" placeholder="Enter Rate">
+            </div>
+
+            <div class="form-group">
+                <label>Phone Conseltance</label>
+                <input type="text" class="form-control" name="phone_rate" id="phone_rate" placeholder="Enter Rate">
+            </div>
+
+            <button class="btn btn-primary btn-cons m-t-10 btn-lg" type="submit">Submit</button>
+
+        </form>
+    </div>
+</div>
+
+
+
+{{#content "script" mode="append"}}
+
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        $("#practicearea").validate({
+
+            rules: {
+                one_rate: {
+                    required: true
+                },
+                email_rate: {
+                    required: true
+                },
+                phone_rate: {
+                    required: true
+                }
+            },
+            messages: {
+                one_rate: {
+                    required: "One rate can't be blank"
+                },
+                email_rate: {
+                    required: "Email rate can't be blank"
+                },
+                phone_rate: {
+                    required: "Phone rate can't be blank"
+                }
+            },
+        });
+    });
+
+
+</script>
+
+{{/content}}

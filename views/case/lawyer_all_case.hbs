@@ -1,0 +1,300 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">All Cases</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_lawyers}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}} {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>All Case Lists</h5>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body ">
+        
+        <div class="col-xl-12 col-lg-12 col-top">
+            <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item liTab2">
+                    <a href="javascript:void(0)" class="active indivisualAdd" class="legalAdd" data-toggle="tab" role="tab" data-target="#pending">Current Cases</a>
+                </li>
+                <li class="nav-item liTab3">
+                    <a href="javascript:void(0)" class="govAdd" data-toggle="tab" role="tab" data-target="#approve">Closed Cases</a>
+                </li>
+                <li class="nav-item liTab4">
+                    <a href="javascript:void(0)" class="policeAdd" data-toggle="tab" role="tab" data-target="#reject">All Cases</a>
+                </li>
+
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane tabDiv2 active" id="pending">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Case No</th>
+                                <th>Case Type</th>
+                                <th>Customer Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_case}} {{#if_eq this.status "3"}}
+                            <tr>
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.case_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.rate_list.type_of_case}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" id="changeCaseStatus" data-case-id="{{this.id}}" data-status="{{this.status}}" class="btn btn-primary"
+                                        title="Change Status">
+                                        <i class="fa fa-exchange"></i>
+                                    </a>
+
+                                    <a href="/case-conversation/{{this.id}}" id="caseView" class="btn btn-primary" title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/if_eq}} {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane tabDiv3" id="approve">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Case No</th>
+                                <th>Case Type</th>
+                                <th>Customer Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_case}} {{#if_eq this.closeing_status "1"}}
+                            <tr>
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.case_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.rate_list.type_of_case}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                </td>
+                                <td>
+
+                                    <a href="/case-conversation/{{this.id}}" id="caseView" class="btn btn-primary" title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/if_eq}} {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane tabDiv4" id="reject">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Case No</th>
+                                <th>Case Type</th>
+                                <th>Customer Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each all_case}}
+                            <tr>
+                                <td class="v-align-middle semi-bold">
+                                    <p>{{math @index "+" 1}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.case_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.rate_list.type_of_case}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.user.first_name}} {{this.user.last_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                     {{#if_eq this.closeing_status "1"}}
+                                    <p class="badge badge-success">Closed Case</p>{{else}} {{#if_eq this.status "3"}}
+                                    <p class="badge badge-warning">Current Case</p>{{/if_eq}} {{#if_eq this.status "1"}}
+                                    <p class="badge badge-primary">Approved</p>{{/if_eq}} {{#if_eq this.status "2"}}
+                                    <p class="badge badge-danger">Rejected</p>{{/if_eq}} {{/if_eq}}
+                                </td>
+                                <td>
+                                    {{#if_eq this.status "3"}}
+                                    <a href="javascript:void(0);" id="changeCaseStatus" data-case-id="{{this.id}}" data-status="{{this.status}}" class="btn btn-primary"
+                                        title="Change Status">
+                                        <i class="fa fa-exchange"></i>
+                                    </a>
+                                    {{/if_eq}}
+
+                                    <a href="/case-conversation/{{this.id}}" id="caseView" class="btn btn-primary" title="View">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!--
+<div class="modal fade" id="lawyerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Lawyer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/lawyers/delete" method="post">
+                <input type="hidden" name="lawyers_id" id="lawyers_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this lawyers?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> --}}
+
+
+<div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" name="changeStatusFrm" id="changeStatusFrm">
+                    <input type="hidden" name="case_id" id="case_id">
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="status" id="status">
+                            <option value="">Select Status</option>
+                            <option value="3">Pending</option>
+                            <option value="1">Approved</option>
+                            <option value="2">Rejected</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnChangeStatus">Change</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#lawyerDeleteBtn", function () {
+        $("#lawyers_id").val($(this).data("lawyer-id"));
+        $("#lawyerDeleteModal").modal("show");
+    });
+
+    $(document).on("click", "#caseAddBtn", function () {
+        $("#addCaseTypeModal").modal("show");
+    });
+
+    $(document).on("click", "#btnCaseAdd", function () {
+        var caseType = $("#case_type").val();
+        window.location.href = "/case/add/" + caseType;
+    });
+
+    $(document).on("click", "#changeCaseStatus", function () {
+        var case_id = $(this).data("case-id");
+        var status = $(this).data("status");
+        $("#case_id").val(case_id);
+        $("#status").val(status);
+        var xxx = $("#status option:selected").text();
+        $("#select2-status-container").text(xxx);
+        $("#changeStatusModal").modal('show');
+    })
+    $(document).on("click", "#btnChangeStatus", function () {
+        if ($("#status").val() == "") {
+            swal("Warning!", "Please Select Status", "warning");
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/change-case-status",
+                data: $("#changeStatusFrm").serialize(),
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Success!",
+                            text: "Status Changed Successfully!",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            })
+        }
+    });
+
+</script> {{/content}}
+<!-- END card -->

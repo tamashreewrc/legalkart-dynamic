@@ -1,0 +1,234 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">GST <Area:r></Area:r>
+                </li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        <div class="card-header ">
+            {{#if success_add_gst}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_add_gst}}
+            </div>
+            {{/if}}
+            {{#if success_edit_gst}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_edit_gst}}
+            </div>
+            {{/if}}
+            {{#if success_delete_gst}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_delete_gst}}
+            </div>
+            {{/if}}
+            <div class="card-title">
+                <h5>Rate</h5>
+            </div>
+            {{!-- <div class="pull-right">
+                <a href="/gst/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add
+                    Rate</a>
+                
+            </div> --}}
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                <thead>
+                    <tr>
+                        <th>Sl NO</th>
+                        <th>GST</th>
+                        <th>Create Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each gstDetails}}
+                    <tr>
+                        <td>{{math @index "+" 1}}</td>
+
+                        <td class="v-align-middle">
+                            {{this.gst_percent}}
+                        </td>
+
+                        <td class="v-align-middle">
+                            <p>{{this.createdAt}}</p>
+                        </td>
+                       
+                         <td>
+                            <button class="btn btn-complete" type="button" id="view_gst" title="View" data-gst-name="{{this.gst_percent}}" >
+                                <i class="fa fa-eye"></i>
+                            </button>  
+                            <button class="btn btn-info" type="button" title="Edit" id="edit_gst" data-gst-id="{{this.id}}"  data-gst-name="{{this.gst_percent}}" >
+                                <i class="fa fa-paste"></i>
+                            </button>  
+                            <button class="btn btn-danger" type="button" title="delete" id="gstDeleteById" data-gst-id="{{this.id}}">
+                                    <i class="fa fa-trash-o"></i>
+                            </button> 
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewgst" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View GST</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>GST</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="view_name" id="view_name" placeholder="Enter  Name" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editrateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit GST</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form" id="editcourtFrm"  method="POST" action="/legalcart-gst/edit">
+                <input type="hidden" name="gst_id" id="gst_id">
+                 <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <div class="form-group">
+                    <label>GST</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="edit_name" id="edit_name" maxlength="3" placeholder="Enter Name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="gstDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete GST</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="addcourtFrm" method="POST" action="/legalcart-gst/delete">
+                <input type="hidden" id="legalcart_gst_id" name="legalcart_gst_id">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this rate?</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+    <script>
+        $(document).on('click', "#view_gst", function(){
+            var gst_name = $(this).data("gst-name");
+            $("#view_name").val(gst_name);
+            $("#viewgst").modal('show');
+        });
+
+
+
+        $(document).on('click', "#edit_gst", function(){
+            var gst_id = $(this).data("gst-id");
+            var gst_name = $(this).data("gst-name");
+            $("#edit_name").val(gst_name);  
+            $("#gst_id").val(gst_id);            
+            $("#editrateModal").modal('show');
+        }
+        
+);
+    
+
+  $(document).on('click','#gstDeleteById', function() {
+        var gst_id = $(this).data("gst-id");
+        $("#legalcart_gst_id").val(gst_id);            
+        $("#gstDelete").modal('show');
+    });
+
+   $(document).ready(function (e) {
+        $("#editcourtFrm").validate({
+
+            rules: {
+                edit_name: {
+                    required: true
+                },
+                edit_rate: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Name can't be blank"
+                },
+                edit_rate: {
+                    required: "Rate can't be blank"
+                }
+            },
+        });
+    });
+
+$("#edit_rate").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: 'Rs. ',
+            rightAlign: false
+        });
+    </script>
+{{/content}}

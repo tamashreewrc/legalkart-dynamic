@@ -1,0 +1,2119 @@
+<!-- START JUMBOTRON -->
+<div data-pages="parallax">
+    <div class="container-fluid p-l-25 p-r-25 sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb sm-p-b-5">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item active">{{firm}}</li>
+                {{#each total_new_case}}
+                {{#if_eq status "1"}}
+                <div class="current-msg objblink m-r-10 m-b-10">
+                    {{!-- <a href="#" class="notification_change" data-noti-id={{this.id}} data-noti-link={{this.link}}>{{this.remarks}}</a>
+                    --}}
+                </div>
+                {{/if_eq}}
+                {{/each}}
+            </ol>
+        </div>
+        {{#if_eq user.role_id "1"}}
+        {{!-- Total Firm Show --}}
+        <div class="row">
+        <div class="col-lg-12 col-sm-12  d-flex flex-column">
+            <div class="card social-card company-logo share m-b-10 no-border all-case-by-month p-b-25 d-block padding-25">
+                <h2 class="text-success no-margin m-b-20 common-heading">All Firms</h2>
+                {{#each firm_case}}
+                <a href="javascript:void(0);" class="m-l-10" id="showChart" data-firmid="{{this.id}}">
+                    {{!-- <div onclick="showChart()"> --}}
+                    <img src="{{this.image}}">
+                    {{!-- </div> --}}
+                </a>
+                {{/each}}
+            </div>
+        </div>
+        </div>
+        {{/if_eq}}
+        
+        {{!--... All case show by month --}}
+        <div class="row time-schedule" id="dashboard_show">
+            <div class="col-lg-12 col-sm-12  d-flex flex-column">
+                <div class="card social-card share  full-width m-b-10 no-border padding-25">
+                    <h2 class="text-success m-b-10 firmName common-heading" id="firmName">{{firm}}</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="first_week"></div>
+                            <div id="second_week"></div>
+                            <div id="third_week"></div>
+                            <div id="fore_week"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="totMsgCount"><b><a href="/messagge-list/0">{{new_msg}}</a></b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END JUMBOTRON -->
+{{#if_eq user.role_id "1"}}
+<!-- START CONTAINER FLUID -->
+<div class="container-fluid p-l-25 p-r-25 p-t-0 p-b-25 sm-padding-10">
+    <!-- START ROW -->
+    {{#if edit_lawyers_profile}}
+    <div class="alert alert-success">
+        <strong>Success! </strong>{{edit_lawyers_profile}}
+    </div>
+    {{/if}}
+    <div class="row">
+        {{!-- All case show by month --}}
+        <div class="col-lg-12 col-sm-12  d-flex flex-column">
+            <div class="card social-card share  full-width m-b-10 no-border all-case-by-month p-b-25">
+                <div class="case-month-filter p-25">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <select name="changeDateWeek" id="changeDateWeek" class="form-control font-16">
+                                <option value="m">Monthly</option>
+                                <option value="w">Weekly</option>
+                            </select>
+                        </div>
+                        <div class="col-md-10 top-6">
+                            <a href="javascript:void(0);" class="findCaseByMonth d-inline-block font-16"></a>
+                            <p class="m-l-50 showCurrentCaseMonth m-r-50 d-inline-block font-16"></p>
+                            <a href="javascript:void(0);" class="findCaseByMonthNext d-inline-block font-16"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="all-cases-month">
+                    <div class="row"></div>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START WIDGET widget_map_sales-->
+            <!-- START ITEM -->
+            <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+                <div id='myChart'></div>
+            </div>
+            <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+                <div class="m-t-10" id='myChartCaseStage'></div>
+                <div class="padding-25 mt-auto">
+                    <a href="javascript:void(0);" id="showAllCaseStageBtn">
+                        <i class="fa fa-external-link fs-16 text-success m-r-10"></i>View more details of Stages
+                    </a>
+                </div>
+            </div>
+            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
+                <div class="card-header top-right">
+                    <div class="card-controls">
+                        <ul>
+                            <li>
+                                <a data-toggle="refresh" class="portlet-refresh text-black" href="#">
+                                    <i class="portlet-icon portlet-icon-refresh"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="padding-wob-25">
+                    <div class="txt-div">
+                        <h2 class="text-success no-margin common-heading">Total Sales</h2>
+                        <p class="no-margin">Firm wise</p>
+                    </div>
+                </div>
+                <div class="auto-overflow widget-11-2-table">
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Firm Name</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">No. of Cases</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">Amount</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            {{#each firm_sales}}
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">
+                                    {{this.firm_name}}
+                                </td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">{{this.cases}}</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">{{this.tot_rate}}/-</span>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="padding-25 mt-auto">
+                    <p class="small no-margin">
+                        <a href="#">
+                            <i class="fa fa-external-link fs-16 text-success m-r-10"></i>
+                        </a>
+                        <span class="hint-text ">View more details of total sales</span>
+                    </p>
+                </div>
+            </div>
+            <!-- END ITEM -->
+
+            <!-- END WIDGET -->
+        </div>
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START ITEM -->
+            <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+                <div id='myChart1'></div>
+            </div>
+            <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+                <div id='myChartStateLawyer'></div>
+            </div>
+            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
+                <div class="card-header top-right">
+                    <div class="card-controls">
+                        <ul>
+                            <li>
+                                <a data-toggle="refresh" class="portlet-refresh text-black" href="#">
+                                    <i class="portlet-icon portlet-icon-refresh"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="padding-wob-25">
+                    <div class="txt-div">
+                        <h2 class="text-success no-margin common-heading">Payments Released and Pending</h2>
+                        <p class="no-margin">Invoice</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="auto-overflow widget-11-2-table">
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Invoice No</td>
+                                <td class="font-montserrat all-caps fs-12 w-50">Lawyer Name</td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">Amount</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">Status</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            {{#each invoice}}
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">{{this.invoice_no}}</td>
+                                <td class="font-montserrat all-caps fs-12 w-50">{{this.user.first_name}}
+                                    {{this.user.last_name}}</td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">{{this.total_amount}}/-</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">
+                                        {{#if_eq this.payment_status "0"}}
+                                        <p class="badge badge-warning"> Pending</p> {{/if_eq}} {{#if_eq
+                                        this.payment_status "1"}}
+                                        <p class="badge badge-success"> Released</p>
+                                        {{/if_eq}}
+                                    </span>
+                                </td>  
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="padding-25 mt-auto">
+                    <p class="small no-margin">
+                        <a href="/invoice">
+                            <i class="fa fa-external-link fs-16 text-success m-r-10"></i>
+                            <span class="hint-text ">View more details of payments</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+                style="margin-top:10px !important;">
+                <div class="card-header top-right">
+                    <div class="card-controls">
+                        <ul>
+                            <li>
+                                <a data-toggle="refresh" class="portlet-refresh text-black" href="#">
+                                    <i class="portlet-icon portlet-icon-refresh"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="padding-wob-25">
+                    <div class="txt-div">
+                        <h2 class="text-success no-margin common-heading">New Lawyer Requisition</h2>
+                        <p class="no-margin">Advocate</p>
+                    </div>
+                </div>
+                <div class="auto-overflow widget-11-2-table">
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Lawyer Name</td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">Mobile</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">Joining Date</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            {{#each lawyer}}
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">
+                                    <a href="/lawyers/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">{{this.mobile}}</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">{{dateFormat this.createdAt "DD/MM/YYYY"}}</span>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="padding-25 mt-auto">
+                    <p class="small no-margin">
+                        <a href="/lawyers">
+                            <i class="fa fa-external-link fs-16 text-success m-r-10"></i>
+                            <span class="hint-text ">View more details of lawyers</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- END ITEM -->
+        </div>
+
+        {{!-- <div class="col-lg-6 m-b-10 d-flex">
+            <!-- START WIDGET widget_pendingComments.tpl-->
+            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
+                <div class="card-header top-right">
+                    <div class="card-controls">
+                        <ul>
+                            <li>
+                                <a data-toggle="refresh" class="portlet-refresh text-black" href="#">
+                                    <i class="portlet-icon portlet-icon-refresh"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="padding-25">
+                    <div class="pull-left">
+                        <h2 class="text-success no-margin">webarch</h2>
+                        <p class="no-margin">Today's sales</p>
+                    </div>
+                    <h3 class="pull-right semi-bold">
+                        <sup>
+                            <small class="semi-bold">$</small>
+                        </sup> 102,967
+                    </h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="auto-overflow widget-11-2-table">
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">Purchase CODE #2345</td>
+                                <td class="text-right hidden-lg">
+                                    <span class="hint-text small">dewdrops</span>
+                                </td>
+                                <td class="text-right b-r b-dashed b-grey w-25">
+                                    <span class="hint-text small">Qty 1</span>
+                                </td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">$27</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="padding-25 mt-auto">
+                    <p class="small no-margin">
+                        <a href="#">
+                            <i class="fa fs-16 fa-arrow-circle-o-down text-success m-r-10"></i>
+                        </a>
+                        <span class="hint-text ">Show more details of APPLE . INC</span>
+                    </p>
+                </div>
+            </div>
+            <!-- END WIDGET -->
+        </div> --}}
+    </div>
+    <!-- END ROW -->
+
+</div>
+<!-- END CONTAINER FLUID -->
+{{/if_eq}}
+{{#if_eq user.role_id "2"}}
+<div class="container-fluid p-l-25 p-r-25 p-t-0 p-b-25 sm-padding-10">
+    <div class="row">
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START ITEM -->
+            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
+                <div class="card-header top-right">
+                    <div class="card-controls">
+                        <ul>
+                            <li>
+                                <a data-toggle="refresh" class="portlet-refresh text-black" href="#">
+                                    <i class="portlet-icon portlet-icon-refresh"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="padding-25">
+                    <div class="txt-div">
+                        <h2 class="text-success no-margin common-heading">New Enquiries</h2>
+                        <p class="no-margin">Book</p>
+                    </div>
+                </div>
+                <div class="auto-overflow widget-11-2-table">
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50"> Name</td>
+                                <td class="font-montserrat all-caps fs-12 w-50">Mobile No</td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">Date</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            {{#each lawyer_enq}}
+                            <tr>
+                                <td class="font-montserrat all-caps fs-12 w-50">{{this.name}}</td>
+                                <td class="font-montserrat all-caps fs-12 w-50">{{this.mobile}} {{this.user.last_name}}</td>
+                                <td class="w-25">
+                                    <span class="font-montserrat fs-18">{{dateFormat this.createdAt "DD/MM/YYYY"}}</span>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="padding-25 mt-auto">
+                    <p class="small no-margin">
+                        <a href="/all-enquiry">
+                            <i class="fa fa-external-link fs-16 text-success m-r-10"></i>
+                            <span class="hint-text ">View more details of enquiry</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <!-- END ITEM -->
+        </div>
+
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START ITEM -->
+            <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+                <div class="m-t-30" id='myChartCaseStage'></div>
+                <a href="javascript:void(0);" id="showAllCaseStageBtn">
+                    <i class="fa fa-external-link fs-16 text-success m-r-10"></i>View more details of Stages
+                </a>
+            </div>
+            <!-- END ITEM -->
+        </div>
+
+    </div>
+</div>
+{{/if_eq}}
+{{!-- END LAWYER DASHBOARD --}}
+
+{{!-- START CUSTOMER DASHBOARD --}}
+{{#if_eq user.role_id "3"}}
+{{#if_eq user.sub_role "C"}}
+<div class="container-fluid p-l-25 p-r-25 p-t-0 p-b-25 sm-padding-10">
+    <div class="row">
+        {{!-- All case show by month --}}
+        <div class="col-lg-12 col-sm-12  d-flex flex-column">
+            <div class="card social-card share  full-width m-b-10 no-border all-case-by-month p-b-25">
+                <div class="case-month-filter p-25">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <select name="changeDateWeek" id="changeDateWeek" class="form-control font-16">
+                                <option value="m">Monthly</option>
+                                <option value="w">Weekly</option>
+                            </select>
+                        </div>
+                        <div class="col-md-10 top-6">
+                            <a href="javascript:void(0);" class="findCaseByMonth d-inline-block font-16"></a>
+                            <p class="m-l-50 showCurrentCaseMonth m-r-50 d-inline-block font-16"></p>
+                            <a href="javascript:void(0);" class="findCaseByMonthNext d-inline-block font-16"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="all-cases-month">
+                    <div class="row"></div>
+                </div>
+            </div>
+        </div>
+        {{!--... All case show by month --}}
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START WIDGET widget_map_sales-->
+            <!-- START ITEM -->
+            <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChart'></div>
+            </div>
+            <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChart2'></div>
+            </div>
+
+            <!-- END ITEM -->
+
+            <!-- END WIDGET -->
+        </div>
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START ITEM -->
+            <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChart1'></div>
+            </div>
+            <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChartCaseStage'></div>
+                <a href="javascript:void(0);" id="showAllCaseStageBtn">
+                    <i class="fa fa-external-link fs-16 text-success m-r-10"></i>View more details of Stages
+                </a>
+            </div>
+
+            <!-- END ITEM -->
+        </div>
+    </div>
+</div>
+{{/if_eq}}
+{{/if_eq}}
+{{!-- END CUSTOMER DASHBOARD --}}
+
+
+{{!-- START MANAGER DASHBOARD --}}
+{{#if_eq user.role_id "5"}}
+<div class="container-fluid p-l-25 p-r-25 p-t-0 p-b-25 sm-padding-10">
+    <!-- START ROW -->
+    <div class="row">
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START WIDGET widget_map_sales-->
+            <!-- START ITEM -->
+            <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChartBarManager'></div>
+            </div>
+            {{!-- <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChart2'></div>
+            </div> --}}
+
+            <!-- END ITEM -->
+
+            <!-- END WIDGET -->
+        </div>
+        <div class="col-lg-6 col-sm-6  d-flex flex-column">
+            <!-- START ITEM -->
+            {{!-- <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChart1'></div>
+            </div> --}}
+            <div class="card social-card share  full-width m-b-20 no-border" data-social="item">
+                <div id='myChartCaseStage'></div>
+                <a href="javascript:void(0);" id="showAllCaseStageBtn">
+                    <i class="fa fa-external-link fs-16 text-success m-r-10"></i>View more details of Stages
+                </a>
+            </div>
+
+            <!-- END ITEM -->
+        </div>
+    </div>
+    <!-- END ROW -->
+</div>
+{{/if_eq}}
+{{!-- END MANAGER DASHBOARD --}}
+
+{{!-- <div class="modal fade" id="showAllCaseStageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Case Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each all_case}}
+                        <tr>
+                            <td class="v-align-middle semi-bold">
+                                <p>{{math @index "+" 1}}</p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> --}}
+<div class="modal fade" id="showAllCaseStageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View All Cases Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <table class="table table-hover demo-table-search table-responsive-block data-tables">
+                    <thead>
+                        <tr>
+                            <th>
+                                SL#
+                            </th>
+                            <th>Case No./ Cab No.</th>
+                            <th>Stage</th>
+                            <th>Status</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each case_status}}
+
+                        <tr>
+
+                            <td class="v-align-middle semi-bold"> {{math @index "+" 1}} </td>
+                            <td class="v-align-middle">
+                                <a href="/case-conversation/{{this.all_case.id}}">
+                                    {{#if_eq this.all_case.cab_no "0"}} <p>{{this.all_case.case_no}}</p>
+                                    {{else}}
+                                    <p>{{this.all_case.cab_no}}</p>
+                                    {{/if_eq}}
+                                </a>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.case_status_category.name}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                {{#if this.case_status_name.name}}
+                                {{this.case_status_name.name}}
+                                {{else}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                                {{/if}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script> zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
+
+
+<script>
+
+    $(document).on("click", "#showAllCaseStageBtn", function () {
+        $("#showAllCaseStageModal").modal("show");
+    });
+
+    $(document).ready(function (e) {
+
+        /* Starts PIE CHART SECTION*/
+        $.ajax({
+            type: "GET",
+            url: "/get-pie-chart-case-stage",
+            success: function (response) {
+                var myConfigCaseStage = {
+                    type: "pie",
+                    plot: {
+                        borderColor: "#2B313B",
+                        borderWidth: 5,
+                        // slice: 90,
+                        valueBox: {
+                            placement: 'out',
+                            text: '%npv%',
+                            fontFamily: "montserrat"
+                        },
+                        tooltip: {
+                            fontSize: '15',
+                            fontFamily: "montserrat",
+                            padding: "5 10",
+                            // text: "%v"
+                            text: "%t\n Cases - %v",
+                        },
+                        animation: {
+                            effect: 2,
+                            method: 5,
+                            speed: 900,
+                            sequence: 1,
+                            delay: 3000
+                        }
+                    },
+                    title: {
+                        fontColor: "#007be8",
+                        text: 'Cases vs Stage',
+                        offsetX: 10,
+                        fontFamily: "montserrat",
+                        fontSize: 16
+                    },
+                    plotarea: {
+                        margin: "20 0 0 0"
+                    },
+                    series: response.pie_case_stage_chart
+                };
+
+                zingchart.render({
+                    id: 'myChartCaseStage',
+                    data: myConfigCaseStage,
+                    height: '100%',
+                    width: '100%',
+                });
+            }
+        });
+
+        /* ENDs PIE CHART SECTION*/
+
+        $.ajax({
+            type: "POST",
+            url: "/get-cases-by-month-site-admin",
+            data: {
+                firm_id: 0
+            },
+            success: function (response) {
+
+                if (response.success == true) {
+                    $(".findCaseByMonth").append(`
+                            < ${response.pre_month_name}
+                        `);
+                    $(".findCaseByMonth").attr('data-month-id', response.pre_mm);
+                    $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_month_name}</strong>
+                        `);
+                    if (response.city_case_month.length == "0") {
+                        $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                    }
+                    else {
+                        for (var i in response.city_case_month) {
+                            $(".all-cases-month .row").append(`
+                            <div class="col-20">
+                                <div class="case-item">
+                                    <a href="/all-case/${response.city_case_month[i].city_name}/0/${response.current_month}"><p class="newCase"><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                    <p>${response.city_case_month[i].newCase}</p>
+                                    <p>${response.city_case_month[i].pendingCase}</p>
+                                    <p>${response.city_case_month[i].completeLawyer}</p>
+                                    <p>${response.city_case_month[i].closeCase}</p>
+                                </div>
+                            </div>
+                            `);
+                        }
+                    }
+                }
+            },
+            error: function (xhr) {
+
+            },
+            complete: function (data) {
+                
+            }
+        });
+        var role = {{user.role_id}};
+    if (role == "1") {
+        /* Starts PIE CHART SECTION*/
+        $.ajax({
+            type: "GET",
+            url: "/get-pie-chart-case",
+            success: function (response) {
+                var myConfig1 = {
+                    type: "pie",
+                    plot: {
+                        borderColor: "#2B313B",
+                        borderWidth: 5,
+                        // slice: 90,
+                        valueBox: {
+                            placement: 'out',
+                            text: '%t\n%npv%',
+                            fontFamily: "montserrat"
+                        },
+                        tooltip: {
+                            fontSize: '18',
+                            fontFamily: "montserrat",
+                            padding: "5 10",
+                            text: "%v"
+                        },
+                        animation: {
+                            effect: 2,
+                            method: 5,
+                            speed: 900,
+                            sequence: 1,
+                            delay: 3000
+                        }
+                    },
+                    title: {
+                        fontColor: "#007be8",
+                        text: 'State vs Cases',
+                        offsetX: 10,
+                        fontFamily: "montserrat",
+                        fontSize: 16
+                    },
+                    plotarea: {
+                        margin: "20 0 0 0"
+                    },
+                    series: response.pie_case_chart
+                };
+
+                zingchart.render({
+                    id: 'myChart1',
+                    data: myConfig1,
+                    height: '100%',
+                    width: '100%',
+                });
+            }
+        });
+
+        /* ENDs PIE CHART SECTION*/
+        /* Starts Bar CHART SECTION*/
+
+        $.ajax({
+            type: "GET",
+            url: "/get-bar-chart-case",
+            success: function (response) {
+                var myConfig = {
+                    "graphset": [
+                        {
+                            "type": "bar",
+                            "background-color": "white",
+                            title: {
+                                fontColor: "#007be8",
+                                text: 'State vs All Cases',
+                                offsetX: 10,
+                                fontFamily: "montserrat",
+                                fontSize: 16,
+                                "alpha": 1,
+                                "adjust-layout": true,
+                            },
+                            "plotarea": {
+                                "margin": "dynamic"
+                            },
+                            "legend": {
+                                "layout": "x3",
+                                "overflow": "page",
+                                "alpha": 0.05,
+                                "shadow": false,
+                                "align": "center",
+                                "adjust-layout": true,
+                                "marker": {
+                                    "type": "circle",
+                                    "border-color": "none",
+                                    "size": "10px"
+                                },
+                                "border-width": 0,
+                                "maxItems": 3,
+                                "toggle-action": "hide",
+                                "pageOn": {
+                                    "backgroundColor": "#000",
+                                    "size": "10px",
+                                    "alpha": 0.65
+                                },
+                                "pageOff": {
+                                    "backgroundColor": "#7E7E7E",
+                                    "size": "10px",
+                                    "alpha": 0.65
+                                },
+                                "pageStatus": {
+                                    "color": "black"
+                                }
+                            },
+                            "plot": {
+                                "bars-space-left": 0.15,
+                                "bars-space-right": 0.15,
+                                "animation": {
+                                    "effect": "ANIMATION_SLIDE_BOTTOM",
+                                    "sequence": 0,
+                                    "speed": 800,
+                                    "delay": 800
+                                }
+                            },
+                            "scale-y": {
+                                "line-color": "#7E7E7E",
+                                "item": {
+                                    "font-color": "#7e7e7e"
+                                },
+                                "values": "0:60:10",
+                                "guide": {
+                                    "visible": true
+                                },
+                                "label": {
+                                    "text": "No. of cases",
+                                    "font-family": "montserrat",
+                                    "bold": true,
+                                    "font-size": "14px",
+                                    "font-color": "#7E7E7E",
+                                },
+                            },
+                            "scaleX": {
+                                "values": response.state,
+                                "placement": "default",
+                                "tick": {
+                                    "size": 58,
+                                    "placement": "cross"
+                                },
+                                "itemsOverlap": true,
+                                "item": {
+                                    "offsetY": -55
+                                }
+                            },
+                            "scaleX2": {
+                                "values": [],
+                                "placement": "default",
+                                "tick": {
+                                    "size": 20,
+                                },
+                                "item": {
+                                    "offsetY": -15
+                                }
+                            },
+                            "tooltip": {
+                                "visible": false
+                            },
+                            "crosshair-x": {
+                                "line-width": "100%",
+                                "alpha": 0.18,
+                                "plot-label": {
+                                    "header-text": "%kv Cases"
+                                }
+                            },
+                            "series": [
+                                {
+                                    "values": response.bar_new_case_chart,
+                                    "alpha": 0.95,
+                                    "borderRadiusTopLeft": 7,
+                                    "background-color": "#8993c7",
+                                    "text": "New",
+                                },
+                                {
+                                    "values": response.bar_pending_case_chart,
+                                    "borderRadiusTopLeft": 7,
+                                    "alpha": 0.95,
+                                    "background-color": "#fdb462",
+                                    "text": "Pending"
+                                },
+                                {
+                                    "values": response.bar_closed_case_chart,
+                                    "alpha": 0.95,
+                                    "borderRadiusTopLeft": 7,
+                                    "background-color": "#8dd3c7",
+                                    "text": "Closed"
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                zingchart.render({
+                    id: 'myChart',
+                    data: myConfig,
+                    height: '100%',
+                    width: '100%'
+                });
+            }
+        });
+
+        /* ENDs Bar CHART SECTION*/
+
+        /* Starts PIE CHART SECTION*/
+        $.ajax({
+            type: "GET",
+            url: "/get-pie-chart-city-lawyers",
+            success: function (response) {
+                var myConfigStateLawyer = {
+                    type: "pie",
+                    plot: {
+                        borderColor: "#2B313B",
+                        borderWidth: 5,
+                        // slice: 90,
+                        valueBox: {
+                            placement: 'out',
+                            text: '%t\n%npv%',
+                            fontFamily: "montserrat"
+                        },
+                        tooltip: {
+                            fontSize: '18',
+                            fontFamily: "montserrat",
+                            padding: "5 10",
+                            text: "%v"
+                        },
+                        animation: {
+                            effect: 2,
+                            method: 5,
+                            speed: 900,
+                            sequence: 1,
+                            delay: 3000
+                        }
+                    },
+                    title: {
+                        fontColor: "#007be8",
+                        text: 'City vs Lawyers',
+                        offsetX: 10,
+                        fontFamily: "montserrat",
+                        fontSize: 16
+                    },
+                    plotarea: {
+                        margin: "20 0 0 0"
+                    },
+                    series: response.pie_case_chart
+                };
+
+                zingchart.render({
+                    id: 'myChartStateLawyer',
+                    data: myConfigStateLawyer,
+                    height: '100%',
+                    width: '100%',
+                });
+            }
+        });
+
+        /* ENDs PIE CHART SECTION*/
+
+        
+
+
+
+    }
+    else if (role == "3") {
+        var sub_role = "{{user.sub_role}}";
+        if (sub_role == "C") {
+            /* Starts PIE CHART SECTION*/
+            $.ajax({
+                type: "GET",
+                url: "/get-pie-corporate-chart-case",
+                success: function (response) {
+                    var myConfig1 = {
+                        type: "pie",
+                        plot: {
+                            borderColor: "#2B313B",
+                            borderWidth: 5,
+                            // slice: 90,
+                            valueBox: {
+                                placement: 'out',
+                                text: '%t\n%npv%',
+                                fontFamily: "montserrat"
+                            },
+                            tooltip: {
+                                fontSize: '18',
+                                fontFamily: "montserrat",
+                                padding: "5 10",
+                                text: "%npv%"
+                            },
+                            animation: {
+                                effect: 2,
+                                method: 5,
+                                speed: 900,
+                                sequence: 1,
+                                delay: 3000
+                            }
+                        },
+                        title: {
+                            fontColor: "#007be8",
+                            text: 'State vs Cases',
+                            offsetX: 10,
+                            fontFamily: "montserrat",
+                            fontSize: 16,
+                        },
+                        plotarea: {
+                            margin: "20 0 0 0"
+                        },
+                        series: response.pie_case_chart
+                    };
+
+                    zingchart.render({
+                        id: 'myChart1',
+                        data: myConfig1,
+                        height: '100%',
+                        width: '100%',
+                    });
+                }
+            });
+
+            /* ENDs PIE CHART SECTION*/
+            /* Starts Bar CHART SECTION*/
+
+            $.ajax({
+                type: "GET",
+                url: "/get-corporate-bar-chart-case",
+                success: function (response) {
+                    var myConfig = {
+                        "graphset": [
+                            {
+                                "type": "bar",
+                                "background-color": "white",
+                                title: {
+                                    fontColor: "#007be8",
+                                    text: 'State vs All Cases',
+                                    offsetX: 10,
+                                    fontFamily: "montserrat",
+                                    fontSize: 16,
+                                    "alpha": 1,
+                                    "adjust-layout": true,
+                                },
+                                "plotarea": {
+                                    "margin": "dynamic"
+                                },
+                                "legend": {
+                                    "layout": "x3",
+                                    "overflow": "page",
+                                    "alpha": 0.05,
+                                    "shadow": false,
+                                    "align": "center",
+                                    "adjust-layout": true,
+                                    "marker": {
+                                        "type": "circle",
+                                        "border-color": "none",
+                                        "size": "10px"
+                                    },
+                                    "border-width": 0,
+                                    "maxItems": 3,
+                                    "toggle-action": "hide",
+                                    "pageOn": {
+                                        "backgroundColor": "#000",
+                                        "size": "10px",
+                                        "alpha": 0.65
+                                    },
+                                    "pageOff": {
+                                        "backgroundColor": "#7E7E7E",
+                                        "size": "10px",
+                                        "alpha": 0.65
+                                    },
+                                    "pageStatus": {
+                                        "color": "black"
+                                    }
+                                },
+                                "plot": {
+                                    "bars-space-left": 0.15,
+                                    "bars-space-right": 0.15,
+                                    "animation": {
+                                        "effect": "ANIMATION_SLIDE_BOTTOM",
+                                        "sequence": 0,
+                                        "speed": 800,
+                                        "delay": 800
+                                    }
+                                },
+                                "scale-y": {
+                                    "line-color": "#7E7E7E",
+                                    "item": {
+                                        "font-color": "#7e7e7e"
+                                    },
+                                    "values": "0:100:10",
+                                    "guide": {
+                                        "visible": true
+                                    },
+                                    "label": {
+                                        "text": "No. of cases",
+                                        "font-family": "montserrat",
+                                        "bold": true,
+                                        "font-size": "14px",
+                                        "font-color": "#7E7E7E",
+                                    },
+                                },
+                                "scaleX": {
+                                    "values": response.state,
+                                    "placement": "default",
+                                    "tick": {
+                                        "size": 58,
+                                        "placement": "cross"
+                                    },
+                                    "itemsOverlap": true,
+                                    "item": {
+                                        "offsetY": -55
+                                    }
+                                },
+                                "scaleX2": {
+                                    "values": [],
+                                    "placement": "default",
+                                    "tick": {
+                                        "size": 20,
+                                    },
+                                    "item": {
+                                        "offsetY": -15
+                                    }
+                                },
+                                "tooltip": {
+                                    "visible": false
+                                },
+                                "crosshair-x": {
+                                    "line-width": "100%",
+                                    "alpha": 0.18,
+                                    "plot-label": {
+                                        "header-text": "%kv Cases"
+                                    }
+                                },
+                                "series": [
+                                    {
+                                        "values": response.bar_new_case_chart,
+                                        "alpha": 0.95,
+                                        "borderRadiusTopLeft": 7,
+                                        "background-color": "#8993c7",
+                                        "text": "New",
+                                    },
+                                    {
+                                        "values": response.bar_pending_case_chart,
+                                        "borderRadiusTopLeft": 7,
+                                        "alpha": 0.95,
+                                        "background-color": "#fdb462",
+                                        "text": "Pending"
+                                    },
+                                    {
+                                        "values": response.bar_closed_case_chart,
+                                        "alpha": 0.95,
+                                        "borderRadiusTopLeft": 7,
+                                        "background-color": "#8dd3c7",
+                                        "text": "Closed"
+                                    }
+                                ]
+                            }
+                        ]
+                    };
+
+                    zingchart.render({
+                        id: 'myChart',
+                        data: myConfig,
+                        height: '100%',
+                        width: '100%'
+                    });
+                }
+            });
+
+            /* ENDs Bar CHART SECTION*/
+            /* Starts Bar CHART SECTION*/
+
+            $.ajax({
+                type: "GET",
+                url: "/get-corporate-bar-chart-case-by-period",
+                success: function (response) {
+                    var myConfig2 = {
+                        "type": "line",
+
+                        title: {
+                            fontColor: "#007be8",
+                            text: 'Cases uploaded over a period',
+                            offsetX: 10,
+                            fontFamily: "montserrat",
+                            fontSize: 16
+                        },
+                        "scale-x": {
+                            "label": {
+                                "text": "Month",
+
+                            },
+                            "labels": ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+                        },
+                        scaleY: {
+                            "values": "0:100:10",
+                            label: {
+                                text: "Total No. of cases",
+                                "font-family": "montserrat",
+                                "font-color": "#7E7E7E",
+                            },
+                        },
+                        guide: {
+                            lineStyle: 'dotted'
+                        },
+                        "scale": {
+                            "size-factor": 1
+                        },
+                        "series": [
+                            {
+                                "values": response.tot_case,
+                                text: 'Total Cases',
+                                "line-color": "#333",
+                                "background-color": "#c2c2c2",
+                                "marker": {
+                                    "background-color": "#333",
+                                    "size": 6,
+                                    "borderColor": "black",
+                                    "borderWidth": 1
+                                },
+                                "hover-marker": {
+                                    "background-color": "#333",
+                                    "size": 8,
+                                    "borderColor": "black",
+                                    "borderWidth": 1
+                                }
+                            }
+                        ]
+                    };
+
+                    zingchart.render({
+                        id: 'myChart2',
+                        data: myConfig2,
+                        height: "400",
+                        width: '100%'
+                    });
+                },
+                error: function (xhr) {
+
+                }
+            });
+
+            /* ENDs Bar CHART SECTION*/
+        }
+    }
+    else if (role == "5") {
+        /* Starts Bar CHART SECTION*/
+
+        $.ajax({
+            type: "GET",
+            url: "/get-corporate-bar-chart-case",
+            success: function (response) {
+                var myConfigBarManager = {
+                    "graphset": [
+                        {
+                            "type": "bar",
+                            "background-color": "white",
+                            title: {
+                                fontColor: "#007be8",
+                                text: 'All Cases',
+                                offsetX: 10,
+                                fontFamily: "montserrat",
+                                fontSize: 16,
+                                "alpha": 1,
+                                "adjust-layout": true,
+                            },
+                            "plotarea": {
+                                "margin": "dynamic"
+                            },
+                            "legend": {
+                                "layout": "x3",
+                                "overflow": "page",
+                                "alpha": 0.05,
+                                "shadow": false,
+                                "align": "center",
+                                "adjust-layout": true,
+                                "marker": {
+                                    "type": "circle",
+                                    "border-color": "none",
+                                    "size": "10px"
+                                },
+                                "border-width": 0,
+                                "maxItems": 3,
+                                "toggle-action": "hide",
+                                "pageOn": {
+                                    "backgroundColor": "#000",
+                                    "size": "10px",
+                                    "alpha": 0.65
+                                },
+                                "pageOff": {
+                                    "backgroundColor": "#7E7E7E",
+                                    "size": "10px",
+                                    "alpha": 0.65
+                                },
+                                "pageStatus": {
+                                    "color": "black"
+                                }
+                            },
+                            "plot": {
+                                "bars-space-left": 0.15,
+                                "bars-space-right": 0.15,
+                                "animation": {
+                                    "effect": "ANIMATION_SLIDE_BOTTOM",
+                                    "sequence": 0,
+                                    "speed": 800,
+                                    "delay": 800
+                                }
+                            },
+                            "scale-y": {
+                                "line-color": "#7E7E7E",
+                                "item": {
+                                    "font-color": "#7e7e7e"
+                                },
+                                "values": "0:100:10",
+                                "guide": {
+                                    "visible": true
+                                },
+                                "label": {
+                                    "text": "No. of cases",
+                                    "font-family": "montserrat",
+                                    "bold": true,
+                                    "font-size": "14px",
+                                    "font-color": "#7E7E7E",
+                                },
+                            },
+                            "scaleX": {
+                                "values": response.state,
+                                "placement": "default",
+                                "tick": {
+                                    "size": 58,
+                                    "placement": "cross"
+                                },
+                                "itemsOverlap": true,
+                                "item": {
+                                    "offsetY": -55
+                                }
+                            },
+                            "scaleX2": {
+                                "values": [],
+                                "placement": "default",
+                                "tick": {
+                                    "size": 20,
+                                },
+                                "item": {
+                                    "offsetY": -15
+                                }
+                            },
+                            "tooltip": {
+                                "visible": false
+                            },
+                            "crosshair-x": {
+                                "line-width": "100%",
+                                "alpha": 0.18,
+                                "plot-label": {
+                                    "header-text": "%kv Cases"
+                                }
+                            },
+                            "series": [
+                                {
+                                    "values": response.bar_new_case_chart,
+                                    "alpha": 0.95,
+                                    "borderRadiusTopLeft": 7,
+                                    "background-color": "#8993c7",
+                                    "text": "New",
+                                },
+                                {
+                                    "values": response.bar_pending_case_chart,
+                                    "borderRadiusTopLeft": 7,
+                                    "alpha": 0.95,
+                                    "background-color": "#fdb462",
+                                    "text": "Pending"
+                                },
+                                {
+                                    "values": response.bar_closed_case_chart,
+                                    "alpha": 0.95,
+                                    "borderRadiusTopLeft": 7,
+                                    "background-color": "#8dd3c7",
+                                    "text": "Closed"
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                zingchart.render({
+                    id: 'myChartBarManager',
+                    data: myConfigBarManager,
+                    height: '100%',
+                    width: '100%'
+                });
+            }
+        });
+
+        /* ENDs Bar CHART SECTION*/
+    }
+
+
+    /*Dash board show*/
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    function getWeeksInMonth(month, year) {
+        var weeks = [],
+            firstDate = new Date(year, month, 1),
+            lastDate = new Date(year, month + 1, 0),
+            numDays = lastDate.getDate();
+
+        var start = 1;
+        var end = 7 - firstDate.getDay();
+        while (start <= numDays) {
+            weeks.push({ start: start, end: end });
+            start = end + 1;
+            end = end + 7;
+            if (end > numDays)
+                end = numDays;
+        }
+        return weeks;
+    }
+    
+    setInterval(function () {
+
+        var first_week;
+        var second_week;
+        var third_week;
+        var fore_week;
+        $.ajax({
+            type: "POST",
+            url: "/dashboard-massage-details-show",
+            data: {
+                firm_id: $(".firmName").attr('data-firm-id') ? $(".firmName").attr('data-firm-id') : 0
+            },
+            success: function (response) {
+                $("#first_week").html("");
+                $("#second_week").html("");
+                $("#third_week").html("");
+                $("#fore_week").html("");
+                var current_case = [];
+                var current_case1 = [];
+                var current_case2 = [];
+                var current_case3 = [];
+
+                var close_case = [];
+                var close_case1 = [];
+                var close_case2 = [];
+                var close_case3 = [];
+
+                var complete_by_lawyer = [];
+                var complete_by_lawyer1 = [];
+                var complete_by_lawyer2 = [];
+                var complete_by_lawyer3 = [];
+
+                var new_case = [];
+                var new_case1 = [];
+                var new_case2 = [];
+                var new_case3 = [];
+
+                response.info.forEach((data, index) => {
+
+                    var todayTime = new Date(data.createdAt);
+
+                    month = monthNames[todayTime.getMonth()],
+                        day = todayTime.getDate(),
+                        year = todayTime.getFullYear();
+
+                    var current_month = new Date();
+                    var currentMonth = monthNames[current_month.getMonth()];
+
+                    if (day == 0 || day <= 7) {
+                        if (data.status == '1') {
+                            close_case.push(data)
+                        }
+                        new_case.push(data)
+
+                        first_week = `<b><a href="/caselist-by-month/1-7/${$(".firmName").attr('data-firm-id') ? $(".firmName").attr('data-firm-id') : 0}">In the week of ${1}-${7} ${month} Allocated ${new_case.length} Closed ${close_case.length}</a></b>`
+
+                    } else if (day == 8 || day <= 15) {
+                        if (data.status == '1') {
+                            close_case1.push(data)
+                        }
+                        new_case1.push(data)
+
+
+                        second_week = `<b><a href="/caselist-by-month/8-15/${$(".firmName").attr('data-firm-id') ? $(".firmName").attr('data-firm-id') : 0}">In the week of ${8}-${15} ${month} Allocated ${new_case1.length} Closed ${close_case1.length} </a></b>`
+
+                    } else if (day == 16 || day <= 23) {
+                        if (data.status == '1') {
+                            close_case2.push(data)
+                        }
+                        new_case2.push(data)
+
+
+                        third_week = `<b><a href="/caselist-by-month/16-23/${$(".firmName").attr('data-firm-id') ? $(".firmName").attr('data-firm-id') : 0}">In the week of ${16}-${23} ${month} Allocated ${new_case2.length} Closed ${close_case2.length} </a></b>`
+
+                    } else if (day == 24 || day <= 31) {
+                        if (data.status == '1') {
+                            close_case3.push(data)
+                        }
+                        new_case3.push(data)
+
+
+                        fore_week = `<b><a href="/caselist-by-month/24-31">In the week of ${24}-${30} ${month} Allocated ${new_case3.length} Closed ${close_case3.length} </a></b>`
+
+                    }
+
+                });
+
+                $("#first_week").html(first_week);
+                $("#second_week").html(second_week);
+                $("#third_week").html(third_week);
+                $("#fore_week").html(fore_week);
+            },
+            error: function (xhr) {
+            }
+        })
+
+    }, 3000);
+
+    });
+
+
+    $(document).on("click",".findCaseByMonth",function(){
+        var change_date_week = $("#changeDateWeek").val();
+        if (change_date_week == "m")
+        {
+            $.ajax({
+                type: "POST",
+                url: "/get-cases-by-month-site-admin-filter",
+                data: {
+                    month_id: $(this).attr("data-month-id"),
+                    firm_id: $(this).attr("data-firm-id") ? $(this).attr("data-firm-id") : 0
+                },
+                success: function(response){
+                    if(response.success == true)
+                    {
+                        $(".findCaseByMonth").html("");
+                        $(".findCaseByMonthNext").html("");
+                        $(".showCurrentCaseMonth").html("");
+                        $(".all-cases-month .row").html("");
+                        $(".findCaseByMonth").removeAttr("data-month-id");
+                        $(".findCaseByMonthNext").removeAttr("data-month-id");
+                        $(".findCaseByMonth").append(`
+                            < ${response.pre_month_name}
+                        `);
+                        $(".findCaseByMonthNext").append(`
+                            ${response.next_month_name} >
+                        `);
+                        $(".findCaseByMonthNext").attr('data-month-id', response.next_mm);
+                        $(".findCaseByMonthNext").attr('data-firm-id', response.firm_name.id);
+                        $(".findCaseByMonth").attr('data-month-id', response.pre_mm);
+                        $(".findCaseByMonth").attr('data-firm-id', response.firm_name.id);
+                        $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_month_name}</strong>
+                        `);
+                        if(response.city_case_month.length == "0")
+                        {
+                            $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                        }
+                        else
+                        {
+                            for (var i in response.city_case_month) {
+                                $(".all-cases-month .row").append(`
+                                    <div class="col-20">
+                                        <div class="case-item">
+                                            <a href="/all-case/${response.city_case_month[i].city_name}/${response.firm_name ? response.firm_name.id : 0}/${response.current_month}"><p><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                            <p>${response.city_case_month[i].newCase}</p>
+                                            <p>${response.city_case_month[i].pendingCase}</p>
+                                            <p>${response.city_case_month[i].completeLawyer}</p>
+                                            <p>${response.city_case_month[i].closeCase}</p>
+                                        </div>
+                                    </div>`
+                                );
+                            }
+                        }
+                    }
+                },
+                error: function(xhr)
+                {
+
+                }
+            })
+        }
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: "/get-cases-by-week-site-admin-filter",
+                data: {
+                    week_id: $(this).attr("data-month-id"),
+                    firm_id: $(".findCaseByMonth").attr("data-firm-id") ? $(".findCaseByMonth").attr("data-firm-id") : 0
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $(".findCaseByMonth").html("");
+                        $(".findCaseByMonthNext").html("");
+                        $(".showCurrentCaseMonth").html("");
+                        $(".all-cases-month .row").html("");
+                        $(".findCaseByMonth").removeAttr("data-month-id");
+                        $(".findCaseByMonthNext").removeAttr("data-month-id");
+                        $(".findCaseByMonth").append(`
+                            < ${response.prev_week}
+                        `);
+                        $(".findCaseByMonthNext").append(`
+                            ${response.next_week} >
+                        `);
+                        $(".findCaseByMonthNext").attr('data-month-id', response.next_week_date);
+                        $(".findCaseByMonth").attr('data-month-id', response.prev_week_date);
+                        $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_week}</strong>
+                        `);
+                        if (response.city_case_month.length == "0") {
+                            $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                        }
+                        else {
+                            for (var i in response.city_case_month) {
+                                $(".all-cases-month .row").append(`
+                                    <div class="col-20">
+                                        <div class="case-item">
+                                            <a href="/all-case-week/${response.city_case_month[i].city_name}/${response.firm_name ? response.firm_name.id : 0}/${response.current_week_date}"><p><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                            <p>${response.city_case_month[i].newCase}</p>
+                                    <p>${response.city_case_month[i].pendingCase}</p>
+                                    <p>${response.city_case_month[i].completeLawyer}</p>
+                                    <p>${response.city_case_month[i].closeCase}</p>
+                                        </div>
+                                    </div>`
+                                );
+                            }
+                        }
+
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            })
+        }
+    });
+
+    $(document).on("click",".findCaseByMonthNext",function(){
+        var change_date_week = $("#changeDateWeek").val();
+        if (change_date_week == "m") {
+            $.ajax({
+                type: "POST",
+                url: "/get-cases-by-month-site-admin-filter",
+                data: {
+                    month_id: $(this).attr("data-month-id"),
+                    firm_id: $(this).attr("data-firm-id") ? $(this).attr("data-firm-id") : 0
+                },
+                success: function(response){
+                    if(response.success == true)
+                    {
+                        $(".findCaseByMonth").html("");
+                        $(".findCaseByMonthNext").html("");
+                        $(".showCurrentCaseMonth").html("");
+                        $(".all-cases-month .row").html("");
+                        $(".findCaseByMonth").removeAttr("data-month-id");
+                        $(".findCaseByMonthNext").removeAttr("data-month-id");
+                        $(".findCaseByMonth").append(`
+                                < ${response.pre_month_name}
+                            `);
+                        $(".findCaseByMonthNext").append(`
+                                ${response.next_month_name} >
+                            `);
+                        $(".findCaseByMonth").attr('data-month-id', response.pre_mm);
+                        $(".findCaseByMonthNext").attr('data-month-id', response.next_mm);
+                        $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_month_name}</strong>
+                        `);
+                        if(response.city_case_month.length == "0")
+                        {
+                            $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                        }
+                        else
+                        {
+                            for (var i in response.city_case_month) {
+                                $(".all-cases-month .row").append(`
+                                    <div class="col-20">
+                                        <div class="case-item">
+                                            <a href="/all-case/${response.city_case_month[i].city_name}/${response.firm_name ? response.firm_name.id : 0}/${response.current_month}"><p><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                            <p>${response.city_case_month[i].newCase}</p>
+                                            <p>${response.city_case_month[i].pendingCase}</p>
+                                            <p>${response.city_case_month[i].completeLawyer}</p>
+                                            <p>${response.city_case_month[i].closeCase}</p>
+                                        </div>
+                                    </div>`
+                                );
+                            }
+                        }
+                    }
+                },
+                error: function(xhr)
+                {
+
+                }
+            })
+        }
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: "/get-cases-by-week-site-admin-filter",
+                data: {
+                    week_id: $(this).attr("data-month-id"),
+                    firm_id: $(".findCaseByMonth").attr("data-firm-id") ? $(".findCaseByMonth").attr("data-firm-id") : 0
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $(".findCaseByMonth").html("");
+                        $(".findCaseByMonthNext").html("");
+                        $(".showCurrentCaseMonth").html("");
+                        $(".all-cases-month .row").html("");
+                        $(".findCaseByMonth").removeAttr("data-month-id");
+                        $(".findCaseByMonthNext").removeAttr("data-month-id");
+                        $(".findCaseByMonth").append(`
+                            < ${response.prev_week}
+                        `);
+                        $(".findCaseByMonthNext").append(`
+                            ${response.next_week} >
+                        `);
+                        $(".findCaseByMonthNext").attr('data-month-id', response.next_week_date);
+                        $(".findCaseByMonth").attr('data-month-id', response.prev_week_date);
+                        $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_week}</strong>
+                        `);
+                        if (response.city_case_month.length == "0") {
+                            $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                        }
+                        else {
+                            for (var i in response.city_case_month) {
+                                $(".all-cases-month .row").append(`
+                                    <div class="col-20">
+                                        <div class="case-item">
+                                            <a href="/all-case-week/${response.city_case_month[i].city_name}/${response.firm_name ? response.firm_name.id : 0}/${response.current_week_date}"><p><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                            <p>${response.city_case_month[i].newCase}</p>
+                                    <p>${response.city_case_month[i].pendingCase}</p>
+                                    <p>${response.city_case_month[i].completeLawyer}</p>
+                                    <p>${response.city_case_month[i].closeCase}</p>
+                                        </div>
+                                    </div>`
+                                );
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            })
+        }
+    });
+
+    $(document).on("change","#changeDateWeek",function(){
+        var change_date_week = $(this).val();
+        if(change_date_week == "m")
+        {
+            $.ajax({
+                type: "POST",
+                url: "/get-cases-by-month-site-admin",
+                data: {
+                    firm_id:$(".findCaseByMonth").attr("data-firm-id") ? $(".findCaseByMonth").attr("data-firm-id") : 0
+                },
+                success: function (response) {
+
+                    if (response.success == true) {
+                        $(".findCaseByMonth").html("");
+                        $(".findCaseByMonthNext").html("");
+                        $(".showCurrentCaseMonth").html("");
+                        $(".all-cases-month .row").html("");
+                        $(".findCaseByMonth").removeAttr("data-month-id");
+                        $(".findCaseByMonthNext").removeAttr("data-month-id"); 
+                        $(".findCaseByMonth").append(`
+                            < ${response.pre_month_name}
+                        `);
+                        $(".findCaseByMonth").attr('data-month-id', response.pre_mm);
+                        $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_month_name}</strong>
+                        `);
+                        if (response.city_case_month.length == "0") {
+                            $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                        }
+                        else {
+                            for (var i in response.city_case_month) {
+                                $(".all-cases-month .row").append(`
+                                    <div class="col-20">
+                                        <div class="case-item">
+                                            <a href="/all-case/${response.city_case_month[i].city_name}/${response.firm_name ? response.firm_name.id : 0}/${response.current_month}"><p><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                            <p>${response.city_case_month[i].newCase}</p>
+                                    <p>${response.city_case_month[i].pendingCase}</p>
+                                    <p>${response.city_case_month[i].completeLawyer}</p>
+                                    <p>${response.city_case_month[i].closeCase}</p>
+                                        </div>
+                                    </div>`
+                                );
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: "/get-cases-by-week-site-admin",
+                data: {
+                    firm_id:$(".findCaseByMonth").attr("data-firm-id") ? $(".findCaseByMonth").attr("data-firm-id") : 0
+                },
+                success:function(response)
+                {
+                    if (response.success == true) {
+                        $(".findCaseByMonth").html("");
+                        $(".findCaseByMonthNext").html("");
+                        $(".showCurrentCaseMonth").html("");
+                        $(".all-cases-month .row").html("");
+                        $(".findCaseByMonth").removeAttr("data-month-id");
+                        $(".findCaseByMonthNext").removeAttr("data-month-id");
+                        $(".findCaseByMonth").append(`
+                            < ${response.prev_week}
+                        `);
+                        $(".findCaseByMonth").attr('data-month-id', response.prev_week_date);
+                        $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_week}</strong>
+                        `);
+                        if (response.city_case_month.length == "0") {
+                            $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                        }
+                        else {
+                            for (var i in response.city_case_month) {
+                                $(".all-cases-month .row").append(`
+                                    <div class="col-20">
+                                        <div class="case-item">
+                                            <a href="/all-case-week/${response.city_case_month[i].city_name}/${response.firm_name ? response.firm_name.id : 0}/${response.current_week_date}"><p><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                            <p>${response.city_case_month[i].newCase}</p>
+                                    <p>${response.city_case_month[i].pendingCase}</p>
+                                    <p>${response.city_case_month[i].completeLawyer}</p>
+                                    <p>${response.city_case_month[i].closeCase}</p>
+                                        </div>
+                                    </div>`
+                                );
+                            }
+                        }
+                    }
+                },
+                error:function(xhr)
+                {
+
+                }
+            })
+        }
+    });
+
+
+    $(document).on('click', '#showChart', function () {
+        var firm_id = $(this).data('firmid');
+        $.ajax({
+            type: "POST",
+            url: "/show-matrix-chart-by-firm-site-admin",
+            data: { firm_id: firm_id },
+            success: function (response) {
+                if (response.success == true) {
+                    $("#firmName").empty();
+                    $(".totMsgCount").empty();
+                    $(".totMsgCount").append(`<b><a href="/messagge-list/${response.firm_name.id}">${response.new_msg}</a></b>`);
+                    $("#firmName").html(response.firm_name.name);
+                    $("#firmName").attr('data-firm-id', response.firm_name.id);
+
+                    $("#changeDateWeek").val("m");
+                    $(".findCaseByMonth").html("");
+                    $(".findCaseByMonthNext").html("");
+                    $(".showCurrentCaseMonth").html("");
+                    $(".all-cases-month .row").html("");
+                    $(".findCaseByMonth").removeAttr("data-month-id");
+                    $(".findCaseByMonthNext").removeAttr("data-month-id");
+                    $(".findCaseByMonth").append(`
+                            < ${response.pre_month_name}
+                        `);
+                    $(".findCaseByMonth").attr('data-month-id', response.pre_mm);
+                    $(".findCaseByMonth").attr('data-firm-id', response.firm_name.id);
+                    $(".showCurrentCaseMonth").append(`
+                            <strong>${response.current_month_name}</strong>
+                        `);
+                    if (response.city_case_month.length == "0") {
+                        $(".all-cases-month .row").append(`
+                                <div class="col-md-12">
+                                        <div class="case-item p-25">
+                                            <p class="text-center font-16">No data available</p>
+                                        </div>
+                                    </div>
+                            `);
+                    }
+                    else {
+                        for (var i in response.city_case_month) {
+                            $(".all-cases-month .row").append(`
+                            <div class="col-20">
+                                <div class="case-item">
+                                    <a href="/all-case/${response.city_case_month[i].city_name}/${response.firm_name.id}/${response.current_month}"><p class="newCase"><strong>${response.city_case_month[i].city_name}</strong></p></a>
+                                    <p>${response.city_case_month[i].newCase}</p>
+                                    <p>${response.city_case_month[i].pendingCase}</p>
+                                    <p>${response.city_case_month[i].completeLawyer}</p>
+                                    <p>${response.city_case_month[i].closeCase}</p>
+                                </div>
+                            </div>
+                            `);
+                        }
+                    }
+                    
+                }
+            }
+        })
+    });
+
+</script> {{/content}}

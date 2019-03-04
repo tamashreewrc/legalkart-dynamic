@@ -1,0 +1,85 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Stamp Paper List</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        <div class="card-title">
+            <h5>All Stamp Papers</h5>
+        </div>
+
+        <div class="pull-right">
+            <div class="col-xs-12">
+                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>First Party</th>
+                    <th>Second Party</th>
+                    <th>Name of Purchaser</th>
+                    <th>Delivery Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each stamp_paper_list}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.first_party}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.second_party}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.purchaser}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>
+                            {{#if_eq this.status "0"}}Pending{{/if_eq}} {{#if_eq this.status "1"}}Delivered{{/if_eq}} {{#if_eq this.status "2"}}Rejected{{/if_eq}}
+
+                        </p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                    </td>
+                    <td>
+                        <a href="/stamp-papers/list/{{this.id}}" class="btn btn-complete" title="View Detail">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+
+</script> {{/content}}
+<!-- END card -->

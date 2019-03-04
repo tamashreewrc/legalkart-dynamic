@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <title>{{title}} :: Legalkart :: {{title}}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/frontend/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/frontend/images/favicon.ico" type="image/x-icon">
+
+    <!-- Animate Css -->
+    <link href="/frontend/css/animate.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="/frontend/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom Style -->
+    <link href="/frontend/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+    <!-- OwlCarousel -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet"> {{#block "style"}} {{/block}}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+</head>
+
+<body>
+
+
+    <!-- Starts on register-box -->
+
+    <div class="register">
+        <a href="" data-toggle="modal" data-target="#register-model">
+            <i class="fa fa-book"></i> Request a Call back</a>
+    </div>
+
+    <!-- Modal-->
+    <div class="modal fade lgx-modal" id="register-model">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">Request a Call back</h4>
+                </div>
+                <div class="modal-body">
+                    {{!-- <h6>Call us 24/7 at 858.122.2450 or fill out the form be;;ow to receive a free and confidential initial consulation.</h6> --}}
+                    <form id="bookCallBackFrm" name="bookCallBackFrm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="call_back_name" name="call_back_name"
+                                aria-describedby="emailHelp" placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <input type="text" class="form-control" id="call_back_mobile" name="call_back_mobile"
+                                aria-describedby="emailHelp" placeholder="Enter Mobile" maxlength="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="call_back_email" name="call_back_email"
+                                aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="messages">Messages</label>
+                            <textarea class="form-control" id="call_back_messages" name="call_back_messages"
+                                placeholder="Enter Messages"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //.Modal-->
+
+    <!-- Ends on register-box -->
+    {{> f_header}}
+
+    <!-- Ends Header -->
+
+    {{{body}}}
+
+    <!-- Starts Footer Section -->
+
+    {{> f_footer}}
+
+    <!-- Ends Footer Section -->
+
+    <!-- Optional JavaScript -->
+
+    
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    {{#block "script"}}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
+
+    <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+    <script src="/frontend/js/index.js"></script>
+
+
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 1) {
+                $('header-bottom').addClass("sticky");
+            }
+            else {
+                $('header-bottom').removeClass("sticky");
+            }
+        });
+    </script>
+
+    <script>
+        $('.banner-carousel').owlCarousel({
+            items: 1,
+            loop: true,
+            nav: true,
+            navText: ["‹", "›"],
+            autoplay: true,
+            margin: 0,
+            pagination: false,
+            autoplayHoverPause: true
+        });
+    </script>
+
+    <script>
+        $('.lawyers-carousel').owlCarousel({
+            items: 4,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            margin: 0,
+            navText: ["‹", "›"],
+            pagination: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                480: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $('.testimonials-carousel').owlCarousel({
+            items: 2,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            margin: 0,
+            navText: ["‹", "›"],
+            pagination: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                480: {
+                    items: 2
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 2
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $('.service-carousel').owlCarousel({
+            items: 2,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            margin: 0,
+            navText: ["‹", "›"],
+            pagination: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                480: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 2
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $('.news-carousel').owlCarousel({
+            items: 4,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            margin: 0,
+            navText: ["‹", "›"],
+            pagination: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                480: {
+                    items: 2
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    </script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "400px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+
+
+    <script>
+            $(function () {
+
+                $('#login-form-link').click(function (e) {
+                    $("#login-form").delay(100).fadeIn(100);
+                    $("#register-form").fadeOut(100);
+                    $('#register-form-link').removeClass('active');
+                    $(this).addClass('active');
+                    e.preventDefault();
+                });
+                $('#register-form-link').click(function (e) {
+                    $("#register-form").delay(100).fadeIn(100);
+                    $("#login-form").fadeOut(100);
+                    $('#login-form-link').removeClass('active');
+                    $(this).addClass('active');
+                    e.preventDefault();
+                });
+
+            });
+    </script>
+
+    <script>
+        {{!-- $(document).ready(function () {
+            $('select').selectpicker();
+        }); --}}
+
+        $(document).on("change", "#state",function() {
+            var state_id = $("#state").val(); 
+            $.ajax({
+                type: "POST",
+                url: "/get-city",
+                data: {
+                    state_id: state_id
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $("#city").find('option').not(':first').remove();
+                        for (var i = 0; i < response.city.length; i++) {
+                            $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                        }
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            });
+        });
+        $(document).ready(function(){
+            $("#freeConsultFrm").validate({
+                rules:
+                {
+                    state: {
+                        required: true
+                    },
+                    city: {
+                        required: true
+                    },
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email:true
+                    },
+                    mobile: {
+                        required: true,
+                        number: true
+                    },
+                    subject: {
+                        required: true
+                    },
+                    messages: {
+                        required: true
+                    }
+                },
+                messages: 
+                {
+                    state: {
+                        required: "Please select state"
+                    },
+                    city: {
+                        required: "Please select city"
+                    },
+                    name: {
+                        required: "Name can't be blank"
+                    },
+                    email: {
+                        required: "Email Id can't be blank"
+                    },
+                    email: {
+                        required: "Mobile no can't be blank"
+                    },
+                    subject: {
+                        required: "Subject can't be blank"
+                    },
+                    messages: {
+                        required: "Messages can't be blank"
+                    }
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/add/free-legal-consultation",
+                        data: $("#freeConsultFrm").serialize(),
+                        success:function(response)
+                        {
+                            if(response.success == true)
+                            {
+                                swal({
+                                    title: "Thank you!",
+                                    text: "For sending this Quote",
+                                    type: "success"
+                                }, function () {
+                                    window.location.href = "/";
+                                });
+                            }
+                        },
+                        error: function(xhr)
+                        {
+
+                        }
+                    })
+                }
+            });
+
+            $("#bookCallBackFrm").validate({
+                rules:
+                {
+                    call_back_name: {
+                        required: true
+                    },
+                    call_back_email: {
+                        required: true,
+                        email:true
+                    },
+                    call_back_mobile: {
+                        required: true,
+                        number: true
+                    },
+                    call_back_messages: {
+                        required: true
+                    }
+                },
+                messages: 
+                {
+                    call_back_name: {
+                        required: "Name can't be blank"
+                    },
+                    call_back_email: {
+                        required: "Email Id can't be blank"
+                    },
+                    call_back_mobile: {
+                        required: "Mobile no can't be blank"
+                    },
+                    call_back_messages: {
+                        required: "Messages can't be blank"
+                    }
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/book-a-call-back",
+                        data: $("#bookCallBackFrm").serialize(),
+                        success:function(response)
+                        {
+                            if(response.success == true)
+                            {
+                                swal({
+                                    title: "Thank you!",
+                                    text: "We will contact soon",
+                                    type: "success"
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            }
+                        },
+                        error: function(xhr)
+                        {
+
+                        }
+                    })
+                }
+            });
+        });
+
+        $(document).on("click", "#bookCallBtn", function(){
+            $(".bookCallBackModal").modal("show");
+        })
+    </script>
+
+    <!-- STARTS SCROLL TO TOP -->
+    <script>
+      $(document).ready(function () {
+
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 100) {
+            $('.scrollup').fadeIn();
+          } else {
+            $('.scrollup').fadeOut();
+          }
+        });
+
+        $('.scrollup').click(function () {
+          $("html, body").animate({
+            scrollTop: 0
+          }, 600);
+          return false;
+        });
+
+      });
+    </script>
+
+
+    {{/block}}
+</body>
+
+</html>

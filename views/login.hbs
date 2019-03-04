@@ -1,0 +1,560 @@
+{{!--
+<div class="login-wrapper ">
+    <!-- START Login Background Pic Wrapper-->
+    <div class="bg-pic">
+        <!-- START Background Pic-->
+        <img src="assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" data-src="assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg"
+            data-src-retina="assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" alt="" class="lazy">
+        <!-- END Background Pic-->
+        <!-- START Background Caption-->
+        <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
+            <h2 class="semi-bold text-white">
+                Pages make it easy to enjoy what matters the most in the life</h2>
+            <p class="small">
+                images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise © 2013-2014
+                REVOX.
+            </p>
+        </div>
+        <!-- END Background Caption-->
+    </div>
+    <!-- END Login Background Pic Wrapper-->
+    <!-- START Login Right Container-->
+    <div class="login-container bg-white">
+        <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+            <img src="/assets/img/logo.png" alt="logo" data-src="/assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78"
+                height="22">
+            <p class="p-t-35">Sign into your pages account</p>
+            {{#if message}}
+            <div class="alert alert-danger">
+                <strong>Error! </strong>{{message}}
+            </div>
+            {{/if}} {{#if success_password_message}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_password_message}}
+            </div>
+            {{/if}}
+            <!-- START Login Form -->
+            <form id="form-login" class="p-t-15" method="post" action="/admin">
+                <!-- START Form Control-->
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <div class="form-group form-group-default">
+                    <label>Login</label>
+                    <div class="controls">
+                        <input type="text" name="email" id="email" placeholder="User Name" class="form-control">
+                    </div>
+                </div>
+                <!-- END Form Control-->
+                <!-- START Form Control-->
+                <div class="form-group form-group-default">
+                    <label>Password</label>
+                    <div class="controls">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Credentials">
+                    </div>
+                </div>
+                <!-- START Form Control-->
+                <div class="row">
+                    <div class="col-md-6 no-padding sm-p-l-10">
+                        <div class="checkbox ">
+                            <input type="checkbox" value="1" id="checkbox1">
+                            <label for="checkbox1">Keep Me Signed in</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center justify-content-end">
+                        <a href="/register" class="text-info small">Register Here</a>
+                    </div>
+                </div>
+                <!-- END Form Control-->
+                <button class="btn btn-primary btn-cons m-t-10" type="submit">Sign in</button>
+            </form>
+
+            <div class="m-t-10">
+                <a href="/login/facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i> Log In with Facebook</a>
+            </div>
+
+            <!--END Login Form-->
+            <div class="pull-bottom sm-pull-bottom">
+                <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
+                    <div class="col-sm-3 col-md-2 no-padding">
+                        <img alt="" class="m-t-5" data-src="assets/img/demo/pages_icon.png" data-src-retina="assets/img/demo/pages_icon_2x.png" height="60"
+                            src="assets/img/demo/pages_icon.png" width="60">
+                    </div>
+                    <div class="col-sm-9 no-padding m-t-10">
+                        <p>
+                            <small>
+                                Create a pages account. If you have a facebook account, log into it for this process. Sign in with
+                                <a href="#" class="text-info">Facebook</a> or
+                                <a href="#" class="text-info">Google</a>
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Login Right Container-->
+</div>
+<!-- START OVERLAY -->
+<div class="overlay hide" data-pages="search">
+    <!-- BEGIN Overlay Content !-->
+    <div class="overlay-content has-results m-t-20">
+        <!-- BEGIN Overlay Header !-->
+        <div class="container-fluid">
+            <!-- BEGIN Overlay Logo !-->
+            <img class="overlay-brand" src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png"
+                width="78" height="22">
+            <!-- END Overlay Logo !-->
+            <!-- BEGIN Overlay Close !-->
+            <a href="#" class="close-icon-light overlay-close text-black fs-16">
+                <i class="pg-close"></i>
+            </a>
+            <!-- END Overlay Close !-->
+        </div>
+        <!-- END Overlay Header !-->
+        <div class="container-fluid">
+            <!-- BEGIN Overlay Controls !-->
+            <input id="overlay-search" class="no-border overlay-search bg-transparent" placeholder="Search..." autocomplete="off" spellcheck="false">
+            <br>
+            <div class="inline-block">
+                <div class="checkbox right">
+                    <input id="checkboxn" type="checkbox" value="1" checked="checked">
+                    <label for="checkboxn">
+                        <i class="fa fa-search"></i> Search within page</label>
+                </div>
+            </div>
+            <div class="inline-block m-l-10">
+                <p class="fs-13">Press enter to search</p>
+            </div>
+            <!-- END Overlay Controls !-->
+        </div>
+        <!-- BEGIN Overlay Search Results, This part is for demo purpose, you can add anything you like !-->
+        <div class="container-fluid">
+            <span>
+                <strong>suggestions :</strong>
+            </span>
+            <span id="overlay-suggestions"></span>
+            <br>
+            <div class="search-results m-t-40">
+                <p class="bold">Pages Search Results</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- BEGIN Search Result Item !-->
+                        <div class="">
+                            <!-- BEGIN Search Result Item Thumbnail !-->
+                            <div class="thumbnail-wrapper d48 circular bg-success text-white inline m-t-10">
+                                <div>
+                                    <img width="50" height="50" src="assets/img/profiles/avatar.jpg" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar2x.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <!-- END Search Result Item Thumbnail !-->
+                            <div class="p-l-10 inline p-t-5">
+                                <h5 class="m-b-5">
+                                    <span class="semi-bold result-name">ice cream</span> on pages</h5>
+                                <p class="hint-text">via john smith</p>
+                            </div>
+                        </div>
+                        <!-- END Search Result Item !-->
+                        <!-- BEGIN Search Result Item !-->
+                        <div class="">
+                            <!-- BEGIN Search Result Item Thumbnail !-->
+                            <div class="thumbnail-wrapper d48 circular bg-success text-white inline m-t-10">
+                                <div>T</div>
+                            </div>
+                            <!-- END Search Result Item Thumbnail !-->
+                            <div class="p-l-10 inline p-t-5">
+                                <h5 class="m-b-5">
+                                    <span class="semi-bold result-name">ice cream</span> related topics</h5>
+                                <p class="hint-text">via pages</p>
+                            </div>
+                        </div>
+                        <!-- END Search Result Item !-->
+                        <!-- BEGIN Search Result Item !-->
+                        <div class="">
+                            <!-- BEGIN Search Result Item Thumbnail !-->
+                            <div class="thumbnail-wrapper d48 circular bg-success text-white inline m-t-10">
+                                <div>
+                                    <i class="fa fa-headphones large-text "></i>
+                                </div>
+                            </div>
+                            <!-- END Search Result Item Thumbnail !-->
+                            <div class="p-l-10 inline p-t-5">
+                                <h5 class="m-b-5">
+                                    <span class="semi-bold result-name">ice cream</span> music</h5>
+                                <p class="hint-text">via pagesmix</p>
+                            </div>
+                        </div>
+                        <!-- END Search Result Item !-->
+                    </div>
+                    <div class="col-md-6">
+                        <!-- BEGIN Search Result Item !-->
+                        <div class="">
+                            <!-- BEGIN Search Result Item Thumbnail !-->
+                            <div class="thumbnail-wrapper d48 circular bg-info text-white inline m-t-10">
+                                <div>
+                                    <i class="fa fa-facebook large-text "></i>
+                                </div>
+                            </div>
+                            <!-- END Search Result Item Thumbnail !-->
+                            <div class="p-l-10 inline p-t-5">
+                                <h5 class="m-b-5">
+                                    <span class="semi-bold result-name">ice cream</span> on facebook</h5>
+                                <p class="hint-text">via facebook</p>
+                            </div>
+                        </div>
+                        <!-- END Search Result Item !-->
+                        <!-- BEGIN Search Result Item !-->
+                        <div class="">
+                            <!-- BEGIN Search Result Item Thumbnail !-->
+                            <div class="thumbnail-wrapper d48 circular bg-complete text-white inline m-t-10">
+                                <div>
+                                    <i class="fa fa-twitter large-text "></i>
+                                </div>
+                            </div>
+                            <!-- END Search Result Item Thumbnail !-->
+                            <div class="p-l-10 inline p-t-5">
+                                <h5 class="m-b-5">Tweats on
+                                    <span class="semi-bold result-name"> ice cream</span>
+                                </h5>
+                                <p class="hint-text">via twitter</p>
+                            </div>
+                        </div>
+                        <!-- END Search Result Item !-->
+                        <!-- BEGIN Search Result Item !-->
+                        <div class="">
+                            <!-- BEGIN Search Result Item Thumbnail !-->
+                            <div class="thumbnail-wrapper d48 circular text-white bg-danger inline m-t-10">
+                                <div>
+                                    <i class="fa fa-google-plus large-text "></i>
+                                </div>
+                            </div>
+                            <!-- END Search Result Item Thumbnail !-->
+                            <div class="p-l-10 inline p-t-5">
+                                <h5 class="m-b-5">Circles on
+                                    <span class="semi-bold result-name"> ice cream</span>
+                                </h5>
+                                <p class="hint-text">via google plus</p>
+                            </div>
+                        </div>
+                        <!-- END Search Result Item !-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Overlay Search Results !-->
+    </div>
+    <!-- END Overlay Content !-->
+</div> --}}
+
+<main class="main-content inner-page lk-about">
+
+
+    <!-- Login / Sign Up Content Area -->
+    <div class="lk-in-login-content">
+        <div class="container">
+            <div class="login-info m-t-40 m-b-70">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h2>Login
+                                <span>& Sign Up</span>
+                            </h2>
+                            <h3>
+                                <span>
+                                    India’s first business to business legal support & service technology platform!
+                                </span>
+                                <br>
+                                SEE EVERYTHING WE CAN HELP YOU WITH</h3>
+                            {{#if message}}
+                            <div class="alert alert-danger">
+                                <strong>Error! </strong>{{message}}
+                            </div>
+                            {{/if}} {{#if success_password_message}}
+                            <div class="alert alert-success">
+                                <strong>Success! </strong>{{success_password_message}}
+                            </div>
+                            {{/if}}
+                            {{#if success_signup_lawyers}}
+                            <div class="alert alert-success">
+                                <strong>Success! </strong>{{success_signup_lawyers}}
+                            </div>
+                            {{/if}}
+                        </div>
+                        <div class="lk-login-panel m-t-50">
+                            <div class="panel panel-login">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <a href="#" class="active" id="login-form-link">Login</a>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <a href="#" id="register-form-link">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form id="login-form" method="post" action="/admin" role="form"
+                                                style="display: block;">
+                                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                                <div class="form-group">
+                                                    <input type="text" name="email" id="username" tabindex="1"
+                                                        class="form-control" placeholder="Email" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="password" id="password" tabindex="2"
+                                                        class="form-control" placeholder="Password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="g-recaptcha"
+                                                        data-sitekey="6LfvuYwUAAAAAL0GJW9gvYNOkZ8bNdVQAUMQGTNW"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="checkbox" tabindex="3" class=""
+                                                                name="remember_me" id="remember_me">
+                                                            <label for="remember"> Remember Me</label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="/forgot-password" tabindex="5"
+                                                                class="forgot-password pull-right">Forgot Password?</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-sm-offset-3">
+                                                            <input type="submit" name="login-submit" id="login-submit"
+                                                                tabindex="4" class="btn btn-login" value="Log In">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <form id="register-form" method="POST" action="/register-details"
+                                                role="form" style="display: none;">
+                                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                                <div class="form-group">
+                                                    <div class="radio radio-success">
+                                                        <input type="radio" value="C" name="role_type" id="yes"
+                                                            class="corporateyes" checked>
+                                                        <label for="yes">Corporate</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group firmType">
+                                                    <input type="text" name="firmdelatis" id="firmdelatis" tabindex="1"
+                                                        class="form-control" placeholder="Name of the Firm" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="first_name" id="first_name" tabindex="1"
+                                                        class="form-control" placeholder="First Name" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="last_name" id="last_name" tabindex="1"
+                                                        class="form-control" placeholder="Last Name" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="mobile_no" id="mobile_no" maxlength="10"
+                                                        tabindex="1" class="form-control" placeholder="Mobile No"
+                                                        value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="email" name="email" id="email" tabindex="1"
+                                                        class="form-control" placeholder="Email Id" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="gender" id="gender">
+                                                        <option value="">Select Gender</option>
+                                                        <option value="M">Male</option>
+                                                        <option value="F">Female</option>
+                                                        <option value="O">Others</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control state" name="state">
+                                                        <option value="">Select State</option>
+                                                        {{#each state}}
+                                                        <option value="{{this.id}}">{{this.name}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control city" name="city">
+                                                        <option value="">Select city</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="r_password" id="r_password"
+                                                        tabindex="2" class="form-control" placeholder="Password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="confirm_password" id="confirm_password"
+                                                        tabindex="2" class="form-control"
+                                                        placeholder="Confirm Password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="checkbox" name="terms" id="terms"> I accept the Terms
+                                                    &amp; Conditions
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-sm-offset-3">
+                                                            <input type="submit" name="register-submit"
+                                                                id="register-submit" tabindex="4"
+                                                                class="btn btn-register" value="Register Now">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--... Login / Sign Up Content Area -->
+</main>
+{{#content "script" mode="append"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#login-form").validate({
+            rules: {
+                email: {
+                    required: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                email: {
+                    required: "Please enter email"
+                },
+                password: {
+                    required: "Please enter password"
+                }
+            }
+        });
+        $('#register-form').validate({
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                r_password: {
+                    required: true
+                },
+                gender: {
+                    required: true
+                },
+                state: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                mobile_no: {
+                    required: true,
+                    number: true
+                },
+                firmdelatis: {
+                    required: true
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: "#r_password"
+                },
+                terms: {
+                    required: true
+                },
+                role_type: {
+                    required: true
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                email: {
+                    required: "Email can't be blank"
+                },
+                r_password: {
+                    required: "Password can't be blank"
+                },
+                state: {
+                    required: "Please select state"
+                },
+                gender: {
+                    required: "Please select gender"
+                },
+                city: {
+                    required: "Please select city"
+                },
+                mobile_no: {
+                    required: "Mobile can't be blank"
+                },
+                firmdelatis: {
+                    required: "Firm name can't be blank"
+                },
+                terms: {
+                    required: "Please check our terms"
+                },
+                role_type: {
+                    required: "Checkbox can't be blank"
+                }
+            },
+        });
+
+        $(".corporateyes").click(function () {
+            $('.firmType').show();
+        });
+
+        $(".retail").click(function () {
+            $('.firmType').hide();
+        });
+
+        $(".alert").fadeTo(4000, 500).slideUp(500, function () {
+            $(".alert").slideUp(500);
+        });
+    });
+
+    $(document).on("change", ".state", function () {
+        var state_id = $(".state").val();
+        $.ajax({
+            type: "POST",
+            url: "/get-city",
+            data: {
+                state_id: state_id
+            },
+            success: function (response) {
+                if (response.success == true) {
+                    $(".city").find('option').not(':first').remove();
+                    for (var i = 0; i < response.city.length; i++) {
+                        $(".city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+    });
+
+</script>
+{{/content}}

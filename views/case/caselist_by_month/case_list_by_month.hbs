@@ -1,0 +1,156 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+
+                <li class="breadcrumb-item active">Lists CASE BY WEEK {{firm_name}}</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        <div class="card-title">
+            <h5>List All Cases {{firm_name}}</h5>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <div class="col-xl-12 col-lg-12 col-top">
+            <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item liTab2">
+                    <a href="javascript:void(0)" class="active indivisualAdd hide-lawyerAssignment" class="legalAdd"
+                        data-toggle="tab" role="tab" data-target="#allocated">Allocated</a>
+                </li>
+                <li class="nav-item liTab3">
+                    <a href="javascript:void(0)" class="govAdd show-lawyerAssignment" data-toggle="tab" role="tab"
+                        data-target="#closed">Closed</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane tabDiv2 active" id="allocated">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th> SL#</th>
+                                <th>Cab No.</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Driver Mobile</th>
+                                <th>Creation Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each caseDetails}}
+                            {{#if_eq closeing_status '1'}}
+                            <tr>
+            
+                                <td class="v-align-middle semi-bold">
+                                    {{math @index "+" 1}}
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.create_case_date}}</p>
+                                </td>
+                                <td>
+                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i>
+                                    </a>
+            
+            
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/each}}
+            
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane tabDiv3" id="closed">
+                    <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                        <thead>
+                            <tr>
+                                <th> SL#</th>
+                                <th>Cab No.</th>
+                                <th>Name of PS</th>
+                                <th>Impound Status</th>
+                                <th>Driver Name</th>
+                                <th>Creation Date</th>
+                                <th>Closed Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each caseDetails}}
+                            {{#if_eq closeing_status '1'}}
+                            <tr>
+                                <td class="v-align-middle semi-bold">
+                                    {{math @index "+" 1}}
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_no}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.impound_status}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.cab_case_details.0.driver_name}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.create_case_date}}</p>
+                                </td>
+                                <td class="v-align-middle">
+                                    <p>{{this.close_case_date}}</p>
+                                </td>
+                                <td>
+                                    <a href="/case-conversation/{{this.id}}" class="btn btn-complete"> <i class="fa fa-eye"></i></a>
+                                </td>
+                            </tr>
+                            {{/if_eq}}
+                            {{/each}}
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{{#content "script" mode="append"}}
+<script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-inputmask/jquery.inputmask.min.js"></script>
+
+
+
+</script> {{/content}}

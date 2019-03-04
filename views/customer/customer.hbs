@@ -1,0 +1,163 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Customer</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="col-xl-12 col-lg-12 col-top">
+        <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+            <li class="nav-item liTab1">
+                <a class="active indivisualAdd" data-toggle="tab" role="tab" data-target="#individual" href="javascript:void(0)">Individual</a>
+            </li>
+            <li class="nav-item liTab2">
+                <a href="javascript:void(0)" class="legalAdd" data-toggle="tab" role="tab" data-target="#corporate">Corporate</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane tabDiv1 active" id="individual">
+                <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Name</th>
+                            <th>Email Id</th>
+                            <th>Mobile No.</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each get_customer}}
+                        {{#if_eq sub_role 'R'}}
+                        <tr>
+                            <td class="v-align-middle semi-bold">
+                                <p>{{math @index "+" 1}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.first_name}} {{this.last_name}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.email}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.mobile}}</p>
+                            </td>
+
+                            <td>
+                                <a href="/customer/view/{{this.id}}" class="btn btn-complete" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/if_eq}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane tabDiv2" id="corporate">
+                <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Name</th>
+                            <th>Email Id</th>
+                            <th>Mobile No.</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each get_customer}}
+                        {{#if_eq sub_role 'C'}}
+                        <tr>
+                            <td class="v-align-middle semi-bold">
+                                <p>{{math @index "+" 1}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.first_name}} {{this.last_name}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.email}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>{{this.mobile}}</p>
+                            </td>
+
+                            <td>
+                                <a href="/customer/view/{{this.id}}" class="btn btn-complete" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="javascript:void(0);" data-corporate-id={{this.id}} id="customerCorporateDeleteBtn" class="btn btn-danger" title="Delete">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+
+
+                            </td>
+                        </tr>
+                        {{/if_eq}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#customerCorporateDeleteBtn", function () {
+        var corporate_cust_id = $(this).data("corporate-id");
+        swal({
+            title: "",
+            text: "Are you sure you went delete this Corporate??",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/customer-corporate/delete",
+                data: {
+                    corporate_cust_id: corporate_cust_id
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        swal({
+                            title: "Success!",
+                            text: "Corporate Removed Successfully",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                    else
+                    {
+                        swal("Warning!","Corporate can't be removed because this corporate already uploaded case","warning");
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            })
+        });
+    });
+        
+
+   
+
+</script> {{/content}}
+
+<!-- END card -->

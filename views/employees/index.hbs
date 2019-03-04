@@ -1,0 +1,120 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Employees</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-transparent">
+    <div class="card-header ">
+
+ {{#if success_add_emp}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_emp}}
+        </div>
+        {{/if}} {{#if delete_add_employee}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_employee}}
+        </div>
+        {{/if}}
+        {{#if edit_employee}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_employee}}
+        </div>
+        {{/if}}
+             <div class="card-title">
+            <h5>Employees</h5>
+        </div>
+        <div class="pull-right">
+            <a href="/employee/add" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-plus"></i> Add Employees</a>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+<div class="card-body lawyers-add">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+              <tbody>
+                {{#each get_employees}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.first_name}} {{this.last_name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.email}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.mobile}}</p>
+                    </td>
+                  
+                    <td>
+                        <a href="/employees/view/{{this.id}}" class="btn btn-complete" title="View">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="/employees/edit/{{this.id}}" class="btn btn-info" title="Edit">
+                            <i class="fa fa-paste"></i>
+                        </a>
+                        <button class="btn btn-danger" id="empDeleteBtn" data-emp_id="{{this.id}}" title="Delete"><i class="fa fa-trash-o"></i></button>
+                        
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="empDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/employee/delete" method="post">
+                <input type="hidden" name="emp_id" id="emp_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this employee?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#empDeleteBtn", function(){
+        $("#emp_id").val($(this).data("emp_id"));
+        $("#empDeleteModal").modal("show");
+    })
+</script>
+{{/content}}

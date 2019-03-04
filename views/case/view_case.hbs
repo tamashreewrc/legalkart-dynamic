@@ -1,0 +1,123 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/my-cases">My Cases Type</a>
+                </li>
+                <li class="breadcrumb-item active">All Cases</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_cases}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_cases}}
+        </div>
+        {{/if}} {{#if delete_add_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{delete_add_lawyers}}
+        </div>
+        {{/if}} {{#if edit_lawyers}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{edit_lawyers}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>View All Cases</h5>
+        </div>
+        
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Cab No.</th>
+                    <th>Name of PS</th>
+                    <th>Impound Status</th>
+                    <th>Driver Name</th>
+                    <th>Driver Mobile</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each all_cases}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.cab_no}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.cab_case_details.0.name_of_ps}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.cab_case_details.0.impound_status}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.cab_case_details.0.driver_name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.cab_case_details.0.driver_mobile}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        {{#if_eq this.status "0"}}<p>Pending</p>{{/if_eq}}
+                        {{#if_eq this.status "1"}}<p>Approved</p>{{/if_eq}}
+                        {{#if_eq this.status "2"}}<p>Rejected</p>{{/if_eq}}
+                    </td>
+                    <td>
+                        <a href="/case-conversation/{{this.id}}" class="btn btn-primary" title="View Details">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="lawyerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Lawyer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/lawyers/delete" method="post">
+                <input type="hidden" name="lawyers_id" id="lawyers_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this lawyers?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+
+</script> {{/content}}
+<!-- END card -->

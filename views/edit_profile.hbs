@@ -1,0 +1,476 @@
+{{#content "style" mode="prepend"}}
+<link href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" media="screen">
+{{/content}}
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/site-profile">View Profile</a>
+                </li>
+                <li class="breadcrumb-item active">Edit Profile</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+<!-- START CONTAINER FLUID -->
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    <h5>
+                        Edit Profile
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <form action="/change-profile-picture" method="POST" enctype="multipart/form-data">
+                                <div class="col-md-12">
+                                    <div class="profile-img-wrap">
+                                        <img class="inline-block" src="{{user.avatar}}" alt="user">
+                                        <div class="fileupload btn btn-default">
+                                            <span class="btn-text">
+                                                <i class="fa fa-pencil"></i> Edit</span>
+                                            <input class="upload" type="file" name="avatar" id="avatar">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary add-site-admin-photo" type="submit">
+                                        <i class="fa fa-upload"></i> Upload</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-danger remove-site-admin-photo" type="button" id="removeSiteAdminImgBtn">
+                                        <i class="fa fa-trash"></i> Remove</button>
+                                </div>
+                                    
+                                    
+                            </form>
+                        </div>
+                        {{#if_eq user.role_id '3'}}
+                        <div class="col-md-9">
+                            <form role="form" id="editSiteProfileFrm" method="POST" action="/edit-site-profile" enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="first_name" id="first_name"
+                                            placeholder="Enter First Name" value="{{user.first_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="last_name" id="last_name"
+                                            placeholder="Enter Last Name" value="{{user.last_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Email Id</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email Id"
+                                            value="{{user.email}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Notification Email Id</label>
+                                        <input type="text" class="form-control" name="notification_email" id="notification_email" placeholder="Enter Notification Email Id"
+                                            {{#if_eq user.notification_email "0"}}{{else}}value="{{user.notification_email}}"{{/if_eq}}>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Mobile No.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control number_validator" name="mobile" id="mobile"
+                                            placeholder="Enter Mobile No" value="{{user.mobile}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Firm Name.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="firm_id" id="firm_id" value="{{firmDetails.name}}"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>GST.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="number" class="form-control" name="gst" id="gst" maxlength="3"
+                                            placeholder="Enter GST No" value="{{customerDetails.gst}}">
+                                    </div>
+                                </div>
+                                <input type="hidden" id="hiddenImage" name="hiddenImage" value="{{customerDetails.logo}}">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Logo.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="file" class="form-control avatar_logo" name="firm_logo" id="firm_logo" >
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <img class="inline-blocks" src="{{firmDetails.image}}" width="50" height="50">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        <span class="requiredErr">*</span>
+                                        <select class="full-width" data-init-plugin="select2" name="state" id="state">
+                                            <option value="">Select State</option>
+                                            {{#each state}}
+                                            <option value="{{this.id}}"
+                                                {{#if_eq this.id ../customerDetails.state_id}} selected {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <span class="requiredErr">*</span>
+                                        <select class="full-width" data-init-plugin="select2" name="city" id="city">
+                                            <option value="">Select City</option>
+                                            {{#each cityName}}
+                                            <option value="{{this.id}}"
+                                                {{#if_eq this.id ../customerDetails.city_id}} selected {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                {{#if_eq ContactPersonDetails ""}}
+                                <div class="row ml-1" id="education">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Contact person Name.</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="c_name" id="c_name"
+                                                placeholder="Enter Contact person Name" value="{{name}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Contact person Email.</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="c_email" id="c_email"
+                                                    placeholder="Enter Contact person Email" value="{{email}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Contact person Phone.</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="c_phone" id="c_phone"
+                                                    placeholder="Enter Contact person Phone" maxlength="10" value="{{phone}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <span class="requiredErr">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <button class="btn btn-primary btn-block" type="button" id="addEducationBtn">
+                                                <i class="fa fa-plus"></i> Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{else}}
+                                {{#each ContactPersonDetails}}
+                                <div class="removediv well p-3 m-b-15 rounded" id="education">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Contact person Name.</label>
+                                            <span class="requiredErr">*</span>
+                                            <input type="text" class="form-control" name="c_name" id="c_name"
+                                                placeholder="Enter Contact person Name" value="{{name}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Contact person Email.</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="c_email" id="c_email"
+                                                    placeholder="Enter Contact person Email" value="{{email}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Contact person Phone.</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="c_phone" id="c_phone"
+                                                    placeholder="Enter Contact person Phone" maxlength="10" value="{{phone}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 m-t-15">
+                                        {{#show_button_add @index}}
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="button" id="addEducationBtn">
+                                                <i class="fa fa-plus"></i> Add
+                                            </button>
+                                        </div>
+                                        {{else}}
+                                        <div class="form-group">
+                                            <button class="btn btn-primary removeEducationBtn" type="button">
+                                                <i class="fa fa-close"></i> Remove
+                                            </button>
+                                        </div>
+                                        {{/show_button_add}}
+                                    </div>
+                                </div>
+                                {{/each}}
+
+                                {{/if_eq}}
+                                <div class="row hide" id="educationDiv">
+                                    <div class="removediv well p-3 m-b-15 rounded" id="education">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Contact person Name.</label>
+                                                <span class="requiredErr">*</span>
+                                                <input type="text" class="form-control" name="c_name" id="c_name"
+                                                    placeholder="Enter Contact person Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Contact person Email.</label>
+                                                    <span class="requiredErr">*</span>
+                                                    <input type="text" class="form-control" name="c_email" id="c_email"
+                                                        placeholder="Enter Contact person Email">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Contact person Phone.</label>
+                                                    <span class="requiredErr">*</span>
+                                                    <input type="text" class="form-control" name="c_phone" id="c_phone"
+                                                        placeholder="Enter Contact person Phone" maxlength="10" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-t-15">
+                                            <button class="btn btn-primary removeEducationBtn" type="button">
+                                                <i class="fa fa-close"></i> Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-cons m-t-20 ml-2 center" type="submit">Save
+                                    &amp; Update</button>
+                            </form>
+                        </div>
+                        {{else}}
+                        <div class="col-md-9">
+                            <form role="form" id="editSiteProfileFrm" method="POST" action="/edit-site-profile" enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="first_name" id="first_name"
+                                            placeholder="Enter First Name" value="{{user.first_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="last_name" id="last_name"
+                                            placeholder="Enter Last Name" value="{{user.last_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Email Id</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email Id"
+                                            value="{{user.email}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Mobile No.</label>
+                                        <span class="requiredErr">*</span>
+                                        <input type="text" class="form-control number_validator" name="mobile" id="mobile"
+                                            placeholder="Enter Email Id" value="{{user.mobile}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        <span class="requiredErr">*</span>
+                                        <select class="full-width" data-init-plugin="select2" name="state" id="state" {{#if_eq user.role_id "5"}} disabled {{/if_eq}}>
+                                            <option value="">Select State</option>
+                                            {{#each state}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../user.state_id}} selected {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <span class="requiredErr">*</span>
+                                        <select class="full-width" data-init-plugin="select2" name="city" id="city">
+                                            <option value="">Select City</option>
+                                                {{#each fetch_city}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../user.city_id}} selected {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-cons m-t-20 ml-2 center" type="submit">Save &amp;
+                                Update</button>
+                            </form>
+                        </div>
+                            {{/if_eq}}
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-inputmask/jquery.inputmask.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#editSiteProfileFrm").validate({
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                notification_email: {
+                    email: true
+                },
+                mobile: {
+                    required: true
+                },
+                gst: {
+                    required: true
+                },
+                c_name: {
+                    required: true
+                },
+                c_email: {
+                    required: true
+                },
+                c_phone: {
+                    required: true
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                email: {
+                    required: "Email can't be blank"
+                },
+                mobile: {
+                    required: "Mobile no. can't be blank"
+                },
+                gst: {
+                    required: "GST. can't be blank"
+                },
+                c_name: {
+                    required: "Contact person name can't be blank"
+                },
+                c_email: {
+                    required: "Contact person email can't be blank"
+                },
+                c_phone: {
+                    required: "Contact person phone can't be blank"
+                }
+            }
+        });
+
+        $(document).on("click", "#addEducationBtn", function () {
+            $("#education").after($("#educationDiv").html());
+        });
+        $(document).on('click', ".removeEducationBtn", function (e) {
+            $(this).parents(".removediv").remove();
+        });
+
+        $("#avatar").change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(".inline-block").attr("src", e.target.result);
+                    $(".img-circle").attr("src", e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+
+        $(".avatar_logo").change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(".inline-blocks").attr("src", e.target.result);
+                    $(".img-circle").attr("src", e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+    });
+
+    $(document).on('click', '#removeSiteAdminImgBtn', function () {
+        $.ajax({
+            type: "GET",
+            url: "/remove-admin-site-photo",
+            success: function (response) {
+                if (response.success == true) {
+                    location.reload();
+                }
+            }
+        });
+    });
+
+
+
+</script> {{/content}}

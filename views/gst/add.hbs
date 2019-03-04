@@ -1,0 +1,65 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/legalkart-gst">GST</a>
+                </li>
+                <li class="breadcrumb-item active">QST Add</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <h5>GST Add </h5>
+        <form role="form" id="legalcartGst" method="POST" action="/legalcart-gst/add">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="form-group">
+                <label>GST Percentage</label>
+                <input type="text" class="form-control" name="name" id="name" maxlength="4" placeholder="Enter Name">
+            </div>
+            <button class="btn btn-primary btn-cons m-t-10 btn-lg" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+{{#content "script" mode="append"}}
+
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        $("#legalcartGst").validate({
+            rules: {
+                name: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Name can't be blank"
+                }
+            },
+        });
+    });
+
+    $("#name").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: '%',
+        rightAlign: false
+    });
+</script>
+
+{{/content}}

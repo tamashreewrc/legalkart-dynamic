@@ -1,0 +1,428 @@
+<main class="main-content inner-page lk-resources">
+    <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">Resource</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+    <!-- Lawyers Directory List Content Area -->
+    <div class="lk-resources-content">
+        <div class="container">
+            <div class="blog-page common-blog m-t-30 m-b-30">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            {{#each resource}}
+                            <div class="col-md-6 m-b-20">
+                                <div class="card border-0">
+                                    <div class="blog-part card-body text-center">
+                                        <h3 class="font-16 font-semibold m-0 m-b-20 text-uppercase">
+                                            {{this.name}}
+                                        </h3>
+                                        <div class="image">
+                                        <img src="{{this.avatar}}" class="img-fluid" alt="">
+                                        </div>
+                                        <div class="blog-title m-b-20">
+                                            <ul>
+                                                <li>
+                                                    <a href="javascript:void(0);">
+                                                        <i class="fa fa-user"></i> Admin</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">
+                                                        <i class="fa fa-calendar-o"></i> {{dateFormat this.updatedAt
+                                                        "MM-YYYY" }}</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">
+                                                        <i class="fa fa-tags"></i> {{#if_eq this.resource_type
+                                                        "articles"}} Articles {{/if_eq}} {{#if_eq this.resource_type
+                                                        "bare_acts"}}
+                                                        Bare Acts {{/if_eq}} {{#if_eq this.resource_type
+                                                        "latest_judgements"}} Latest Judgements {{/if_eq}} {{#if_eq
+                                                        this.resource_type
+                                                        "legal_news"}} Legal News {{/if_eq}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="para">
+                                            <p class="m-0 m-b-30 font-16">
+                                                {{{striptags this.content}}}
+                                            </p>
+                                        </div>
+                                        <a class="text-decoration-none text-primary-color font-15 m-b-20 m-t-20 d-inline-block"
+                                            href="/blog-details/{{this.id}}">
+                                            <span class="border-bottom border-bottom-primary-2">
+                                                <span class="m-r-5">Continue Reading</span>
+                                                <i class="fa fa-caret-right"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{!-- <div class="blog-part">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                Lawyer Fight For Justice
+                            </h3>
+                            <img src="/frontend/images/lawyer-directory-top.jpg" class="img-fluid" alt="">
+                            <div class="blog-title m-b-50">
+                                <ul>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-user"></i> Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-heart"></i> 4.250</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="m-0 m-b-30 font-16">
+                                Whether you are f ling a divorce, wanting child custody, alimony or maintenance,
+                                fighting 498a, fighting a dispute related
+                                to discord in the family, or are being harassed by your children, choose a lawyer who
+                                is
+                                an expert in family I. Use LawRato to hire a top rated family dispute lawyer in India.
+                            </p>
+                            <a class="text-decoration-none text-primary-color font-15 m-b-40 d-inline-block" href="/blog-details">
+                                <span class="border-bottom border-bottom-primary-2">
+                                    <span class="m-r-5">Continue Reading</span>
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="blog-part">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                Lawyer Fight For Justice
+                            </h3>
+                            <img src="/frontend/images/lawyer-directory-top.jpg" class="img-fluid" alt="">
+                            <div class="blog-title m-b-50">
+                                <ul>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-user"></i> Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-heart"></i> 4.250</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="m-0 m-b-30 font-16">
+                                Whether you are f ling a divorce, wanting child custody, alimony or maintenance,
+                                fighting 498a, fighting a dispute related
+                                to discord in the family, or are being harassed by your children, choose a lawyer who
+                                is
+                                an expert in family I. Use LawRato to hire a top rated family dispute lawyer in India.
+                            </p>
+                            <a class="text-decoration-none text-primary-color font-15 m-b-40 d-inline-block" href="/blog-details">
+                                <span class="border-bottom border-bottom-primary-2">
+                                    <span class="m-r-5">Continue Reading</span>
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="blog-part">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                Lawyer Fight For Justice
+                            </h3>
+                            <img src="/frontend/images/lawyer-directory-top.jpg" class="img-fluid" alt="">
+                            <div class="blog-title m-b-50">
+                                <ul>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-user"></i> Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-heart"></i> 4.250</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="m-0 m-b-30 font-16">
+                                Whether you are f ling a divorce, wanting child custody, alimony or maintenance,
+                                fighting 498a, fighting a dispute related
+                                to discord in the family, or are being harassed by your children, choose a lawyer who
+                                is
+                                an expert in family I. Use LawRato to hire a top rated family dispute lawyer in India.
+                            </p>
+                            <a class="text-decoration-none text-primary-color font-15 m-b-40 d-inline-block" href="/blog-details">
+                                <span class="border-bottom border-bottom-primary-2">
+                                    <span class="m-r-5">Continue Reading</span>
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="blog-part">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                Lawyer Fight For Justice
+                            </h3>
+                            <img src="/frontend/images/lawyer-directory-top.jpg" class="img-fluid" alt="">
+                            <div class="blog-title m-b-50">
+                                <ul>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-user"></i> Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa fa-heart"></i> 4.250</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="m-0 m-b-30 font-16">
+                                Whether you are f ling a divorce, wanting child custody, alimony or maintenance,
+                                fighting 498a, fighting a dispute related
+                                to discord in the family, or are being harassed by your children, choose a lawyer who
+                                is
+                                an expert in family I. Use LawRato to hire a top rated family dispute lawyer in India.
+                            </p>
+                            <a class="text-decoration-none text-primary-color font-15 m-b-40 d-inline-block" href="/blog-details">
+                                <span class="border-bottom border-bottom-primary-2">
+                                    <span class="m-r-5">Continue Reading</span>
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                        </div> --}}
+                        {{!-- <div class="pagination">
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a aria-disabled="true" tabindex="-1" href="#" class="page-link">Previous</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li aria-current="page" class="page-item active">
+                                        <a href="#" class="page-link">2
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div> --}}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="blog-filter">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Resources Category
+                            </h4>
+                            <div class="blog-list">
+                                <ul>
+                                    <li>
+                                        <a href="/resources/articles">Articles</a>
+                                    </li>
+                                    <li>
+                                        <a href="/resources/bare_acts">Bare Acts</a>
+                                    </li>
+                                    <li>
+                                        <a href="/resources/latest_judgements">Latest Judgements</a>
+                                    </li>
+                                    <li>
+                                        <a href="/resources/legal_news">Legal News</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blog-filter m-t-80">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Latest News
+                            </h4>
+                            <div class="news-list">
+                                <ul>
+                                    {{#each resource_latest}}
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="{{this.avatar}}" alt="" width="60" height="60">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="/blog-details/{{this.id}}">{{this.name}}</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="javascript:void(0);">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">
+                                                            <i class="fa fa-calendar-o"></i> {{dateFormat
+                                                            this.updatedAt "MM-YYYY" }}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {{/each}}
+                                    {{!-- <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-avtar">
+                                            <a href="">
+                                                <img src="https://via.placeholder.com/80" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="right-title">
+                                            <h4>
+                                                <a href="">Professioanl Lawyers 2017</a>
+                                            </h4>
+                                            <div class="blog-title">
+                                                <ul>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-user"></i> Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-calendar-o"></i> May, 26</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <i class="fa fa-commenting"></i> 2.214</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li> --}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--... Lawyers Directory List Content Area -->
+</main>

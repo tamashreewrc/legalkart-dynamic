@@ -1,0 +1,210 @@
+
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+    <div class="inner">
+        <!-- START BREADCRUMB -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/dashboard">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Jurisdiction</li>
+        </ol>
+        <!-- END BREADCRUMB -->
+    </div>
+</div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_jurisdiction}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_jurisdiction}}
+        </div>
+        {{/if}}
+        {{#if del_add_jurisdiction}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{del_add_jurisdiction}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Jurisdiction</h5>
+        </div>
+        <div class="pull-right">
+            <a href="/jurisdiction/add" class="btn btn-primary btn-cons m-b-10"><i class="fa fa-plus"></i> Add Jurisdiction</a>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Name</th>
+                    <th>Remarks</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each jurisdiction}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.remarks}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{dateFormat this.cratedAt "DD-MM-YYYY"}}</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-complete" type="button" id="viewJurisdiction" title="View" data-jurisdiction-id="{{this.id}}" data-jurisdiction-name="{{this.name}}" data-jurisdiction-remarks="{{this.remarks}}"><i class="fa fa-eye"></i></button>  
+                        <button class="btn btn-info" type="button" title="Edit" id="editJurisdiction" data-jurisdiction-id="{{this.id}}" data-jurisdiction-name="{{this.name}}" data-jurisdiction-remarks="{{this.remarks}}"><i class="fa fa-paste"></i></button>  
+                        <a href="/jurisdiction/delete/{{this.id}}" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></a>  
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END card -->
+<div class="modal fade" id="viewJurisdictionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Jurisdiction</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="view_name" id="view_name" placeholder="Enter Jurisdiction Name" readonly>
+                </div>
+                <div class="form-group">
+                    <label>remarks</label>
+                    <span class="requiredErr">*</span>
+                    <textarea class="form-control" id="view_remarks" name="view_remarks" placeholder="Briefly Describe your Remarks" readonly></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editJurisdictionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Jurisdiction</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form role="form" id="editJurisdictionFrm">
+                <input type="hidden" name="juris_id" id="juris_id">
+                <div class="form-group">
+                    <label>Name</label>
+                    <span class="requiredErr">*</span>
+                    <input type="text" class="form-control" name="edit_name" id="edit_name" placeholder="Enter Jurisdiction Name">
+                </div>
+                <div class="form-group">
+                    <label>remarks</label>
+                    <span class="requiredErr">*</span>
+                    <textarea class="form-control" id="edit_remarks" name="edit_remarks" placeholder="Briefly Describe your Remarks"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEditjurisdiction">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+    <script>
+        $(document).on('click', "#viewJurisdiction", function(){
+            var juris_id = $(this).data("jurisdiction-id");
+            var juris_name = $(this).data("jurisdiction-name");
+            var juris_remarks = $(this).data("jurisdiction-remarks");
+            $("#view_name").val(juris_name);            
+            $("#view_remarks").val(juris_remarks);
+            $("#viewJurisdictionModal").modal('show');
+        });
+
+        $(document).on('click', "#editJurisdiction", function(){
+            var juris_id = $(this).data("jurisdiction-id");
+            var juris_name = $(this).data("jurisdiction-name");
+            var juris_remarks = $(this).data("jurisdiction-remarks");
+            $("#edit_name").val(juris_name);            
+            $("#juris_id").val(juris_id);            
+            $("#edit_remarks").val(juris_remarks);
+            $("#editJurisdictionModal").modal('show');
+        });
+
+        $(document).ready(function(e){
+            $("#btnEditjurisdiction").click(function () {
+                $("#editJurisdictionFrm").submit();
+            });
+
+            $("#editJurisdictionFrm").validate({
+                rules: {
+                    edit_name: {
+                        required: true
+                    },
+                    edit_remarks: {
+                        required: true
+                    }
+                },
+                messages: {
+                    edit_name: {
+                        required: "Jurisdiction Name can't be blank"
+                    },
+                    edit_remarks: {
+                        required: "Remarks can't be blank"
+                    }
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/edit-jurisdiction",
+                        data: $("#editJurisdictionFrm").serialize(),
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                            $("#btnEditjurisdiction").prop('disabled', true);
+                            $("#btnEditjurisdiction").html("Loading...");
+                        },
+                        success: function (response) {
+                            if (response.success == true) {
+                                $(`<div class="alert alert-success"><strong>Success! </strong>Jurisdiction Edited Successfully</div>`).insertBefore("#editJurisdictionFrm");
+                                setTimeout(function () {
+                                    window.location.href = "/jurisdiction";
+                                }, 2000);
+                            }
+                        },
+                        error: function (xhr) {
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{{/content}}

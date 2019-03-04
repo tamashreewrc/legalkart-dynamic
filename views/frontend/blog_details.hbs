@@ -1,0 +1,120 @@
+<main class="main-content inner-page lk-blog-details">
+   <!-- Title and Bredcrumb Block -->
+    <div class="title-block  m-t-30 m-b-30">
+      <div class="container">
+             <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/resources">Resource</a></li>
+                    <li class="breadcrumb-item text-primary-color" aria-current="page">Resource Details</li>
+                </ol>
+            </nav>
+      </div>
+    </div>
+    <!-- Title and Bredcrumb Block -->
+    <!-- Lawyers Directory List Content Area -->
+    <div class="lk-lawyer-directory-content">
+        <div class="container">
+            <div class="blog-page m-t-30 m-b-30">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="blog-part">
+                            <h3 class="font-40 font-semibold m-0 m-b-40">
+                                {{resource.name}}
+                            </h3>
+                            <img src="{{resource.avatar}}" class="img-fluid" alt="">
+                            <div class="blog-title m-b-50">
+                                <ul>
+                                        <li>
+                                            <a href="javascript:void(0);">
+                                                <i class="fa fa-user"></i> Admin</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">
+                                                <i class="fa fa-calendar-o"></i> {{dateFormat resource.updatedAt "MM-YYYY" }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">
+                                                <i class="fa fa-tags"></i> {{#if_eq resource.resource_type "articles"}} Articles {{/if_eq}} {{#if_eq resource.resource_type "bare_acts"}}
+                        Bare Acts {{/if_eq}} {{#if_eq resource.resource_type "latest_judgements"}} Latest Judgements {{/if_eq}} {{#if_eq resource.resource_type
+                        "legal_news"}} Legal News {{/if_eq}}</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">
+                                                <i class="fa fa-heart"></i> 4.250</a>
+                                        </li>
+                                    </ul>
+                                </ul>
+                            </div>
+                            <p class="m-0 m-b-30 font-16">
+                                {{{resource.content}}}
+                            </p>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="blog-filter">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Resources Category
+                            </h4>
+                            <div class="blog-list">
+                                <ul>
+                                    <li>
+                                        <a href="/resources/articles">Articles</a>
+                                    </li>
+                                    <li>
+                                        <a href="/resources/bare_acts">Bare Acts</a>
+                                    </li>
+                                    <li>
+                                        <a href="/resources/latest_judgements">Latest Judgements</a>
+                                    </li>
+                                    <li>
+                                        <a href="/resources/legal_news">Legal News</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blog-filter m-t-80">
+                            <h4 class="m-0 font-30 font-semibold text-uppercase m-b-30">
+                                Latest News
+                            </h4>
+                            <div class="news-list">
+                                <ul>
+                                    {{#each resource_latest}}
+                                        <li>
+                                            <div class="left-avtar">
+                                                <a href="">
+                                                    <img src="{{this.avatar}}" alt="" width="60" height="60">
+                                                </a>
+                                            </div>
+                                            <div class="right-title">
+                                                <h4>
+                                                    <a href="/blog-details/{{this.id}}">{{this.name}}</a>
+                                                </h4>
+                                                <div class="blog-title">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="javascript:void(0);">
+                                                                <i class="fa fa-user"></i> Admin</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);">
+                                                                <i class="fa fa-calendar-o"></i> {{dateFormat this.updatedAt "MM-YYYY" }}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--... Lawyers Directory List Content Area -->
+</main>

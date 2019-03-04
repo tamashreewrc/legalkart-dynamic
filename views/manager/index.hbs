@@ -1,0 +1,208 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">City List</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_manager}}
+        </div>
+        {{/if}} 
+        {{#if success_del_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_del_manager}}
+        </div>
+        {{/if}} {{#if success_edit_manager}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_edit_manager}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Manager Lists</h5>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary btn-cons m-b-10" type="button" id="addsuperAdminStatusBtn"><i class="fa fa-user"></i> Add Super Admin</button>
+            <a href="/manager/add" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-plus"></i> Add City</a>
+           
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body ">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Name</th>
+                    <th>Email Id</th>
+                    <th>Mobile No.</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each manager}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <input type="checkbox" name="super_admin_status" id="super_admin_status" class="super_admin_status" value="{{this.id}}"
+                            {{#if_eq this.super_admin_status "1"}} checked disabled {{/if_eq}}>
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.first_name}} {{this.last_name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.email}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.mobile}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.state.name}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.city.name}}</p>
+                    </td>
+                    <td>
+                        <a href="/manager/view/{{this.id}}" class="btn btn-primary" title="View"><i class="fa fa-eye"></i></a>
+                        <a href="/manager/edit/{{this.id}}" class="btn btn-primary" title="Edit"><i class="fa fa-paste"></i></a>
+                        <button class="btn btn-danger" title="Delete" id="managerDeleteBtn" data-manager-id="{{this.id}}"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{!-- <div class="modal fade" id="managerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete City</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/manager/delete" method="post">
+                <input type="hidden" name="manager_id" id="manager_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure you went delete this City?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> --}}
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    $(document).on("click", "#managerDeleteBtn", function () {
+        var manager_id = $(this).data("manager-id");
+        swal({
+            title: "",
+            text: "Are you sure you went delete this City??",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/manager/delete",
+                data: {
+                    manager_id: manager_id
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        swal({
+                            title: "Success!",
+                            text: "Manager Removed Successfully",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                    else
+                    {
+                        swal("Warning!","City manager can't be removed because this city manager already uploaded case","warning");
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            })
+        });
+    });
+    $(document).ready(function(){
+        $("#check_all").click(function () {
+            $(".super_admin_status").prop('checked', $(this).prop('checked'));
+        });
+
+        $(".super_admin_status").change(function () {
+            if (!$(this).prop("checked")) {
+                $("#check_all").prop("checked", false);
+            }
+        });
+    });
+
+    $(document).on("click", "#addsuperAdminStatusBtn", function () {
+            var superAdminStatus = [];
+            $(".super_admin_status").each(function () {
+                if ($(this).is(':checked')) {
+                    superAdminStatus.push($(this).val())
+                }
+            });
+            if (superAdminStatus.length == 0) {
+                swal("Warning!", "Please select one or more Manager", "warning");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/add-super-admin-manager",
+                    data: {
+                        manager_id: superAdminStatus
+                    },
+                    success: function (response) {
+                        if (response.success == true) {
+                            swal({
+                                title: "Success!",
+                                text: "Super Admin added successfully",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        }); 
+
+   
+
+</script> {{/content}}
+<!-- END card -->

@@ -1,0 +1,316 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Stamp Paper List</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    <div class="pull-left">
+                        <h5>All Stamp Papers</h5>
+                    </div>
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld" href="#">Pending</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2FollowUs">Assigned</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#tab2Inspire">Completed</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-12">
+                                                <div class="card-body">
+                                                    <a href="javascript:void(0)" class="btn btn-primary btn-cons m-b-10" id="stampPaperAssignment">
+                <i class="fa fa-share-square-o"></i>Assign</a>
+                                                    <table class="table table-hover demo-table-search table-responsive-block data-tables stamp-list-table" id="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                                                </th>
+                                                                <th>Sl No.</th>
+                                                                <th>First Party</th>
+                                                                <th>Second Party</th>
+                                                                <th>Name of Purchaser</th>
+                                                                <th>Delivery Status</th>
+                                                                <th>Date</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each stamp_paper_list_pending}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">
+                                                                    <input type="checkbox" name="stamp_check_id" value="{{this.id}}" />{{math
+                                                                    @index "+" 1}}
+                                                                </td>
+                                                                <td class="v-align-middle semi-bold">
+                                                                    <p>{{math @index "+" 1}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.first_party}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.second_party}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.purchaser}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>
+                                                                        {{#if_eq this.status "0"}}Pending{{/if_eq}} {{#if_eq this.status "1"}}Delivered{{/if_eq}} {{#if_eq this.status "2"}}Rejected{{/if_eq}}
+
+                                                                    </p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/stamp-papers/list/{{this.id}}" class="btn btn-complete" title="View Detail">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                                                                </td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2FollowUs">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body lawyers-add">
+                                                    <table class="table table-hover table-responsive-block data-tables stamp-list-assigned-table" id="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sl No.</th>
+                                                                <th>First Party</th>
+                                                                <th>Second Party</th>
+                                                                <th>Name of Purchaser</th>
+                                                                <th>Delivery Status</th>
+                                                                <th>Date</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each stamp_paper_list_assigned}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">
+                                                                    <p>{{math @index "+" 1}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.first_party}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.second_party}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.purchaser}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>
+                                                                        {{#if_eq this.status "0"}}Pending{{/if_eq}} {{#if_eq this.status "1"}}Delivered{{/if_eq}} {{#if_eq this.status "2"}}Rejected{{/if_eq}}
+
+                                                                    </p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/stamp-papers/list/{{this.id}}" class="btn btn-complete" title="View Detail">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                                                                </td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane " id="tab2Inspire">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-body lawyers-add">
+                                                    <table class="table table-hover table-responsive-block data-tables stamp-list-completed-table" id="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sl No.</th>
+                                                                <th>First Party</th>
+                                                                <th>Second Party</th>
+                                                                <th>Name of Purchaser</th>
+                                                                <th>Delivery Status</th>
+                                                                <th>Date</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each stamp_paper_list_completed}}
+                                                            <tr>
+                                                                <td class="v-align-middle semi-bold">
+                                                                    <p>{{math @index "+" 1}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.first_party}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.second_party}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{this.purchaser}}</p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>
+                                                                        {{#if_eq this.status "0"}}Pending{{/if_eq}} {{#if_eq this.status "1"}}Delivered{{/if_eq}} {{#if_eq this.status "2"}}Rejected{{/if_eq}}
+
+                                                                    </p>
+                                                                </td>
+                                                                <td class="v-align-middle">
+                                                                    <p>{{dateFormat this.createdAt "DD/MM/YYYY"}}</p>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/stamp-papers/list/{{this.id}}" class="btn btn-complete" title="View Detail">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                                                                </td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>
+
+<!--Vendor Assign start-->
+<div class="modal fade" id="legalCart_vendor_assignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Vendor Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{!--
+            <form role="form" id="legalCart_lawyer_assignment_form" method="POST"> --}}
+                <input type="hidden" id="hiddenstampId" name="hiddenstampId">
+                <div class="modal-body">
+
+                    <div class="form-group ">
+                        <label>Vendor Email ID</label>
+                        <span class="requiredErr">*</span>
+                        <input type="email" class="form-control" id="vendor_assignment_email" name="vendor_assignment_email" />
+                        <div class="lawyerListLabelErrorTargetMulti vendor_assign_error error"></div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="vendorEmailAssign">Submit</button>
+                </div>
+                {{!-- </form> --}}
+        </div>
+    </div>
+</div>
+<!--Vendor Assign end-->
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+    function checkall(source) {
+        var checkboxes = document.getElementsByName('stamp_check_id');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    $(document).on("click", "#stampPaperAssignment", function () {
+        var stamp_paper_id = [];
+        $('input[name="stamp_check_id"]:checked').each(function () {
+            stamp_paper_id.push(this.value);
+        });
+        if (stamp_paper_id.length == 0) {
+            swal("", "Please select at least one stamp paper!", "warning");
+        } else {
+            $('#legalCart_vendor_assignment').modal("show");
+        }
+    });
+
+    $(document).on('click', '#vendorEmailAssign', function () {
+        var stampPaperId = [];
+        var vendorEmail = $('#vendor_assignment_email').val();
+        $('input[name="stamp_check_id"]:checked').each(function () {
+            stampPaperId.push(this.value);
+        });
+        console.log(stampPaperId);
+        if (vendorEmail == '') {
+            $('.vendor_assign_error').html('Please enter a vendor email');
+        } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(vendorEmail))) {
+            $('.vendor_assign_error').html('Please enter a valid email');
+        } else {
+            $('.vendor_assign_error').html('');
+            $.ajax({
+                url: '/stamp-papers/vendor-assign/',
+                type: 'POST',
+                data: { vendorEmail: vendorEmail, stampPaperId: stampPaperId },
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Nice!",
+                            text: response.msg,
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    $('.stamp-list-table').dataTable({
+        "paging": false,
+        "bSort": false,
+        "info": false
+    });
+
+    $(document).ready(function () {
+        $('.stamp-list-assigned-table').DataTable().destroy();
+        $('.stamp-list-completed-table').DataTable().destroy();
+    });
+
+</script> {{/content}}

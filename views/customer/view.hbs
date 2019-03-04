@@ -1,0 +1,172 @@
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/customer">Customer</a>
+                </li>
+                <li class="breadcrumb-item active">View Customer</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-body">
+                    <div class="pull-left">
+                        <h5>View Customer</h5>
+                    </div>
+
+                    <div class="card card-borderless">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 bg-white">
+                                <div class="card-body">
+                                    <div class="profile-pic">
+                                        <img src="{{customer.avatar}}" alt="" width="200" height="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-6 col-top">
+                                <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld"
+                                            href="#">Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" role="tab" data-target="#viewcases">View Cases</a>
+                                    </li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab2hellowWorld">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-6">
+                                                <div class="profile-info">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Full Name :</strong> {{customer.first_name}}
+                                                            {{customer.last_name}}</li>
+                                                        <li>
+                                                            <strong>Email ID :</strong> {{customer.email}}</li>
+                                                        <li>
+                                                            <strong>Mobile No. :</strong> {{customer.mobile}}</li>
+                                                        <li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="viewcases">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                {{!-- <table class="table table-hover demo-table-search table-responsive-block data-tables"
+                                                    id="tableWithSearch">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Case Name</th>
+                                                            <th>Email Id</th>
+                                                            <th>Mobile No.</th>
+                                                            <th>Role</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {{#each allcases}}
+                                                        <tr>
+                                                            <td class="v-align-middle semi-bold">
+                                                                <p>{{math @index "+" 1}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.first_name}} {{this.last_name}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.email}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.mobile}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>
+                                                                    {{#if_eq this.sub_role "I"}}Individual
+                                                                    Lawyer{{/if_eq}} {{#if_eq this.sub_role "L"}}Legal
+                                                                    Consultant{{/if_eq}} {{#if_eq this.sub_role
+                                                                    "G"}}Govt Relations{{/if_eq}} {{#if_eq
+                                                                    this.sub_role "P"}}Police Officer{{/if_eq}}
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                        {{/each}}
+                                                    </tbody>
+                                                </table> --}}
+                                                <table class="table table-hover demo-table-search table-responsive-block data-tables"
+                                                    id="tableWithSearch">
+                                                    <thead>
+                                                        <tr>
+                                                            <th> SL#</th>
+                                                            <th>Case No.</th>
+                                                            <th>Case Type</th>
+                                                            {{#if_eq user.role_id '1'}}
+                                                            <th>Firm Name</th>
+                                                            {{/if_eq}}
+                                                            <th>Description</th>
+                                                            <th>Create Date</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {{#each all_cases}}
+                                                        {{#if_eq this.status "0"}}
+                                                        <tr>
+                                                            <td class="v-align-middle semi-bold">
+                                                                {{math @index "+" 1}}
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.case_no}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.rate_list.type_of_case}}</p>
+                                                            </td>
+                                                            {{#if_eq ../user.role_id '1'}}
+                                                            <td class="v-align-middle">
+                                                                <p>{{../user.first_name}} {{../user.last_name}}</p>
+                                                            </td>
+                                                            {{/if_eq}}
+                                                            <td class="v-align-middle">
+                                                                <p>{{this.description}}</p>
+                                                            </td>
+                                                            <td class="v-align-middle">
+                                                                {{dateFormat this.cratedAt "DD-MM-YYYY"}}
+                                                            </td>
+                                                            <td>
+                                                                <a href="/case-conversation/{{this.id}}" class="btn btn-complete">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        {{/if_eq}}
+                                                        {{/each}}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+</div>

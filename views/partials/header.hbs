@@ -1,0 +1,681 @@
+<!-- START HEADER -->
+<div class="header ">
+    <!-- START MOBILE SIDEBAR TOGGLE -->
+    <a href="#" class="btn-link toggle-sidebar d-lg-none pg pg-menu" data-toggle="sidebar">
+    </a>
+    
+    <!-- END MOBILE SIDEBAR TOGGLE -->
+
+    <div class="m-l-290">
+        
+        {{#if_eq user.role_id "1"}}
+        <span class="text-primary">Super Admin</span>
+        {{/if_eq}}
+        {{#if_eq user.role_id "4"}}
+        <span class="text-primary">Employee</span>
+        {{/if_eq}}
+        {{#if_eq user.role_id "3"}}
+        {{#if_eq user.sub_role "C"}}
+        <span class="text-primary">Corporate Customer</span>
+        {{/if_eq}}
+        {{#if_eq user.sub_role "R"}}
+        <span class="text-primary">Retail Customer</span>
+        {{/if_eq}}
+        {{/if_eq}}
+        {{#if_eq user.role_id "2"}}
+        {{#if_eq user.sub_role "I"}}
+        <span class="text-primary">Individual Lawyer</span>
+        {{/if_eq}}
+        {{#if_eq user.sub_role "L"}}
+        <span class="text-primary">Legal Consultant</span>
+        {{/if_eq}}
+        {{#if_eq user.sub_role "G"}}
+        <span class="text-primary">Govt Relations</span>
+        {{/if_eq}}
+        {{#if_eq user.sub_role "P"}}
+        <span class="text-primary">Police Officer</span>
+        {{/if_eq}}
+        {{/if_eq}}
+        {{#if_eq user.role_id "4"}}
+        <span class="text-primary">Legalkart Employee</span>
+        {{/if_eq}}
+        {{#if_eq user.role_id "5"}}
+        <span class="text-primary">Corporate Manager</span>
+        {{/if_eq}}
+        {{!-- <a href="#" class="search-link d-none d-lg-inline-block d-xl-inline-block" data-toggle="search">
+            <i class="pg-search"></i>Type anywhere to
+            <span class="bold">search</span>
+        </a> --}}
+    </div>
+    {{#if_eq user.role_id "3"}} {{#if_eq user.sub_role "C"}}
+    <span class="firm-name-head font-weight-bold"></span>
+    {{/if_eq}}{{/if_eq}} {{#if_eq user.role_id "5"}}
+    <span class="firm-name-head font-weight-bold"></span>{{/if_eq}}
+    <div class="d-flex align-items-center">
+
+        <ul class="d-lg-inline-block d-none no-margin b-grey b-r no-style p-l-20 header-search">
+            <li class="inline">
+               <form method="GET" action="/search-by-header" > 
+                <div class="search">
+                    <input type="text" class="search-box" id="search-box" name="search_name" placeholder="Search here..."/>
+                    <span class="search-button">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <button type="submit" class="search-button submit-search-button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                   
+                </div>
+                </form>
+            </li>
+        </ul>
+
+        <ul class="d-lg-inline-block d-none no-margin b-grey b-r no-style p-l-20 p-r-10">
+            <li class="p-r-10 inline">
+                <div class="dropdown">
+                    <a href="/about-us" id="notification-center" class="header-icon fa fa-globe" title="Go to website">
+                        
+                    </a>
+                </div>
+            </li>
+        </ul>
+        {{#if_eq user.role_id "1"}}
+        <ul class="d-lg-inline-block d-none no-margin b-grey b-r no-style p-l-20 p-r-10">
+            <li class="p-r-10 inline">
+                <div class="dropdown">
+                    <a href="javascript:void(0);" id="notification-center" class="header-icon fa fa-microphone addBroadCastMsg" title="Broadcast">
+                        
+                    </a>
+                </div>
+            </li>
+        </ul>
+        {{/if_eq}}
+        <ul class="d-lg-inline-block d-none notification-list no-margin b-grey b-r no-style p-l-20 p-r-10">
+            <li class="p-r-10 inline">
+                <div class="dropdown">
+                    <a href="javascript:;" id="notification-center" class="header-icon fa fa-bell" data-toggle="dropdown">
+                        <span id="bubble_" ></span>
+                    </a>
+                    <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
+                        <div class="notification-panel">
+                            <div class="scroll-wrapper notification-body scrollable" style="position: relative;">
+
+                                <div class="notification-body scrollable scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+
+                                    {{!-- Notification Start --}}
+                                    <div class="notification-item unread clearfix">
+                                        <div class="heading" id="nitificationsList">
+                                        </div>
+                                        {{!-- <div class="option" data-toggle="tooltip" data-placement="left" title=""
+                                        data-original-title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div> --}}
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="notification-footer text-center">
+                            <a href="#" class="">Read all notifications</a>
+                            <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
+                                <i class="pg-refresh_new"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <ul class="d-lg-inline-block d-none notification-list no-margin b-grey b-r no-style p-l-20 p-r-10">
+        <li class="p-r-10 inline">
+            <a href="/messagge-list/0" id="notification-center" class="header-icon fa fa-envelope">
+             <span id="bubble_msg_count"></span>
+          </a>
+</li>
+</ul>
+
+
+<!-- START NOTIFICATION LIST -->
+{{!-- <ul class="d-lg-inline-block d-none notification-list no-margin b-grey b-r no-style p-l-30 p-r-20">
+    <li class="p-r-10 inline">
+        <div class="dropdown">
+            <a href="javascript:;" id="notification-center" class="header-icon pg pg-world" data-toggle="dropdown">
+                <span class="bubble"></span>
+            </a>
+            <!-- START Notification Dropdown -->
+            <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
+                <!-- START Notification -->
+                <div class="notification-panel">
+                    <!-- START Notification Body-->
+                    <div class="notification-body scrollable">
+                        <!-- START Notification Item-->
+                        <div class="notification-item unread clearfix">
+                            <!-- START Notification Item-->
+                            <div class="heading open">
+                                <a href="#" class="text-primary pull-left">
+                                    <i class="pg-map fs-16 m-r-10"></i>
+                                    <span class="bold">Carrot Design</span>
+                                    <span class="fs-12 m-l-10">David Nester</span>
+                                </a>
+                                <div class="pull-right">
+                                    <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
+                                        <div>
+                                            <i class="fa fa-angle-left"></i>
+                                        </div>
+                                    </div>
+                                    <span class=" time">few sec ago</span>
+                                </div>
+                                <div class="more-details">
+                                    <div class="more-details-inner">
+                                        <h5 class="semi-bold fs-16">“Apple’s Motivation - Innovation
+                                            <br> distinguishes between
+                                            <br> A leader and a follower.”</h5>
+                                            <p class="small hint-text">
+                                                Commented on john Smiths wall.
+                                                <br> via pages framework.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item Right Side-->
+                                <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                    <a href="#" class="mark"></a>
+                                </div>
+                                <!-- END Notification Item Right Side-->
+                            </div>
+                            <!-- START Notification Body-->
+                            <!-- START Notification Item-->
+                            <div class="notification-item  clearfix">
+                                <div class="heading">
+                                    <a href="#" class="text-danger pull-left">
+                                        <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                        <span class="bold">98% Server Load</span>
+                                        <span class="fs-12 m-l-10">Take Action</span>
+                                    </a>
+                                    <span class="pull-right time">2 mins ago</span>
+                                </div>
+                                <!-- START Notification Item Right Side-->
+                                <div class="option">
+                                    <a href="#" class="mark"></a>
+                                </div>
+                                <!-- END Notification Item Right Side-->
+                            </div>
+                            <!-- END Notification Item-->
+                            <!-- START Notification Item-->
+                            <div class="notification-item  clearfix">
+                                <div class="heading">
+                                    <a href="#" class="text-warning-dark pull-left">
+                                        <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                        <span class="bold">Warning Notification</span>
+                                        <span class="fs-12 m-l-10">Buy Now</span>
+                                    </a>
+                                    <span class="pull-right time">yesterday</span>
+                                </div>
+                                <!-- START Notification Item Right Side-->
+                                <div class="option">
+                                    <a href="#" class="mark"></a>
+                                </div>
+                                <!-- END Notification Item Right Side-->
+                            </div>
+                            <!-- END Notification Item-->
+                            <!-- START Notification Item-->
+                            <div class="notification-item unread clearfix">
+                                <div class="heading">
+                                    <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                        <img width="30" height="30" data-src-retina="assets/img/profiles/1x.jpg"
+                                        data-src="assets/img/profiles/1.jpg" alt="" src="assets/img/profiles/1.jpg">
+                                    </div>
+                                    <a href="#" class="text-primary pull-left">
+                                        <span class="bold">Revox Design Labs</span>
+                                        <span class="fs-12 m-l-10">Owners</span>
+                                    </a>
+                                    <span class="pull-right time">11:00pm</span>
+                                </div>
+                                <!-- START Notification Item Right Side-->
+                                <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                    <a href="#" class="mark"></a>
+                                </div>
+                                <!-- END Notification Item Right Side-->
+                            </div>
+                            <!-- END Notification Item-->
+                        </div>
+                        <!-- END Notification Body-->
+                        <!-- START Notification Footer-->
+                        <div class="notification-footer text-center">
+                            <a href="#" class="">Read all notifications</a>
+                            <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
+                                <i class="pg-refresh_new"></i>
+                            </a>
+                        </div>
+                        <!-- START Notification Footer-->
+                    </div>
+                    <!-- END Notification -->
+                </div>
+                <!-- END Notification Dropdown -->
+            </div>
+        </li>
+        <li class="p-r-10 inline">
+            <a href="#" class="header-icon pg pg-link"></a>
+        </li>
+        <li class="p-r-10 inline">
+            <a href="#" class="header-icon pg pg-thumbs"></a>
+        </li>
+    </ul> --}}
+    <!-- END NOTIFICATIONS LIST -->
+    <!-- START User Info-->
+
+    <div class="pull-left p-r-10 fs-14 font-heading d-lg-inline-block d-none m-l-20">
+        <span class="semi-bold">{{user.first_name}}</span>
+        <span class="text-master">{{user.last_name}}</span>
+    </div>
+    <div class="dropdown pull-right d-lg-inline-block d-none">
+        <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <span class="thumbnail-wrapper d32 circular inline">
+            <img src="{{user.avatar}}" alt="" data-src="{{user.avatar}}" data-src-retina="{{user.avatar}}"
+            width="32" height="32">
+        </span>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
+        <a href="/site-profile" class="dropdown-item">
+            <i class="fa fa-user"></i> Profile</a>
+            {{#if_eq user.role_id "2"}}
+            <a href="/edit-lawyer-profile" class="dropdown-item">
+                <i class="fa fa-pencil-square-o"></i>Edit Profile</a>
+                {{else}}
+                <a href="/edit-site-profile" class="dropdown-item">
+                    <i class="fa fa-pencil-square-o"></i>Edit Profile</a>
+                    {{/if_eq}}
+                    <a href="/change-password" class="dropdown-item">
+                        <i class="fa fa-key"></i> Change Password</a>
+                        {{#if_eq user.role_id "3"}}
+                        <a href="javascript:void(0);" class="dropdown-item" id="changeLoginRoleByCorporateAdmin">
+                                <i class="fa fa-sign-in"></i> Login as City Manager</a>
+                        {{/if_eq}}
+                        {{#if_eq user.super_admin_status "1"}}
+                        <a href="javascript:void(0);" class="dropdown-item" id="changeLoginRoleByCorporateAdmin">
+                                <i class="fa fa-sign-in"></i> Login as City Manager</a>
+                        {{/if_eq}}
+                        {{#if user.actual_user_id}}
+                            <a href="javascript:void(0);" class="dropdown-item" id="backToLoginRoleByCorporateAdmin">
+                                <i class="fa fa-sign-in"></i> Back to Corporate Dashboard</a>
+                        {{/if}}
+                        <a href="/logout" class="clearfix bg-master-lighter dropdown-item">
+                            <span class="pull-left">Logout</span>
+                            <span class="pull-right">
+                                <i class="pg-power"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <!-- END User Info-->
+                {{!-- <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview"
+                data-toggle-element="#quickview"></a> --}}
+            </div>
+        </div>
+        <!-- END HEADER -->
+
+<div class="modal fade" id="changeLoginRoleByCorporateAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Login as</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-t-10">
+                <form role="form" name="changeLoginRoleByCorporateAdminfrm" id="changeLoginRoleByCorporateAdminfrm" action="/Get-city-manager-list-login-corporate-admin" method="POST">
+                    <input type="hidden" id="case_cate_id" value="{{case_status.case_status_category_id}}">
+                    <div class="form-group">
+                        <label>Select City</label>
+                        <span class="requiredErr">*</span>
+                        <select class="full-width" data-init-plugin="select2" name="city_manager_id" id="city_manager_id">
+                            <option value="0">Select City</option>
+                            
+                        </select>
+                    </div>
+                    <input type="hidden" name="actual_user_id" id="actual_user_id" value="{{user.id}}">
+                    <input type="hidden" name="email" id="email">
+                    <input type="hidden" name="password" id="password">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="changeLoginRoleByCorporateAdminbtn">Login</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="backToLoginRoleByCorporateAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Back to corporate dashboard</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="addpracticeareaFrm" method="POST" action="/Get-back-to-login-corporate-admin">
+                <input type="hidden" id="email" name="email" value="{{actual_user.email}}">
+                <input type="hidden" id="password" name="password" value="{{actual_user.password}}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p class="p-b-10">Are you sure?</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No </button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="broadcastMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header m-b-20">
+                <h5 class="modal-title" id="exampleModalLabel">Broadcast Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="addbroadcastfrm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea name="broadcast_msg" id="broadcast_msg" class="form-control" placeholder="Enter Boardcast Message"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+                    <button type="button" class="btn btn-primary" id="addBroadcastSentBtn">Send</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+        {{#content "script" mode="append"}}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Searchbox
+               /* $('.header-search .search').click(function(event){
+                     event.stopPropagation();
+                }); */
+
+                $('.header-search  .search-button').click(function(){
+                    $(".firm-name-head").hide();
+                    $(this).parent().addClass('open');
+                    $(this).hide();
+                     $('.header-search  .search-box').show();
+                     $('.header-search  .submit-search-button').show();
+                });
+
+              /*  $(document).click(function(  ) {
+                 $('.header-search  .search-button').parent().removeClass('open');
+                }); */
+
+                $("#changeLoginRoleByCorporateAdminfrm").validate({
+                    rules: {
+                        city_manager_id: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        city_manager_id: {
+                            required: "Please Select One"
+                        }
+                    }
+                })
+                $.ajax({
+                    type: "GET",
+                    url:"/total-message-count",
+                    success: function(response){
+                        if(response.success == true)
+                        {
+                            if (response.new_msg>0) {
+                                $("#bubble_msg_count").addClass("bubble");
+                            }
+                        }
+                    },
+                    error: function(xhr)
+                    {
+
+                    }
+                })
+            });
+            $(document).ready(function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/notification-legalcart",
+                    success: function (response) {
+                        console.log(response);
+                        if (response.data.length>0) {
+                            $("#bubble_").addClass("bubble");
+                        }
+                        for (let i = 0; i < response.data.length; i++) {
+
+                            var todayTime = new Date(response.data[i].createdAt);
+                            month = '' + (todayTime.getMonth() + 1),
+                            day = '' + todayTime.getDate(),
+                            year = todayTime.getFullYear();
+
+                            if (month.length < 2) month = '0' + month;
+                            if (day.length < 2) day = '0' + day;
+
+                            var creation_date = [month, day, year].join('-');
+
+                            var d = new Date(response.data[i].createdAt),
+                            dformat = [d.getMonth() + 1,
+                            d.getDate(),
+                            d.getFullYear()].join('-') + ' ' +
+                            [d.getHours(),
+                            d.getMinutes(),
+                            d.getSeconds()].join(':');
+
+                            var header = "n";
+
+                            var startDate = new Date(response.data[i].createdAt);
+
+                            var endDate = new Date();
+                            var diffDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                            var diff = (endDate.getTime() - startDate.getTime()) / 1000;
+                            var hour = diff / (60 * 60);
+                            var minute = diff / 60;
+                            var hrs = Math.abs(Math.round(hour));
+                            var mins = Math.abs(Math.round(minute));
+                            var sec = Math.abs(Math.round(diff));
+                            var get_time = "";
+                            if (sec < 60) {
+                                get_time = "Just now";
+                            }
+                            else if (sec >= 60 && mins < 60 && diffDays == 1) {
+                                get_time = mins + " mins ago";
+                            }
+                            else if (sec > 60 && mins >= 60 && diffDays == 1) {
+                                get_time = hrs + " hours ago";
+                            }
+                            else if (sec > 60 && mins > 60 && diffDays > 1 && diffDays < 7) {
+                                get_time = diffDays - 1 + " days ago"
+                            }
+                            else if (sec > 60 && mins > 60 && diffDays >= 7) {
+                                get_time = dformat;
+                            }
+                            if({{user.role_id}} == "3")
+                            {
+                                $('#nitificationsList').append(`<div class="row" ><div class="m-t-10 col-md-2"><img class="border-rad-50p" width="30" height="30" data-src-retina="/frontend/images/favicon.ico" data-src="/frontend/images/favicon.ico" alt="" src="/frontend/images/favicon.ico"></div><div class="col-md-10"><a href="#" data-noti-id="` + response.data[i].id + `" data-noti-link="` + response.data[i].link + `"id="notification_change" class="text-primary line-h-1 m-t-10 d-block notification_change"><span class="bold m-b-10 d-block">LekalKart</span><span class="fs-12 d-block">` + response.data[i].remarks + `</span></a><span class="time">` + get_time + `</span></div></div>`)
+                            }
+                            else
+                            {
+                                $('#nitificationsList').append(`<div class="row" ><div class="m-t-10 col-md-2"><img class="border-rad-50p" width="30" height="30" data-src-retina="` + response.data[i].img + `" data-src="` + response.data[i].img + `" alt="" src="` + response.data[i].img + `"></div><div class="col-md-10"><a href="#" data-noti-id="`+ response.data[i].id +`" data-noti-link="`+ response.data[i].link +`"id="notification_change" class="text-primary line-h-1 m-t-10 d-block notification_change"><span class="bold m-b-10 d-block">` + response.data[i].name + `</span><span class="fs-12 d-block">` + response.data[i].remarks + `</span></a><span class="time">` + get_time + `</span></div></div>`)
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+
+                    },
+                    complete: function () {
+                        $('.notification_change').click(function () {
+                            var noti_id = $(this).data("noti-id");
+                            var noti_link = $(this).data("noti-link");
+                            $.ajax({
+                                type: "POST",
+                                url: "/notification-update",
+                                data: { noti_id: noti_id },
+                                success: function (response) {
+                                    window.location.href = noti_link
+                                },
+                                error: function (xhr) {
+
+                                }
+                            });
+                        });
+                    }
+                });
+
+if({{user.role_id}} == "3" && "{{user.sub_role}}"=="C" || {{user.role_id}} == "5")
+{    
+    $.ajax({
+        type: "GET",
+        url: "/get-firm-name-header",
+        success:function(response)
+        {
+            $(".firm-name-head").append('<img src="'+ response.firm_name.image +'" width="50" class="m-r-5"><span class="border-left"> '+ response.firm_name.name + ' Legal Central</span>')
+        },
+        error:function(xhr)
+        {
+
+        }
+    })
+}
+});
+
+$(document).on("click","#changeLoginRoleByCorporateAdmin", function(){
+    $.ajax({
+        type: "GET",
+        url: "/Get-city-manager-list",
+        success: function(response)
+        {
+            if(response.success == true)
+            {
+                $("#city_manager_id").find('option').not(':first').remove();
+                for(var i=0; i<response.city_manager_list.length; i++)
+                {
+                    if({{user.role_id}} == "5")
+                    {
+                        if(response.city_manager_list[i].super_admin_status != "1")
+                        $("#city_manager_id").append(`
+                            <option value="${response.city_manager_list[i].email},${response.city_manager_list[i].password}">${response.city_manager_list[i].first_name} ${response.city_manager_list[i].last_name}</option>
+                        `);
+                    }
+                    else
+                    {
+                        $("#city_manager_id").append(`
+                            <option value="${response.city_manager_list[i].email},${response.city_manager_list[i].password}">${response.city_manager_list[i].first_name} ${response.city_manager_list[i].last_name}</option>
+                        `);
+                    }
+                }
+                $("#changeLoginRoleByCorporateAdminModal").modal('show');
+            }
+        },
+        error: function(xhr)
+        {
+
+        }
+    });
+})
+
+$(document).on("change","#city_manager_id", function(){
+    if($(this).val() != "")
+    {
+        var city_manager_id = $(this).val().split(",");
+        $("#email").val(city_manager_id[0]);    
+        $("#password").val(city_manager_id[1]);
+    }
+    else
+    {
+        $("#email").val("");    
+        $("#password").val("");
+    }
+});
+
+$(document).on("click","#backToLoginRoleByCorporateAdmin", function(){
+    $("#backToLoginRoleByCorporateAdminModal").modal("show");
+})
+
+
+/*$(document).on("click",".submit-search-button",function(){
+    var searchtext = $("#search-box").val();
+    $.ajax({
+        type: "GET",
+        url: `/search-by-header/${searchtext}`,
+        success: function(response)
+        {
+
+        },
+        error: function(xhr)
+        {
+
+        }
+    })
+});*/
+
+$(document).on("click",".addBroadCastMsg", function(){
+    $("#broadcastMessageModal").modal('show');
+});
+
+$(document).on("click","#addBroadcastSentBtn", function(){
+    if($("#broadcast_msg").val() == "")
+    {
+        swal("Warning!","Please enter message","warning");
+    }
+    else
+    {
+        $.ajax({
+            type: "POST",
+            url: "/send-broadcast-msg",
+            data: {
+                broadcast_msg: $("#broadcast_msg").val()
+            },
+            beforeSend: function() {
+                    // setting a timeout
+                    $("#addBroadcastSentBtn").attr("disabled",true);
+                    $("#addBroadcastSentBtn").html('Please Wait...');
+                },
+            success: function(response)
+            {
+                if(response.success == true)
+                {
+                    swal({
+                        title: "Success!",
+                        text: "Message has been sent",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+            },
+            error: function(xhr)
+            {
+
+            }
+        })
+    }
+})
+</script> {{/content}}
