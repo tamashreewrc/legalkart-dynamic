@@ -1,0 +1,225 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Form Builder For </li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label>Type of Case</label>
+            <span class="requiredErr">*</span>
+            <select class="full-width caseType" data-init-plugin="select2" name="case_type_name" id="case_type_name" disabled="true">
+                <option value="">Select Type of Case</option>
+                {{#each case_type}}
+                <option value="{{this.id}}" {{#if_eq this.id ../case_type_id}} selected {{/if_eq}}>{{this.type_of_case}}</option>
+                {{/each}}
+            </select>
+        </div>
+        {{#if_neq check_form ""}}
+        <div class="addFieldWrap">
+            {{#each check_form}}
+            <input type="hidden" name="input_type" value="{{this.input_type}}" id="input_type" class="input_type" data-name="{{this.name}}"
+                data-label="{{this.label}}" data-placeholder="{{this.placeholder}}" data-required="{{this.required}}" data-subtype="{{this.sub_type}}"
+            /> {{/each}} {{!--
+            <button id="prependField" class="addFieldBtn" data-label="Prepended Field" data-index="0" type="button">Prepend Field</button>            --}} {{!-- <button id="appendField" class="addFieldBtn" data-label="Appended Field" type="button">Append Field</button>            --}}
+        </div>
+        <div class="build-wrap">
+            {{!--
+            <li class="text-field form-field editing" type="text" id="frmb-1552289394479-fld-1">
+                <div class="field-actions">
+                    <a type="remove" id="del_frmb-1552289394479-fld-1" class="del-button btn icon-cancel delete-confirm" title="Remove Element"></a>
+                    <a type="edit" id="frmb-1552289394479-fld-1-edit" class="toggle-form btn icon-pencil open" title="Edit"></a>
+                    <a type="copy" id="frmb-1552289394479-fld-1-copy" class="copy-button btn icon-copy" title="Copy"></a>
+                </div>
+                <label class="field-label">Text Field</label>
+                <span class="required-asterisk" style=""> *</span>
+                <span class="tooltip-element" tooltip="undefined" style="display:none">?</span>
+                <div class="prev-holder" style="display: none;">
+                    <div class="fb-text form-group field-text-1552289413253-preview">
+                        <label for="text-1552289413253-preview" class="fb-text-label">Text Field</label>
+                        <input class="form-control" name="text-1552289413253-preview" type="text" id="text-1552289413253-preview">
+                    </div>
+                </div>
+                <div id="frmb-1552289394479-fld-1-holder" class="frm-holder" data-field-id="frmb-1552289394479-fld-1" style="display: block;">
+                    <div class="form-elements">
+                        <div class="form-group required-wrap">
+                            <label for="required-frmb-1552289394479-fld-1">Required</label>
+                            <div class="input-wrap">
+                                <input type="checkbox" class="fld-required" name="required" id="required-frmb-1552289394479-fld-1">
+                            </div>
+                        </div>
+                        <div class="form-group label-wrap" style="display: block">
+                            <label for="label-frmb-1552289394479-fld-1">Label</label>
+                            <div class="input-wrap">
+                                <div name="label" placeholder="Label" class="fld-label form-control" id="label-frmb-1552289394479-fld-1" contenteditable="true">Text Field
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group description-wrap" style="display: block">
+                            <label for="description-frmb-1552289394479-fld-1">Help Text</label>
+                            <div class="input-wrap">
+                                <input name="description" placeholder="" class="fld-description form-control" id="description-frmb-1552289394479-fld-1" value=""
+                                    type="text">
+                            </div>
+                        </div>
+                        <div class="form-group placeholder-wrap" style="display: block">
+                            <label for="placeholder-frmb-1552289394479-fld-1">Placeholder</label>
+                            <div class="input-wrap">
+                                <input name="placeholder" placeholder="" class="fld-placeholder form-control" id="placeholder-frmb-1552289394479-fld-1" value=""
+                                    type="text">
+                            </div>
+                        </div>
+                        <div class="form-group className-wrap" style="display: block">
+                            <label for="className-frmb-1552289394479-fld-1">Class</label>
+                            <div class="input-wrap">
+                                <input name="className" placeholder="space separated classes" class="fld-className form-control" id="className-frmb-1552289394479-fld-1"
+                                    value="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group name-wrap" style="display: block">
+                            <label for="name-frmb-1552289394479-fld-1">Name</label>
+                            <div class="input-wrap">
+                                <input name="name" placeholder="" class="fld-name form-control" id="name-frmb-1552289394479-fld-1" value="text-1552289413253"
+                                    type="text">
+                            </div>
+                        </div>
+                        <div class="form-group access-wrap">
+                            <label for="access-frmb-1552289394479-fld-1">Access</label>
+                            <div class="input-wrap">
+                                <input type="checkbox" class="fld-access" name="access" id="access-frmb-1552289394479-fld-1">
+                                <label for="access-frmb-1552289394479-fld-1">Limit access to one or more of the following roles:</label>
+                                <div class="available-roles">
+                                    <label for="fld-frmb-1552289394479-fld-1-roles-1">
+							<input type="checkbox" name="roles[]" value="1" id="fld-frmb-1552289394479-fld-1-roles-1" class="roles-field"> Administrator</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group value-wrap" style="display: undefined">
+                            <label for="value-frmb-1552289394479-fld-1">Value</label>
+                            <div class="input-wrap">
+                                <input name="value" placeholder="Value" class="fld-value form-control" id="value-frmb-1552289394479-fld-1" value="" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group subtype-wrap">
+                            <label for="subtype-frmb-1552289394479-fld-1">Type</label>
+                            <div class="input-wrap">
+                                <select id="subtype-frmb-1552289394479-fld-1" name="subtype" class="fld-subtype form-control">
+						<option label="Text Field" value="text">Text Field</option>
+						<option label="password" value="password">password</option>
+						<option label="email" value="email">email</option>
+						<option label="color" value="color">color</option>
+						<option label="tel" value="tel">tel</option>
+					</select>
+                            </div>
+                        </div>
+                        <div class="form-group maxlength-wrap">
+                            <label for="maxlength-frmb-1552289394479-fld-1">Max Length</label>
+                            <div class="input-wrap">
+                                <input type="number" name="maxlength" min="0" class="fld-maxlength form-control form-control" id="maxlength-frmb-1552289394479-fld-1">
+                            </div>
+                        </div>
+                        <a class="close-field">Close</a>
+                    </div>
+                </div>
+            </li> --}}
+        </div>
+        <button id="getJSON" type="button" class="btn btn-primary m-t-10">Build Form</button> {{/if_neq}} {{#if_eq check_form
+        ""}} Dynamic form not created for this type. {{/if_eq}}
+    </div>
+
+</div>
+
+{{#content "script" mode="append"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+<script>
+    jQuery(function ($) {
+        //alert('hi');
+        //var fbEditor = document.getElementById('build-wrap');
+        var formBuilder = $(".build-wrap").formBuilder();
+
+        //var buttons = document.getElementsByClassName('addFieldBtn');
+        //alert(buttons[0].dataset.label);
+        //for (var i = 0; i < buttons.length; i++) {
+        //buttons[0].onclick = function () {
+        $(".input_type").each(function (e) {
+            $(this).on("click", function () {
+                var input_type = $(this).val();
+                var name = $(this).attr('data-name');
+                var label = $(this).attr('data-label');
+                var placeholder = $(this).attr('data-placeholder');
+                var required = $(this).attr('data-required');
+                var subtype = $(this).attr('data-subtype');
+                //alert(name);
+                var field = {
+                    type: input_type,
+                    class: 'form-control',
+                    //label: this.dataset.label + ' added at: ' + new Date().getTime()
+                    label: label,
+                    name: name,
+                    placeholder: placeholder,
+                    required: required,
+                    subtype: subtype
+                };
+                //var index = this.dataset.index ? Number(this.dataset.index) : undefined;
+                var index = undefined;
+
+                setTimeout(function () { formBuilder.actions.addField(field, index) }, 1000);
+            });
+            $(this).trigger('click');
+        });
+
+        $("#getJSON").click(function () {
+            console.log(formBuilder.actions.getData('json'));
+            console.log(formBuilder.actions.getData());
+            if ($("#case_type_name").val() == "") {
+                swal("Warning!", "Please Select Case Type", "warning");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/add/dynamic-form-builder-case-edit",
+                    data: {
+                        "formbuilder": formBuilder.actions.getData('json'),
+                        "case_type": $("#case_type_name").val()
+                    },
+                    success: function (response) {
+                        console.log(response.status);
+                        if (response.status == "1") {
+                            console.log("success");
+                            window.location.href = "/dashboard";
+                        }
+                        else if (response.status == "2") {
+                            swal("Warning!", "Form already bulid for this case type", "warning")
+                        }
+                        else {
+                            swal("Warning!", "Please build form", "warning")
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                })
+            }
+        });
+
+
+
+    });
+
+</script> {{/content}}

@@ -6,8 +6,8 @@ const exphbs = require("express-handlebars");
 const passport = require("passport");
 const path = require("path");
 const flash = require("connect-flash");
-const Cryptr = require('cryptr');
-const cryptr = new Cryptr('myTotalySecretKey');
+const Cryptr = require("cryptr");
+const cryptr = new Cryptr("myTotalySecretKey");
 
 //const lodash = require('lodash');
 const port = process.env.PORT || 3000;
@@ -40,14 +40,15 @@ const stamp_paper = require("./routes/stamp_paper");
 const enquiry = require("./routes/enquiry");
 const resource = require("./routes/resource");
 const invoice = require("./routes/invoice");
+const dynamic_creation = require("./routes/dynamic_creation");
 
 //facebook integration
 var Strategy = require("passport-facebook").Strategy;
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-app.use(express.static(path.join(__dirname, 'public')));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
+app.use(express.static(path.join(__dirname, "public")));
 
 passport.use(
   new Strategy(
@@ -88,20 +89,22 @@ require("./config/passport")(passport);
 const hbs = exphbs.create({
   extname: ".hbs",
   helpers: {
-    check_image:(data,opts) => {
-      if (data.split(".")[1]=='jpg' || data.split(".")[1]=='png' || data.split(".")[1]=='jpeg' ) {
+    check_image: (data, opts) => {
+      if (
+        data.split(".")[1] == "jpg" ||
+        data.split(".")[1] == "png" ||
+        data.split(".")[1] == "jpeg"
+      ) {
         return opts.fn(this);
       } else {
         return opts.inverse(this);
       }
-      
     },
-    encriptUserid:(data,opts) =>{
+    encriptUserid: (data, opts) => {
       const encryptedString = cryptr.encrypt(data);
       // const decryptedString = cryptr.decrypt(encryptedString);
       // console.log(decryptedString);
-      return encryptedString
-      
+      return encryptedString;
     },
     eq: function(v1, v2) {
       return v1 == v2;
@@ -114,6 +117,12 @@ const hbs = exphbs.create({
     },
     if_eq: function(a, b, opts) {
       if (a == b) return opts.fn(this);
+      else return opts.inverse(this);
+    },
+    if_neq: function(a, b, opts) {
+      if (a != b)
+        // Or === depending on your needs
+        return opts.fn(this);
       else return opts.inverse(this);
     },
     inArray: function(array, value, block) {
@@ -141,42 +150,33 @@ const hbs = exphbs.create({
       if (index == 0) return opts.fn(this);
       else return opts.inverse(this);
     },
-    striptags: function (txt) {
+    striptags: function(txt) {
       // console.log(txt)
-      // exit now if text is undefined 
-      if (txt == null)
-      {
+      // exit now if text is undefined
+      if (txt == null) {
         return;
-      } 
-      else
-      {
+      } else {
         // the regular expresion
-        var regexp = /<[\/\w]+>/g
+        var regexp = /<[\/\w]+>/g;
         // replacing the text
-        return txt.replace(regexp, '');
+        return txt.replace(regexp, "");
       }
     },
-    compare_date: function (date, opts)
-    {
-      const oneDay = 60 * 60 * 24 * 1000
+    compare_date: function(date, opts) {
+      const oneDay = 60 * 60 * 24 * 1000;
       const oneDayAgoDate = new Date(date.getTime() + oneDay);
-      if(oneDayAgoDate > new Date())
-      {
+      if (oneDayAgoDate > new Date()) {
         return opts.fn(this);
-      }
-      else
-      {
+      } else {
         return opts.inverse(this);
       }
     },
-    check_length: function (array,value, opts)
-    {
+    check_length: function(array, value, opts) {
       var a = array.length;
       if (a == value) return opts.fn(this);
       else return opts.inverse(this);
     },
-    splitString: function(value)
-    {
+    splitString: function(value) {
       var a = value.split("/");
       return a.pop();
     },
@@ -236,6 +236,7 @@ app.use(enquiry);
 app.use(resource);
 app.use(invoice);
 app.use(apilegalcart);
+app.use(dynamic_creation);
 
 /********** End **********/
 

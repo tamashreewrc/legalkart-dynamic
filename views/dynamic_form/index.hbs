@@ -1,0 +1,100 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Case Form Builder</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        {{#if success_add_resource}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_add_resource}}
+        </div>
+        {{/if}} {{#if success_edit_resource}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{success_edit_resource}}
+        </div>
+        {{/if}}
+        <div class="card-title">
+            <h5>Case Form Builder</h5>
+        </div>
+        <div class="pull-right">
+            <a href="/dynamic-form-builder/list" class="btn btn-primary btn-cons m-b-10">
+                <i class="fa fa-view"></i> List of Forms</a>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label>Type of Case</label>
+            <span class="requiredErr">*</span>
+            <select class="full-width caseType" data-init-plugin="select2" name="case_type_name" id="case_type_name">
+                <option value="">Select Type of Case</option>
+                {{#each case_type}}
+                <option value="{{this.id}}">{{this.type_of_case}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="build-wrap"></div>
+        <button id="getJSON" type="button" class="btn btn-primary m-t-10">Build Form</button>
+    </div>
+
+</div>
+
+{{#content "script" mode="append"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+<script>
+    jQuery(function ($) {
+        //var fbEditor = document.getElementById('build-wrap');
+        var formBuilder = $(".build-wrap").formBuilder();
+
+        $("#getJSON").click(function () {
+            console.log(formBuilder.actions.getData('json'));
+            console.log(formBuilder.actions.getData());
+            if ($("#case_type_name").val() == "") {
+                swal("Warning!", "Please Select Case Type", "warning");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/add/dynamic-form-builder-case",
+                    data: {
+                        "formbuilder": formBuilder.actions.getData('json'),
+                        "case_type": $("#case_type_name").val()
+                    },
+                    success: function (response) {
+                        console.log(response.status);
+                        if (response.status == "1") {
+                            console.log("success");
+                            window.location.href = "/dashboard";
+                        }
+                        else if (response.status == "2") {
+                            swal("Warning!", "Form already bulid for this case type", "warning")
+                        }
+                        else {
+                            swal("Warning!", "Please build form", "warning")
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                })
+            }
+        });
+    });
+
+</script> {{/content}}

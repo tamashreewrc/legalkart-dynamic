@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "legalkart_prod",
+    "database": "legalkart_dynamic",
     "host": "192.168.1.109",
     "dialect": "postgres",
     "logging": false

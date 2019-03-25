@@ -1,0 +1,72 @@
+<!-- START JUMBOTRON -->
+<div class="jumbotron" data-pages="parallax">
+    <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Form List</li>
+            </ol>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<!-- END JUMBOTRON -->
+
+<!-- START card -->
+<div class="card card-transparent">
+    <div class="card-header ">
+        <div class="card-title">
+            <h5>Forms</h5>
+        </div>
+        <div class="pull-right">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body lawyers-add">
+        <table class="table table-hover demo-table-search table-responsive-block data-tables" id="tableWithSearch">
+            <thead>
+                <tr>
+                    <th>Sl No.</th>
+                    <th>Case Type</th>
+                    {{!--
+                    <th>Input Type</th>
+                    <th>Label</th> --}}
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each case_type}}
+                <tr>
+                    <td class="v-align-middle semi-bold">
+                        <p>{{math @index "+" 1}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.type_of_case}}</p>
+                    </td>
+                    {{!--
+                    <td class="v-align-middle">
+                        <p>{{this.input_type}}</p>
+                    </td>
+                    <td class="v-align-middle">
+                        <p>{{this.label}}</p>
+                    </td> --}}
+                    <td>
+                        <a href="/dynamic-form-builder/list/edit/{{this.id}}" class="btn btn-info" title="Edit">
+                            <i class="fa fa-paste"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript">
+
+</script>
+{{/content}}
+<!-- END card -->

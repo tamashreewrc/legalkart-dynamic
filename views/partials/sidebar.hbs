@@ -23,9 +23,18 @@
                 </span>
             </li>
 
+            <li {{#if_eq client_url "dynamic-form-builder" }} class="active" {{/if_eq}}>
+                <a href="/dynamic-form-builder" class="detailed">
+                    <span class="title">Form Builder</span>
+                </a>
+                <span class="icon-thumbnail">
+                    <i class="pg-home"></i>
+                </span>
+            </li>
+
             <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}} {{#if_eq client_url "legalcart-mact" }} class="active"
-                {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}}
-                {{#if_eq client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
+                {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}} {{#if_eq client_url
+                "legalcart-superdari" }} class="active" {{/if_eq}}>
                 <a href="javascript:;">
                     <span class="title">My Cases</span>
                     <span {{#if_eq client_url "legalcart-challan" }} class="arrow open active" {{/if_eq}}
@@ -80,7 +89,8 @@
                 </span>
             </li>
 
-            {{!-- <li {{#if_eq client_url "dynamic-form-builder" }} class="active" {{/if_eq}}>
+            {{!--
+            <li {{#if_eq client_url "dynamic-form-builder" }} class="active" {{/if_eq}}>
                 <a href="/dynamic-form-builder" class="detailed">
                     <span class="title">Form Builder</span>
                 </a>
@@ -257,7 +267,8 @@
                 </span>
             </li>
 
-            {{!-- <li {{#if_eq client_url "lawyers" }} class="active" {{/if_eq}}>
+            {{!--
+            <li {{#if_eq client_url "lawyers" }} class="active" {{/if_eq}}>
                 <a href="/lawyers" class="detailed">
                     <span class="title">Lawyers</span>
                 </a>
@@ -283,9 +294,10 @@
                 </span>
             </li>
 
-            {{!-- <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}{{#if_eq client_url "legalcart-mact" }} class="active"
-                {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}} {{#if_eq client_url
-                "legalcart-superdari" }} class="active" {{/if_eq}}>
+            {{!--
+            <li {{#if_eq client_url "legalcart-case" }} class="active" {{/if_eq}}{{#if_eq client_url
+                "legalcart-mact" }} class="active" {{/if_eq}} {{#if_eq client_url "legalcart-challan" }} class="active" {{/if_eq}} {{#if_eq
+                client_url "legalcart-superdari" }} class="active" {{/if_eq}}>
                 <a href="javascript:;">
                     <span class="title">My Cases</span>
                     <span {{#if_eq client_url "legalcart-challan" }} class="arrow open active" {{/if_eq}}
@@ -359,10 +371,9 @@
                 </span>
             </li>
 
-            <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}}
-                {{#if_eq client_url "assign-superdari-all" }} class="active" {{/if_eq}}
-                {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}}
-                {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
+            <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}} {{#if_eq client_url "assign-superdari-all" }} class="active"
+                {{/if_eq}} {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}} {{#if_eq client_url
+                "assign-case-all" }} class="active" {{/if_eq}}>
                 <a href="javascript:;">
                     <span class="title">My Cases</span>
                     
@@ -412,7 +423,7 @@
 
                 </ul>
             </li>
-            
+
             <li {{#if_eq client_url "case-invitation" }} class="active" {{/if_eq}}>
                 <a href="/case-invitation" class="detailed">
                     <span class="title">New Case Invitation</span>
@@ -447,11 +458,9 @@
                 <span class="icon-thumbnail">
                     <i class="fa fa-book" aria-hidden="true"></i>
                 </span>
-            </li> --}}
-
-            {{!-- <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}}
-                {{#if_eq client_url "assign-mact-all" }} class="active" {{/if_eq}}
-                {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
+            </li> --}} {{!--
+            <li {{#if_eq client_url "assign-challan-all" }} class="active" {{/if_eq}} {{#if_eq client_url
+                "assign-mact-all" }} class="active" {{/if_eq}} {{#if_eq client_url "assign-case-all" }} class="active" {{/if_eq}}>
                 <a href="javascript:;">
                     <span class="title">My Cases</span>
                     
